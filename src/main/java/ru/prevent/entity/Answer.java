@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -22,4 +24,8 @@ public class Answer {
 
     @Column(name = "weight_arg")
     Long weight;
+
+    @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
+    List<QuestionAndAnswers> questions = new ArrayList<>();
+
 }
