@@ -1,14 +1,15 @@
 package ru.prevent.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -16,14 +17,26 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private String username;
-    private String mobile;
-    private boolean active;
+    @Column(name = "first_name")
+    String firstName;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    @Column(name = "last_name")
+    String lastName;
+
+    @Column(name = "third_name")
+    String thirdName;
+
+    @Column(name = "sex")
+    String sex;
+
+    @Column(name = "birthday")
+    LocalDateTime birthday;
+
+    @Column(name = "telephone")
+    String mobile;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<UserQuizzes> quizzes = new ArrayList<>();
 }
