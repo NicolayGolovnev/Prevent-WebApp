@@ -2,6 +2,8 @@ package ru.prevent.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user_n_quiz")
@@ -23,4 +25,7 @@ public class UserQuizzes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_quiz", nullable = false)
     Quiz quiz;
+
+    @OneToMany(mappedBy = "user_n_quizzes", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<UserAnswers> userAnswers = new ArrayList<>();
 }

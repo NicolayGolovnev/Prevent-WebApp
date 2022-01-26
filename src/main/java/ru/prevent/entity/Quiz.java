@@ -34,14 +34,12 @@ public class Quiz {
     @Column(name = "weight_arg")
     Long weight;
 
-    //  не каскад
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
     List<UserQuizzes> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     List<keyQuiz> keys = new ArrayList<>();
 
-    //  не каскад
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
     List<Question> questions = new ArrayList<>();
 }
