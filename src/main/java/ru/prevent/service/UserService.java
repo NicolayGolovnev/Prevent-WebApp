@@ -1,22 +1,28 @@
 package ru.prevent.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.prevent.entity.User;
 import ru.prevent.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Slf4j
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository repository;
 
-    public List<User> findAll(String firstName, LocalDateTime birthday) {
-        return userRepository.findAll();
+    public List<User> findAll() {
+        return repository.findAll();
+    }
+
+    public User findById(Long id) {
+        Optional<User> optionalUser = repository.findById(id);
+        if (optionalUser.isPresent())
+            return optionalUser.get();
+        else
+            throw new RuntimeException("User with id=" + id + " not found!");
     }
 }

@@ -1,13 +1,11 @@
 package ru.prevent.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 @Setter

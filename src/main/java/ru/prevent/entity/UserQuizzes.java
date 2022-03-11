@@ -26,6 +26,6 @@ public class UserQuizzes {
     @JoinColumn(name = "id_quiz", nullable = false)
     Quiz quiz;
 
-    @OneToMany(mappedBy = "user_n_quizzes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
     List<UserAnswers> userAnswers = new ArrayList<>();
 }
