@@ -31,6 +31,7 @@ ALTER TABLE "usr" ADD CONSTRAINT "PK_usr" PRIMARY KEY ("id")
 CREATE TABLE "quiz"
 (
     "id" bigserial UNIQUE NOT NULL,
+    "title" Text,
     "access" Boolean,
     "gender" Text,
     "min_age" Bigint,
@@ -72,7 +73,7 @@ ALTER TABLE "question" ADD CONSTRAINT "PK_question" PRIMARY KEY ("id")
 
 CREATE TABLE "answer"
 (
-    "id" Bigint NOT NULL,
+    "id" bigserial NOT NULL,
     "content" Text,
     "weight_arg" Bigint
 )
