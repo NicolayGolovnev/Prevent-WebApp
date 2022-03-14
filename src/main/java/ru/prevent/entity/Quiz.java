@@ -19,6 +19,9 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "title")
+    String title;
+
     @Column(name = "access")
     boolean access;
 

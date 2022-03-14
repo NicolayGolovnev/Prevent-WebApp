@@ -6,6 +6,7 @@ import ru.prevent.entity.Quiz;
 import ru.prevent.repository.QuizRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuizService {
@@ -15,5 +16,13 @@ public class QuizService {
 
     public List<Quiz> findAll() {
         return repository.findAll();
+    }
+
+    public Quiz findById(Long id) {
+        Optional<Quiz> optional = repository.findById(id);
+        if (optional.isPresent())
+            return optional.get();
+        else
+            throw new RuntimeException("Quiz with id=" + id + " not found!");
     }
 }

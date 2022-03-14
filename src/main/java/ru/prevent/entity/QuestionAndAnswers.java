@@ -23,7 +23,8 @@ public class QuestionAndAnswers {
     @JoinColumn(name = "id_question", nullable = false)
     Question question;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // fetch = FetchType.LAZY
+    @ManyToOne()
     @JoinColumn(name = "id_answer", nullable = false)
     Answer answer;
 
