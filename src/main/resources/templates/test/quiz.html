@@ -29,29 +29,33 @@
             <th:block th:utext="${user.firstName} + ' ' + ${user.lastName}"/>
         </p>
     </div>
-    <form action="#" method="post" th:action="@{/saveResults}"
-          th:object="${questions}">
-        <th:block th:each="question, state: ${questions}">
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Вопрос №[[${state.count}]]</label>
-                <th:p th:utext="${question.content}"/>
-                <div th:each="answer, st: ${question.answers}">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" th:field="${question.userAnswer.id}" th:value="${answer.id}" class="custom-control-input">
-                        <label class="custom-control-label" th:for="${answer.id}" th:text="${answer.content}">content</label>
+    <form action="#" method="post" th:action="@{/saveResults}" th:object="${questions}">
+        <div th:each="question, state: *{questions}" class="form-group">
+            <label class="col-sm-2 col-form-label">Вопрос №[[${state.count}]]</label>
+            <th:p th:utext="${question.content}"/>
+            <fieldset class="row">
+                <legend class="col-form-label pt-0">Ответы</legend>
+                <div>
+                    <div class="form-check" th:each="answer: ${question.answers}">
+                        <input class="form-check-input" type="radio" th:field="*{questions[__${state.index}__].userAnswer}" th:value="${answer.id}">
+                        <label class="form-check-label" th:for="${answer.id}" th:text="${answer.content}"></label>
                     </div>
                 </div>
+            </fieldset>
+        </div>
 
-<!--                <fieldset>-->
-<!--                    <th:block th:each="answer, st: ${question.answers}">-->
-<!--                        <input type="radio" th:field="${question.answers}" th:value="${answer.id}" th:id="${'radio' +-->
-<!--                        st.count}">-->
-<!--                        <label class="form-check-label" th:for="${'radio' + st.count}"-->
-<!--                               th:text="${answer.content}"></label>-->
-<!--                    </th:block>-->
-<!--                </fieldset>-->
-            </div>
-        </th:block>
+<!--        <label class="col-sm-2 col-form-label">Вопрос 1</label>-->
+<!--        <th:p th:utext="${question.content}"/>-->
+<!--        <fieldset class="row">-->
+<!--            <legend class="col-form-label pt-0">Ответы</legend>-->
+<!--            <div>-->
+<!--                <div class="form-check" th:each="answer: ${question.answers}">-->
+<!--                    <input class="form-check-input" type="radio" th:field="*{userAnswer}"-->
+<!--                           th:value="${answer.id}">-->
+<!--                    <label class="form-check-label" th:for="${answer.id}" th:text="${answer.content}"></label>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </fieldset>-->
 
         <button type="submit"
                 class="btn btn-primary col-sm-4 text-center">Завершить опрос

@@ -9,6 +9,7 @@ import ru.prevent.entity.Answer;
 import ru.prevent.entity.Question;
 import ru.prevent.entity.Quiz;
 import ru.prevent.entity.User;
+import ru.prevent.model.QAModelCreation;
 import ru.prevent.model.QuestionAnswersModel;
 import ru.prevent.model.UserNQuizModel;
 import ru.prevent.repository.AnswerRepository;
@@ -44,7 +45,8 @@ public class TestController {
         Quiz quiz = quizService.findById(qid);
         List<Question> entityQuestions = questionService.findQuestionsByQuizId(quiz.getId());
 
-        List<QuestionAnswersModel> questions = new ArrayList<>();
+//        List<QuestionAnswersModel> questions = new ArrayList<>();
+        QAModelCreation questions = new QAModelCreation();
         for (var question : entityQuestions) {
             List<Answer> answers = new ArrayList<>();
             question.getAnswers().forEach(collection -> answers.add(collection.getAnswer()));
@@ -54,6 +56,7 @@ public class TestController {
                     .numQuestion(question.getNumQuestion())
                     .weight(question.getWeight())
                     .answers(answers)
+                    .userAnswer(new Answer())
                     .build();
             questions.add(buf);
         }
