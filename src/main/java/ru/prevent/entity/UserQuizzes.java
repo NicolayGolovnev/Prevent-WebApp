@@ -1,11 +1,19 @@
 package ru.prevent.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_n_quiz")
 public class UserQuizzes {
     @Id
@@ -16,7 +24,10 @@ public class UserQuizzes {
     String status;
 
     @Column(name = "complete_date")
-    Timestamp completeDate;
+    LocalDate completeDate;
+
+    @Column(name = "result")
+    String result;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usr", nullable = false)

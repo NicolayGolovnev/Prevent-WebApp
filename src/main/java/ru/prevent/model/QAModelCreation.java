@@ -1,6 +1,8 @@
 package ru.prevent.model;
 
 import lombok.*;
+import ru.prevent.entity.Quiz;
+import ru.prevent.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,9 @@ import java.util.List;
 @Setter
 @Builder
 public class QAModelCreation {
-    List<QuestionAnswersModel> questions = new ArrayList<>();
+    private List<QuestionAnswersModel> questions = new ArrayList<>();
+    private Long userId = 0L;
+    private Long quizId = 0L;
 
     public void add(QuestionAnswersModel question) {
         questions.add(question);

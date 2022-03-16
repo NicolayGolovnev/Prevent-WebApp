@@ -30,6 +30,8 @@
         </p>
     </div>
     <form action="#" method="post" th:action="@{/saveResults}" th:object="${questions}">
+        <input type="text" th:field="*{userId}" th:value="${user.id}">
+        <input type="text" th:field="*{quizId}" th:value="${quiz.id}">
         <div th:each="question, state: *{questions}" class="form-group">
             <label class="col-sm-2 col-form-label">Вопрос №[[${state.count}]]</label>
             <th:p th:utext="${question.content}"/>
