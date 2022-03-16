@@ -11,17 +11,13 @@ import ru.prevent.entity.*;
 import ru.prevent.model.QAModelCreation;
 import ru.prevent.model.QuestionAnswersModel;
 import ru.prevent.model.UserNQuizModel;
-import ru.prevent.repository.AnswerRepository;
 import ru.prevent.service.QuestionService;
 import ru.prevent.service.QuizService;
 import ru.prevent.service.UserQuizzesService;
 import ru.prevent.service.UserService;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -75,7 +71,7 @@ public class TestController {
     }
 
     @PostMapping("/saveResults")
-    public void saveResults(@ModelAttribute QAModelCreation resultForm, Model model){
+    public void saveResults(@ModelAttribute("questions") QAModelCreation resultForm, Model model){
         List<QuestionAnswersModel> answeredQuestions = resultForm.getQuestions();
         User user = userService.findById(resultForm.getUserId());
         Quiz quiz = quizService.findById(resultForm.getQuizId());
