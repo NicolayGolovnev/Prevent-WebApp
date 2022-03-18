@@ -12,9 +12,9 @@
     <h1>Результат тестирования</h1>
     <hr>
     <div>
-        <p>Пациент: <th:block th:utext="${quizResult.user.getFirstName()} +' '+ ${quizResult.user.getLastName()}"/></p>
-        <p>Тест: <th:block th:utext="${quizResult.quiz.getTitle()}"/></p>
-        <p>Результат: <th:block th:utext="${quizResult.getResult()}"/></p>
+        <p>Пациент: <th:block th:utext="${result.user.getFirstName()} +' '+ ${result.user.getLastName()}"/></p>
+        <p>Тест: <th:block th:utext="${result.quiz.getTitle()}"/></p>
+        <p>Результат: <th:block th:utext="${result.getResult()}"/></p>
     </div>
 </div>
 </body>

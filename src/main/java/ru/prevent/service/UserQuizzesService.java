@@ -14,4 +14,8 @@ public class UserQuizzesService {
     public void save(UserQuizzes userQuizzes){
         userQuizzesRepository.save(userQuizzes);
     }
+
+    public UserQuizzes findById(Long id){
+        return userQuizzesRepository.findById(id).orElse(null);
+    }
 }

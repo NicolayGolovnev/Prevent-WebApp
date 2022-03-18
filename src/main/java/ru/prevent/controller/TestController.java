@@ -3,10 +3,7 @@ package ru.prevent.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.prevent.entity.*;
 import ru.prevent.model.QAModelCreation;
 import ru.prevent.model.QuestionAnswersModel;
@@ -32,7 +29,7 @@ public class TestController {
     QuestionService questionService;
 
     @Autowired
-    UserQuizzesService userQuizzesSerrvice;
+    UserQuizzesService userQuizzesService;
 
     @GetMapping("/")
     public String loadTestIndex(Model model) {
@@ -71,7 +68,7 @@ public class TestController {
     }
 
     @PostMapping("/saveResults")
-    public void saveResults(@ModelAttribute("questions") QAModelCreation resultForm, Model model){
+    public String saveResults(@ModelAttribute("questions") QAModelCreation resultForm, Model model){
         List<QuestionAnswersModel> answeredQuestions = resultForm.getQuestions();
         User user = userService.findById(resultForm.getUserId());
         Quiz quiz = quizService.findById(resultForm.getQuizId());
@@ -86,11 +83,17 @@ public class TestController {
                 .user(user)
                 .quiz(quiz)
                 .build();
-        userQuizzesSerrvice.save(newRecord);
+        userQuizzesService.save(newRecord);
 
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
 
-        System.out.println();
+        return "redirect:/showResult/" + newRecord.getId();
+    }
+
+    @GetMapping("/showResult/{id}")
+    public String showResult(@PathVariable Long id, Model model){
+        model.addAttribute("result", userQuizzesService.findById(id));
+        return "test/showResult";
     }
 }
