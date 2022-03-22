@@ -25,7 +25,7 @@ public class Answer {
     @Column(name = "weight_arg")
     Long weight;
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
-    List<QuestionAndAnswers> questions = new ArrayList<>();
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_question", nullable = false)
+    Question question;
 }

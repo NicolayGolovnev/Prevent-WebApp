@@ -32,7 +32,7 @@ public class Question {
     @JoinColumn(name = "id_quiz", nullable = false)
     Quiz quiz;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<QuestionAndAnswers> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    List<Answer> answers = new ArrayList<>();
 }
 
