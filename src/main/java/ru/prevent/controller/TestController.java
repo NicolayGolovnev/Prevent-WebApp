@@ -43,19 +43,19 @@ public class TestController {
     public String loadQuiz(@RequestParam("userId") Long uid, @RequestParam("quizId") Long qid, Model model) {
         User user = userService.findById(uid);
         Quiz quiz = quizService.findById(qid);
+
+        //TODO проверка имеет ли опросник опросников детей
+
         List<Question> entityQuestions = questionService.findQuestionsByQuizId(quiz.getId());
 
-//        List<QuestionAnswersModel> questions = new ArrayList<>();
         QAModelCreation questions = new QAModelCreation();
         for (var question : entityQuestions) {
-            List<Answer> answers = new ArrayList<>();
-            question.getAnswers().forEach(collection -> answers.add(collection.getAnswer()));
             QuestionAnswersModel buf = QuestionAnswersModel.builder()
                     .id(question.getId())
                     .content(question.getContent())
                     .numQuestion(question.getNumQuestion())
                     .weight(question.getWeight())
-                    .answers(answers)
+                    .answers(question.getAnswers())
                     .userAnswer(new Answer())
                     .build();
             questions.add(buf);

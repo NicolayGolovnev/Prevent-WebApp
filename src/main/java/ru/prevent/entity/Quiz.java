@@ -45,10 +45,4 @@ public class Quiz {
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
     List<Question> questions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<QuizAndQuiz> parentQuizzes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "childQuiz", fetch = FetchType.LAZY)
-    List<QuizAndQuiz> childQuizzes = new ArrayList<>();
 }
