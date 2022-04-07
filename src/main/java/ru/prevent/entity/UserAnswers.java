@@ -21,14 +21,14 @@ public class UserAnswers {
     String contentAnswer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_answer_n_question", nullable = false)
-    QuestionAndAnswers questionAndAnswers;
+    @JoinColumn(name = "id_user_n_quiz", nullable = false)
+    UserQuizzes userQuizzes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_answer", nullable = false)
+    Answer answer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_question", nullable = false)
     Question question;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user_n_quiz", nullable = false)
-    UserQuizzes userQuizzes;
 }
