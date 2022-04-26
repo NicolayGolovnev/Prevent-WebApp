@@ -34,5 +34,8 @@ public class Question {
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    List<UserAnswers> userAnswers = new ArrayList<>();
 }
 

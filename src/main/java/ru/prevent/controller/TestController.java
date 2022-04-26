@@ -8,13 +8,9 @@ import ru.prevent.entity.*;
 import ru.prevent.model.QAModelCreation;
 import ru.prevent.model.QuestionAnswersModel;
 import ru.prevent.model.UserNQuizModel;
-import ru.prevent.service.QuestionService;
-import ru.prevent.service.QuizService;
-import ru.prevent.service.UserQuizzesService;
-import ru.prevent.service.UserService;
+import ru.prevent.service.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,11 +27,20 @@ public class TestController {
     @Autowired
     UserQuizzesService userQuizzesService;
 
-    @GetMapping("/")
-    public String loadTestIndex(Model model) {
-        model.addAttribute("users", userService.findAll());
+    @Autowired
+    UserAnswerService userAnswerService;
+
+    @GetMapping("/{userId}")
+    public String loadTestIndex(@PathVariable("userId") Long userId, Model model) {
+        model.addAttribute("user", userService.findById(userId));
+
+        //TODO собирать не все тесты, а тесты доступные пользователю
         model.addAttribute("quizzes", quizService.findAll());
-        model.addAttribute("uqModel", new UserNQuizModel());
+
+        UserNQuizModel userNQuizModel = new UserNQuizModel();
+        userNQuizModel.setUserId(userId);
+
+        model.addAttribute("uqModel", userNQuizModel);
         return "/test/index";
     }
 
@@ -76,19 +81,31 @@ public class TestController {
         for (QuestionAnswersModel question: answeredQuestions) {
             resultOfTest += question.getUserAnswer().getWeight();
         }
-        UserQuizzes newRecord = UserQuizzes.builder()
+
+        UserQuizzes newUserQuiz = UserQuizzes.builder()
                 .status("true")
                 .completeDate(LocalDate.now())
                 .result(Integer.toString(resultOfTest))
                 .user(user)
                 .quiz(quiz)
                 .build();
-        userQuizzesService.save(newRecord);
+        userQuizzesService.save(newUserQuiz);
+
+        for (QuestionAnswersModel question: answeredQuestions) {
+            Question q = questionService.findById(5L);
+            UserAnswers newUserAnswer = UserAnswers.builder()
+                    .userQuizzes(newUserQuiz)
+                    .answer(question.getUserAnswer())
+                    .question(questionService.findById(question.getId()))
+                    .answer(question.getUserAnswer())
+                    .build();
+            userAnswerService.save(newUserAnswer);
+        }
 
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
 
-        return "redirect:/showResult/" + newRecord.getId();
+        return "redirect:/showResult/" + newUserQuiz.getId();
     }
 
     @GetMapping("/showResult/{id}")
