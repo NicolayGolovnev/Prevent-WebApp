@@ -25,7 +25,7 @@ public class keyQuiz {
     @Column(name = "result_arg")
     Long resultArg;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)
     Quiz quiz;
 }

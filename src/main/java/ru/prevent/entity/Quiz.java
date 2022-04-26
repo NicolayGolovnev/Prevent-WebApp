@@ -1,5 +1,6 @@
 package ru.prevent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,11 +39,22 @@ public class Quiz {
     Long weight;
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
+    @JsonIgnore
     List<UserQuizzes> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<keyQuiz> keys = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "childQuiz", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<QuizAndQuiz> parents = new ArrayList<>();
+
+    @OneToMany(mappedBy = "parentQuiz", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<QuizAndQuiz> childrens = new ArrayList<>();
 }

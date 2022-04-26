@@ -1,5 +1,6 @@
 package ru.prevent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +14,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "question")
-
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,16 @@ public class Question {
     @Column(name = "weight_arg")
     Long weight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)
     Quiz quiz;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @JsonIgnore
     List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<UserAnswers> userAnswers = new ArrayList<>();
 }
 

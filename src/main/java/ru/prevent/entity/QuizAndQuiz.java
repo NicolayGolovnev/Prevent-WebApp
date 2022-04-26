@@ -16,11 +16,11 @@ public class QuizAndQuiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_parent_quiz", nullable = false)
     Quiz parentQuiz;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_child_quiz", nullable = false)
     Quiz childQuiz;
 }

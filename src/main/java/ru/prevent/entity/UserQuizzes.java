@@ -1,5 +1,6 @@
 package ru.prevent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,14 +32,15 @@ public class UserQuizzes {
     @Column(name = "result")
     String result;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_usr", nullable = false)
     User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)
     Quiz quiz;
 
     @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<UserAnswers> userAnswers = new ArrayList<>();
 }

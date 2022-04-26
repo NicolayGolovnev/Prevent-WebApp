@@ -22,22 +22,14 @@
 
 <div class="container mt-4">
     <h3 class="text-center">Прохождение опросника пользователем</h3>
-    <form action="#" method="get" th:action="@{/loadQuizByUser}"
-          th:object="${uqModel}">
-        <div class="form-group row">
-            <label for="forUser" class="col-sm-2 col-form-label">Пользователь</label>
-            <select class="form-select form-control rounded-4" id="forUser" th:field="${uqModel.userId}">
-                <option th:each="user : ${users}"
-                        th:value="${user.id}"
-                        th:utext="${user.firstName + ' ' + user.lastName}">
-            </select>
-        </div>
+    <form action="#" method="get" th:action="@{/loadQuizByUser}"  th:object="${uqModel}">
         <div class="form-group row">
             <label for="forQuiz" class="col-sm-2 col-form-label">Опрос</label>
+            <input hidden th:field="${uqModel.userId}">
             <select class="form-select form-control rounded-4" id="forQuiz" th:field="${uqModel.quizId}">
                 <option th:each="quiz : ${quizzes}"
                         th:value="${quiz.id}"
-                        th:utext="${quiz.id}">
+                        th:utext="${quiz.title}">
             </select>
         </div>
         <button type="submit"

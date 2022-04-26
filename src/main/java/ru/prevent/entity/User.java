@@ -1,5 +1,6 @@
 package ru.prevent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,5 +39,6 @@ public class User {
     String mobile;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<UserQuizzes> quizzes = new ArrayList<>();
 }

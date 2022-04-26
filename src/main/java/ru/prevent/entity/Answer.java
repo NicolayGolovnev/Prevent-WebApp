@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "answer")
-
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +24,10 @@ public class Answer {
     @Column(name = "weight_arg")
     Long weight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_question", nullable = false)
     Question question;
+
+    @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
+    List<UserAnswers> userAnswers = new ArrayList<>();
 }
