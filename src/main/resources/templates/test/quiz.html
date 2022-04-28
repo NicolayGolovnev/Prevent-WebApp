@@ -33,7 +33,6 @@
         <input type="hidden" th:name="userId" th:value="${user.id}" >
         <input type="hidden" th:name="quizId" th:value="${quiz.id}" >
         <div th:each="question, state: *{questions}" class="form-group">
-            <input type="hidden" th:name="question" th:value="${question}">
             <label class="col-sm-2 col-form-label">Вопрос №[[${state.count}]]</label>
             <th:p th:utext="${question.content}"/>
             <fieldset class="row">
