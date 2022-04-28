@@ -40,5 +40,5 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    List<UserQuizzesEntity> quizzes = new ArrayList<>();
+    List<UserAndQuizzesEntity> quizzes = new ArrayList<>();
 }

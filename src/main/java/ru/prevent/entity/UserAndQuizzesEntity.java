@@ -1,10 +1,7 @@
 package ru.prevent.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,8 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = "user_n_quiz")
-public class UserQuizzesEntity {
+public class UserAndQuizzesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -41,5 +39,5 @@ public class UserQuizzesEntity {
 
     @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    List<UserAnswersEntity> userAnswers = new ArrayList<>();
+    List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

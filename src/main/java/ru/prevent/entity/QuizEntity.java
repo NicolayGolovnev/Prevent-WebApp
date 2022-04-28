@@ -40,7 +40,7 @@ public class QuizEntity {
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<UserQuizzesEntity> users = new ArrayList<>();
+    List<UserAndQuizzesEntity> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

@@ -12,7 +12,7 @@ import java.util.Optional;
 public class QuizService {
 
     @Autowired
-    QuizRepository repository;
+    private QuizRepository repository;
 
     public List<QuizEntity> findAll() {
         return repository.findAll();

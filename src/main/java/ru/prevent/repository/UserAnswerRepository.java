@@ -1,7 +1,7 @@
 package ru.prevent.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.prevent.entity.UserAnswersEntity;
+import ru.prevent.entity.UserAndAnswersEntity;
 
-public interface UserAnswerRepository extends JpaRepository<UserAnswersEntity, Long> {
+public interface UserAnswerRepository extends JpaRepository<UserAndAnswersEntity, Long> {
 }

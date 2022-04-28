@@ -14,7 +14,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "question")
-
 public class QuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +38,6 @@ public class QuestionEntity {
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<UserAnswersEntity> userAnswers = new ArrayList<>();
+    List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }
 

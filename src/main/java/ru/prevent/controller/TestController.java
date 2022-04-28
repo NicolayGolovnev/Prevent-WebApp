@@ -11,6 +11,7 @@ import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -81,25 +82,29 @@ public class TestController {
             resultOfTest += question.getUserAnswer().getWeight();
         }
 
-        UserQuizzesEntity newUserQuiz = UserQuizzesEntity.builder()
+        UserAndQuizzesEntity newUserQuiz = UserAndQuizzesEntity.builder()
                 .status("true")
                 .completeDate(LocalDate.now())
                 .result(Integer.toString(resultOfTest))
                 .user(user)
                 .quiz(quiz)
                 .build();
-        userQuizzesService.save(newUserQuiz);
 
+        List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
         QuestionEntity questionField;
         for (QuestionAnswersModel question: answeredQuestions) {
             questionField = questionService.findById(question.getId());
-            UserAnswersEntity newUserAnswer = UserAnswersEntity.builder()
+            UserAndAnswersEntity newUserAnswer = UserAndAnswersEntity.builder()
+                    .contentAnswer("")
                     .userQuizzes(newUserQuiz)
                     .answer(question.getUserAnswer())
                     .question(questionField)
+                    .user(user)
                     .build();
-            userAnswerService.save(newUserAnswer);
+            userAnswers.add(newUserAnswer);
         }
+        newUserQuiz.setUserAnswers(userAnswers);
+        userQuizzesService.save(newUserQuiz);
 
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);

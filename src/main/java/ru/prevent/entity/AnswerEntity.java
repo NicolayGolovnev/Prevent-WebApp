@@ -29,5 +29,5 @@ public class AnswerEntity {
     QuestionEntity question;
 
     @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
-    List<UserAnswersEntity> userAnswers = new ArrayList<>();
+    List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

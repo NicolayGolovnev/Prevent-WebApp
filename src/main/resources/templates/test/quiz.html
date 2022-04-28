@@ -34,15 +34,16 @@
         <input type="hidden" th:name="quizId" th:value="${quiz.id}" >
         <div th:each="question, state: *{questions}" class="form-group">
             <label class="col-sm-2 col-form-label">Вопрос №[[${state.count}]]</label>
-            <th:p th:utext="${question.question.getContent()}"/>
+            <!--/*@thymesVar id="question" type="ru.prevent.model.QuestionAnswersModel"*/-->
+            <th:p th:utext="${question.question.getContent()}"></th:p>
             <fieldset class="row">
                 <legend class="col-form-label pt-0">Ответы</legend>
                 <div>
                     <div class="form-check" th:each="answer: ${question.answers}">
+                        <input type="hidden" th:field="*{questions[__${state.index}__].id}" th:value="${question.getId()}">
                         <input class="form-check-input" type="radio"
                                style="background-color: green" th:field="*{questions[__${state.index}__].userAnswer}" th:value="${answer.id}">
                         <label class="form-check-label" th:for="${answer.id}" th:text="${answer.content}"></label>
-                        <input type="hidden" th:field="*{questions[__${state.index}__].id}" th:value="${question.getId()}">
                     </div>
                 </div>
             </fieldset>
