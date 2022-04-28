@@ -1,7 +1,8 @@
 package ru.prevent.model;
 
 import lombok.*;
-import ru.prevent.entity.Answer;
+import ru.prevent.entity.AnswerEntity;
+import ru.prevent.entity.QuestionEntity;
 
 import java.util.List;
 
@@ -12,9 +13,10 @@ import java.util.List;
 @Builder
 public class QuestionAnswersModel {
     Long id;
-    String content;
+    /*String content;
     Long numQuestion;
-    Long weight;
-    List<Answer> answers;
-    Answer userAnswer;
+    Long weight;*/
+    QuestionEntity question;
+    List<AnswerEntity> answers;
+    AnswerEntity userAnswer;
 }

@@ -2,7 +2,7 @@ package ru.prevent.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.prevent.entity.Quiz;
+import ru.prevent.entity.QuizEntity;
 import ru.prevent.repository.QuizRepository;
 
 import java.util.List;
@@ -14,12 +14,12 @@ public class QuizService {
     @Autowired
     QuizRepository repository;
 
-    public List<Quiz> findAll() {
+    public List<QuizEntity> findAll() {
         return repository.findAll();
     }
 
-    public Quiz findById(Long id) {
-        Optional<Quiz> optional = repository.findById(id);
+    public QuizEntity findById(Long id) {
+        Optional<QuizEntity> optional = repository.findById(id);
         if (optional.isPresent())
             return optional.get();
         else

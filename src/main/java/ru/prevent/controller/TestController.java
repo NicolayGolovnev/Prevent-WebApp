@@ -46,22 +46,20 @@ public class TestController {
 
     @GetMapping("/loadQuizByUser")
     public String loadQuiz(@RequestParam("userId") Long uid, @RequestParam("quizId") Long qid, Model model) {
-        User user = userService.findById(uid);
-        Quiz quiz = quizService.findById(qid);
+        UserEntity user = userService.findById(uid);
+        QuizEntity quiz = quizService.findById(qid);
 
         //TODO проверка имеет ли опросник опросников детей
 
-        List<Question> entityQuestions = questionService.findQuestionsByQuizId(quiz.getId());
+        List<QuestionEntity> entityQuestionEntities = questionService.findQuestionsByQuizId(quiz.getId());
 
         QAModelCreation questions = new QAModelCreation();
-        for (var question : entityQuestions) {
+        for (var question : entityQuestionEntities) {
             QuestionAnswersModel buf = QuestionAnswersModel.builder()
                     .id(question.getId())
-                    .content(question.getContent())
-                    .numQuestion(question.getNumQuestion())
-                    .weight(question.getWeight())
+                    .question(question)
                     .answers(question.getAnswers())
-                    .userAnswer(new Answer())
+                    .userAnswer(new AnswerEntity())
                     .build();
             questions.add(buf);
         }
@@ -75,14 +73,15 @@ public class TestController {
     @PostMapping("/saveResults")
     public String saveResults(@ModelAttribute("questions") QAModelCreation resultForm, Model model){
         List<QuestionAnswersModel> answeredQuestions = resultForm.getQuestions();
-        User user = userService.findById(resultForm.getUserId());
-        Quiz quiz = quizService.findById(resultForm.getQuizId());
+        UserEntity user = userService.findById(resultForm.getUserId());
+        QuizEntity quiz = quizService.findById(resultForm.getQuizId());
+
         int resultOfTest = 0;
         for (QuestionAnswersModel question: answeredQuestions) {
             resultOfTest += question.getUserAnswer().getWeight();
         }
 
-        UserQuizzes newUserQuiz = UserQuizzes.builder()
+        UserQuizzesEntity newUserQuiz = UserQuizzesEntity.builder()
                 .status("true")
                 .completeDate(LocalDate.now())
                 .result(Integer.toString(resultOfTest))
@@ -91,13 +90,13 @@ public class TestController {
                 .build();
         userQuizzesService.save(newUserQuiz);
 
+        QuestionEntity questionField;
         for (QuestionAnswersModel question: answeredQuestions) {
-            Question q = questionService.findById(5L);
-            UserAnswers newUserAnswer = UserAnswers.builder()
+            questionField = questionService.findById(question.getId());
+            UserAnswersEntity newUserAnswer = UserAnswersEntity.builder()
                     .userQuizzes(newUserQuiz)
                     .answer(question.getUserAnswer())
-                    .question(questionService.findById(question.getId()))
-                    .answer(question.getUserAnswer())
+                    .question(questionField)
                     .build();
             userAnswerService.save(newUserAnswer);
         }

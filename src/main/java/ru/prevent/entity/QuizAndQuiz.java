@@ -18,9 +18,9 @@ public class QuizAndQuiz {
 
     @ManyToOne
     @JoinColumn(name = "id_parent_quiz", nullable = false)
-    Quiz parentQuiz;
+    QuizEntity parentQuiz;
 
     @ManyToOne
     @JoinColumn(name = "id_child_quiz", nullable = false)
-    Quiz childQuiz;
+    QuizEntity childQuiz;
 }

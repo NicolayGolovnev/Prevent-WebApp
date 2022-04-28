@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "question")
 
-public class Question {
+public class QuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -31,14 +31,14 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_quiz", nullable = false)
-    Quiz quiz;
+    QuizEntity quiz;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<Answer> answers = new ArrayList<>();
+    List<AnswerEntity> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<UserAnswers> userAnswers = new ArrayList<>();
+    List<UserAnswersEntity> userAnswers = new ArrayList<>();
 }
 

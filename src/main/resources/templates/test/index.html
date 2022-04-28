@@ -27,16 +27,16 @@
             <label for="forQuiz" class="col-sm-2 col-form-label">Опрос</label>
             <input hidden th:field="${uqModel.userId}">
             <select class="form-select form-control rounded-4" id="forQuiz" th:field="${uqModel.quizId}">
-                <option th:each="quiz : ${quizzes}"
-                        th:value="${quiz.id}"
-                        th:utext="${quiz.title}">
+                <option th:each="quizEntity : ${quizzes}"
+                        th:value="${quizEntity.id}"
+                        th:utext="${quizEntity.title}">
             </select>
         </div>
         <button type="submit"
                 class="btn btn-primary col-sm-4 text-center">Пройти опрос
         </button>
     </form>
-    <!--    th:onclick="'location.href=\'/user/' + ${uqModel.userId} + '/quiz/' + ${uqModel.quizId} + '\''"-->
+    <!--    th:onclick="'location.href=\'/user/' + ${uqModel.userId} + '/quizEntity/' + ${uqModel.quizId} + '\''"-->
 
 </div>
 </body>

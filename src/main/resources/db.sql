@@ -26,9 +26,9 @@ CREATE TABLE "usr"
 ALTER TABLE "usr" ADD CONSTRAINT "PK_usr" PRIMARY KEY ("id")
 ;
 
--- Table quiz
+-- Table quizEntity
 
-CREATE TABLE "quiz"
+CREATE TABLE "quizEntity"
 (
     "id" BigSerial NOT NULL,
     "title" Text,
@@ -42,7 +42,7 @@ CREATE TABLE "quiz"
         autovacuum_enabled=true)
 ;
 
-ALTER TABLE "quiz" ADD CONSTRAINT "PK_quiz" PRIMARY KEY ("id")
+ALTER TABLE "quizEntity" ADD CONSTRAINT "PK_quiz" PRIMARY KEY ("id")
 ;
 
 -- Table question
@@ -176,7 +176,7 @@ ALTER TABLE "user_n_quiz"
 ALTER TABLE "user_n_quiz"
     ADD CONSTRAINT "Relationship2"
         FOREIGN KEY ("id_quiz")
-            REFERENCES "quiz" ("id")
+            REFERENCES "quizEntity" ("id")
             ON DELETE RESTRICT
             ON UPDATE RESTRICT
 ;
@@ -184,7 +184,7 @@ ALTER TABLE "user_n_quiz"
 ALTER TABLE "key_quiz"
     ADD CONSTRAINT "Relationship14"
         FOREIGN KEY ("id_quiz")
-            REFERENCES "quiz" ("id")
+            REFERENCES "quizEntity" ("id")
             ON DELETE CASCADE
             ON UPDATE CASCADE
 ;
@@ -200,7 +200,7 @@ ALTER TABLE "user_answer"
 ALTER TABLE "question"
     ADD CONSTRAINT "Relationship7"
         FOREIGN KEY ("id_quiz")
-            REFERENCES "quiz" ("id")
+            REFERENCES "quizEntity" ("id")
             ON DELETE RESTRICT
             ON UPDATE RESTRICT
 ;
@@ -232,7 +232,7 @@ ALTER TABLE "user_answer"
 ALTER TABLE "quiz_n_quiz"
     ADD CONSTRAINT "Relationship15"
         FOREIGN KEY ("id_parent_quiz")
-            REFERENCES "quiz" ("id")
+            REFERENCES "quizEntity" ("id")
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 ;
@@ -240,7 +240,7 @@ ALTER TABLE "quiz_n_quiz"
 ALTER TABLE "quiz_n_quiz"
     ADD CONSTRAINT "Relationship16"
         FOREIGN KEY ("id_child_quiz")
-            REFERENCES "quiz" ("id")
+            REFERENCES "quizEntity" ("id")
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 ;
