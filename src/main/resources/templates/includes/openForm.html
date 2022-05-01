@@ -1,0 +1,10 @@
+<div class="content" xmlns:th="http://www.thymeleaf.org">
+  <div th:object="${user}">
+    <p><b>Имя:</b> <span th:utext="*{firstName}"></span></p>
+    <p><b>Фамилия:</b> <span th:utext="*{lastName}"></span></p>
+    <p><b>Отчество:</b> <span th:utext="*{thirdName}"></span></p>
+    <p><b>Пол:</b> <span th:utext="*{sex}"></span></p>
+    <p><b>Дата рождения:</b> <span th:utext="*{birthday}"></span></p>
+    <p><b>Телефон:</b> <span th:utext="*{mobile}"></span></p>
+  </div>
+</div>

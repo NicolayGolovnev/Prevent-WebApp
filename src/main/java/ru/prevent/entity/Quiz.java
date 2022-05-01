@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "quiz")
 public class Quiz {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

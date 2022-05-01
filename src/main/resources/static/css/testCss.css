@@ -1,6 +1,16 @@
+.body {
+
+}
+
 @media (max-width: 992px){
     .logo-img {
         height: 30px;
+    }
+
+    .navbar-collapse {
+        max-height: max-content;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 }
 
@@ -9,8 +19,7 @@
     height: 50px;
 }
 .navbar a.navbar-brand {
-    /* подвинуть его вправо */
-    margin-left: 15px;
+    margin-left: 1rem;
 }
 
 .navbar.navbar-light {
@@ -19,6 +28,9 @@
 
 .navbar-collapse {
     margin-top: 15px;
+    /*max-height: max-content;*/
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
 }
 
 .navbar ul {
@@ -97,3 +109,52 @@
 .navbar ul li.active a .text {
     color: #5ea758;
 }
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 232px;
+    right: 0;
+    z-index: 1030;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0rem;
+    font-size: larger;
+    background-color: #f5f4f2;
+}
+
+.main-container {
+    position: relative;
+    top: 70px;
+    padding: .5rem;
+}
+
+
+@media (max-width: 767px) {
+    .header {
+        display: none;
+    }
+
+    .main-container {
+        top: 0;
+    }
+}
+
+.main-container .title {
+    font-size: 20px;
+}
+
+/*::-webkit-scrollbar-track {*/
+/*    border-radius: 0.125rem;*/
+/*    background-color: lightgray;*/
+/*}*/
+/*::-webkit-scrollbar {*/
+/*    width: 0.25rem;*/
+/*    border-radius: 0.125rem;*/
+/*}*/
+/*::-webkit-scrollbar-thumb {*/
+/*    border-radius: 0.125rem;*/
+/*    background-color: gray;*/
+/*}*/
