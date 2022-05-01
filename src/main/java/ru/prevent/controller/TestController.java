@@ -89,8 +89,8 @@ public class TestController {
                 .user(user)
                 .quiz(quiz)
                 .build();
+        userQuizzesService.save(newUserQuiz);
 
-        List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
         QuestionEntity questionField;
         for (QuestionAnswersModel question: answeredQuestions) {
             questionField = questionService.findById(question.getId());
@@ -101,10 +101,8 @@ public class TestController {
                     .question(questionField)
                     .user(user)
                     .build();
-            userAnswers.add(newUserAnswer);
+            userAnswerService.save(newUserAnswer);
         }
-        newUserQuiz.setUserAnswers(userAnswers);
-        userQuizzesService.save(newUserQuiz);
 
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
