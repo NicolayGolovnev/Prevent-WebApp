@@ -1,13 +1,11 @@
 package ru.prevent.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.prevent.entity.Quiz;
-import ru.prevent.entity.User;
-import ru.prevent.entity.UserQuizzes;
+import ru.prevent.entity.UserAndQuizzesEntity;
 
 import java.util.Optional;
 
-public interface UserAndQuizeRepository extends JpaRepository<UserQuizzes, Long> {
+public interface UserAndQuizeRepository extends JpaRepository<UserAndQuizzesEntity, Long> {
 
-    Optional<UserQuizzes> findByUser_IdAndQuiz_Id(Long idUser, Long idQuiz);
+    Optional<UserAndQuizzesEntity> findByUser_IdAndQuiz_Id(Long idUser, Long idQuiz);
 }

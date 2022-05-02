@@ -1,5 +1,6 @@
 package ru.prevent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "quiz")
-public class Quiz {
+public class QuizEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -37,17 +38,22 @@ public class Quiz {
     Long weight;
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
-    List<UserQuizzes> users = new ArrayList<>();
+    @JsonIgnore
+    List<UserAndQuizzesEntity> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<keyQuiz> keys = new ArrayList<>();
+    @JsonIgnore
+    List<KeyQuizEntity> keys = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
-    List<Question> questions = new ArrayList<>();
+    @JsonIgnore
+    List<QuestionEntity> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<QuizAndQuiz> parentQuizzes = new ArrayList<>();
+    @JsonIgnore
+    List<QuizAndQuizEntity> parentQuizzes = new ArrayList<>();
 
     @OneToMany(mappedBy = "childQuiz", fetch = FetchType.LAZY)
-    List<QuizAndQuiz> childQuizzes = new ArrayList<>();
+    @JsonIgnore
+    List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
 }

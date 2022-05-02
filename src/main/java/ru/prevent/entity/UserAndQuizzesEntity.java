@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Table(name = "user_n_quiz")
-public class UserQuizzes {
+public class UserAndQuizzesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -34,13 +33,13 @@ public class UserQuizzes {
 
     @ManyToOne
     @JoinColumn(name = "id_usr", nullable = false)
-    User user;
+    UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)
-    Quiz quiz;
+    QuizEntity quiz;
 
     @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    List<UserAnswers> userAnswers = new ArrayList<>();
+    List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

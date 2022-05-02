@@ -1,25 +1,11 @@
-.body {
-
-}
-
-@media (max-width: 992px){
-    .logo-img {
-        height: 30px;
-    }
-
-    .navbar-collapse {
-        max-height: max-content;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-}
-
-/* TODO Сделать еще расширения лого для разных экранов */
 .logo-img {
     height: 50px;
 }
 .navbar a.navbar-brand {
     margin-left: 1rem;
+}
+.navbar {
+    padding: 0;
 }
 
 .navbar.navbar-light {
@@ -28,9 +14,6 @@
 
 .navbar-collapse {
     margin-top: 15px;
-    /*max-height: max-content;*/
-    /*overflow-y: auto;*/
-    /*overflow-x: hidden;*/
 }
 
 .navbar ul {
@@ -140,21 +123,32 @@
     .main-container {
         top: 0;
     }
+
+    .navbar-collapse {
+        max-height: 60vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 }
 
 .main-container .title {
     font-size: 20px;
 }
 
-/*::-webkit-scrollbar-track {*/
-/*    border-radius: 0.125rem;*/
-/*    background-color: lightgray;*/
-/*}*/
-/*::-webkit-scrollbar {*/
-/*    width: 0.25rem;*/
-/*    border-radius: 0.125rem;*/
-/*}*/
-/*::-webkit-scrollbar-thumb {*/
-/*    border-radius: 0.125rem;*/
-/*    background-color: gray;*/
-/*}*/
+.patient-table {
+    width: 100%;
+    max-width: 100%;
+}
+
+ion-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.patient-table tr td.icon {
+    width: 45px;
+}
+
+.patient-table td.trash {
+    color: red;
+}

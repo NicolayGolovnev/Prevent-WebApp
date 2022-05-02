@@ -11,16 +11,16 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "quiz_n_quiz")
-public class QuizAndQuiz {
+public class QuizAndQuizEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_parent_quiz", nullable = false)
-    Quiz parentQuiz;
+    QuizEntity parentQuiz;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_child_quiz", nullable = false)
-    Quiz childQuiz;
+    QuizEntity childQuiz;
 }
