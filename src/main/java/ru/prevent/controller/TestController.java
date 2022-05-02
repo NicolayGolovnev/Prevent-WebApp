@@ -42,7 +42,8 @@ public class TestController {
         userNQuizModel.setUserId(userId);
 
         model.addAttribute("uqModel", userNQuizModel);
-        return "/test/index";
+        return "userPage1";
+        //return "/test/index";
     }
 
     @GetMapping("/loadQuizByUser")

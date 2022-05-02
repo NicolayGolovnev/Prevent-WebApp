@@ -17,6 +17,6 @@ public class UserController {
     @GetMapping("/userPage/{id}")
     public String showUserPage(@PathVariable Long id, Model model){
         model.addAttribute("user", userService.findById(id));
-        return "userPage";
+        return "userPage1";
     }
 }

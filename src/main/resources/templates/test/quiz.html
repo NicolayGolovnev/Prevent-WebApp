@@ -19,34 +19,35 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-
-<div class="container mt-4">
-    <h3 class="text-center">Прохождение опросника
-        <th:block th:utext="${quiz.title}"/>
-    </h3>
-    <div>
-        <p>Пользователь:
-            <th:block th:utext="${user.firstName} + ' ' + ${user.lastName}"/>
-        </p>
-    </div>
-    <form action="#" method="post" th:action="@{/saveResults}" th:object="${questions}">
+    <a class="navbar-brand" href="https://preventplus.ru">
+        <img th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
+    </a>
+    <header style="background-color: #f5f4f2; height: 50%">
+        <h1 style="padding-top: 1%; padding-bottom: 3%; padding-left: 1%">Центр превентивной и эстетической медицины</h1>
+    </header>
+    <div class="container mt-4" style="margin-left: auto; margin-right: auto">
+        <h3><th:block th:utext="'Прохождение опросника ' + ${quiz.title}"/></h3>
+        <form action="#" method="post" th:action="@{/saveResults}" th:object="${questions}">
         <input type="hidden" th:name="userId" th:value="${user.id}" >
         <input type="hidden" th:name="quizId" th:value="${quiz.id}" >
-        <div th:each="question, state: *{questions}" class="form-group">
-            <label class="col-sm-2 col-form-label">Вопрос №[[${state.count}]]</label>
-            <!--/*@thymesVar id="question" type="ru.prevent.model.QuestionAnswersModel"*/-->
-            <th:p th:utext="${question.question.getContent()}"></th:p>
-            <fieldset class="row">
-                <legend class="col-form-label pt-0">Ответы</legend>
-                <div>
-                    <div class="form-check" th:each="answer: ${question.answers}">
-                        <input type="hidden" th:field="*{questions[__${state.index}__].id}" th:value="${question.getId()}">
-                        <input class="form-check-input" type="radio"
-                               style="background-color: green" th:field="*{questions[__${state.index}__].userAnswer}" th:value="${answer.id}">
-                        <label class="form-check-label" th:for="${answer.id}" th:text="${answer.content}"></label>
-                    </div>
+        <div th:each="question, state: *{questions}" class="form-group"
+             style="background-color: #f5f4f2; width: 70%; height: 40%; border-radius: 10px">
+            <div style="margin-left: 2%; margin-top: 2%">
+                <div style="margin-top: 2%">
+                    <th:p th:utext="'Вопрос №' + ${state.count} + ': ' + ${question.question.getContent()}"></th:p>
                 </div>
-            </fieldset>
+                <hr style="margin-right: 2%">
+                <fieldset class="row">
+                    <div style="width: 100%" class="form-check" th:each="answer: ${question.answers}">
+                        <input type="hidden" th:field="*{questions[__${state.index}__].id}" th:value="${question.getId()}">
+                        <div style="margin-left: 2%; margin-bottom: 2%">
+                            <input class="form-check-input" type="radio"
+                                   style="background-color: green" th:field="*{questions[__${state.index}__].userAnswer}" th:value="${answer.id}">
+                            <label class="form-check-label" th:for="${answer.id}" th:text="${answer.content}"></label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
         </div>
         <button type="submit"
                 class="btn btn-primary col-sm-4 text-center">Завершить опрос
