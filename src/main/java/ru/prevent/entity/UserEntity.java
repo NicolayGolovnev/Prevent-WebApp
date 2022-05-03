@@ -2,8 +2,10 @@ package ru.prevent.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,11 @@ public class UserEntity {
     String sex;
 
     @Column(name = "birthday")
-    LocalDateTime birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate birthday;
 
     @Column(name = "telephone")
-    String mobile;
+    String telephone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

@@ -26,11 +26,11 @@
 </head>
 <body>
 
-<th:block>
+<th:block xmlns:th="http://www.thymeleaf.org">
   <div class="main-container container mt-4" >
     <div class="row m-auto justify-content-around">
         <input type="search" id="search" value="" class="form-control col-sm-7" placeholder="Поиск пациентов" style="margin: 0.3125rem">
-        <button type="button" class="btn btn-success col-sm-4 text-center" style="margin: 0.3125rem">Зарегестрировать</button>
+        <button type="button" class="btn btn-success col-sm-4 text-center" th:onclick="'location.href=\'/user/create/\''" style="margin: 0.3125rem">Зарегистрировать</button>
     </div>
     <div class="col-sm-12">
       <div class="d-flex justify-content-center">

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Личный кабинет врача</title>
+
+  <!-- Bootstrap CSS (Cloudflare CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
+        integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" th:href="@{~/css/testCss.css}">
+  <link rel="stylesheet" th:href="@{~/css/navbar-fixed-left.min.css}">
+
+  <!-- jQuery (Cloudflare CDN) -->
+  <!--    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"-->
+  <!--            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="-->
+  <!--            crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- Bootstrap Bundle JS (Cloudflare CDN) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+          integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+
+<div class="header">
+  Центр превентивной и эстетической медицины Превент+
+</div>
+<div class="container mt-4">
+  <h3 class="text-center">Регистрация нового пациента</h3>
+
+  <form action="#" method="post" th:action="@{/user/create}" th:object="${patient}">
+    <div class="form-group row">
+      <label for="forFirstName" class="col-md-2 col-form-label">Фамилия</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" id="forFirstName" placeholder="Введите свою фамилию"
+               th:field="*{firstName}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="forLastName" class="col-md-2 col-form-label">Имя</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" id="forLastName" placeholder="Введите свое имя"
+               th:field="*{lastName}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="forThirdName" class="col-md-2 col-form-label">Отчество</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" id="forThirdName" placeholder="Введите свое отчество"
+               th:field="*{thirdName}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="forSex" class="col-md-2 col-form-label">Пол</label>
+      <div class="col-md-4">
+        <select class="custom-select" th:field="*{sex}" id="forSex">
+          <option selected disabled value="">Выберите свой пол...</option>
+          <option value="Мужчина">Мужчина</option>
+          <option value="Женщина">Женщина</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="forBirthday" class="col-md-2 col-form-label">Дата рождения</label>
+      <div class="col-md-4">
+        <input type="date" class="form-control" id="forBirthday" th:field="*{birthday}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="forMobile" class="col-md-2 col-form-label">Телефон</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" id="forMobile" placeholder="Введите свой номер телефона"
+               th:field="*{telephone}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-success col-md-4">Зарегистрировать</button>
+        <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-2">Назад</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<script th:src="@{~/js/loadModals.js}"></script>
+
+</body>
+</html>
