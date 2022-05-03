@@ -25,4 +25,8 @@ public class UserService {
         else
             throw new RuntimeException("User with id=" + id + " not found!");
     }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }
