@@ -93,19 +93,27 @@
     color: #5ea758;
 }
 
-.header {
+.logo-header, .header {
     position: fixed;
     top: 0;
-    left: 232px;
-    right: 0;
     z-index: 1030;
     height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem 0rem;
-    font-size: larger;
     background-color: #f5f4f2;
+}
+
+.logo-header {
+    left: 0;
+    width: 232px;
+}
+
+.header {
+    left: 232px;
+    right: 0;
+    font-size: larger;
 }
 
 .main-container {
@@ -116,7 +124,7 @@
 
 
 @media (max-width: 767px) {
-    .header {
+    .header, .logo-header {
         display: none;
     }
 
@@ -129,10 +137,6 @@
         overflow-y: auto;
         overflow-x: hidden;
     }
-}
-
-.main-container .title {
-    font-size: 20px;
 }
 
 .patient-table {

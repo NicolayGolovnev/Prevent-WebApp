@@ -34,10 +34,4 @@ public class RestfulAdminController {
     public String getSearchPluginPage() {
         return "/admin/includes/search-plugin";
     }
-
-    @GetMapping("/user/delete/{id}")
-    public String deletePatient(@PathVariable Long id) {
-        userService.deleteById(id);
-        return "redirect:/ajax/getPatientList";
-    }
 }

@@ -5,8 +5,9 @@ function openForm() {
         dataType: 'html'
     }).done( function (response) {
         let container = $('.main-container');
+        // alert(response.body)
         container.empty();
-        container.append(response);
+        container.replaceWith(response);
     });
 }
 
@@ -18,7 +19,7 @@ function openPatientListContainer() {
     }).done( function (response) {
         let container = $('.main-container');
         container.empty();
-        container.append(response);
+        container.replaceWith(response);
     });
 }
 
@@ -30,8 +31,9 @@ function deletePatient() {
     const id = $(".btn-modal-delete").val();
     $.ajax({
         type: 'GET',
-        url: '/ajax/user/delete/' + id
+        url: '/user/delete/' + id
     }).done( function (response) {
+        alert(response);
         location.reload();
     });
 }
