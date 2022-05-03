@@ -11,7 +11,6 @@ import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -114,6 +113,6 @@ public class TestController {
     @GetMapping("/showResult/{id}")
     public String showResult(@PathVariable Long id, Model model){
         model.addAttribute("result", userQuizzesService.findById(id));
-        return "test/showResult";
+        return "showResult";
     }
 }

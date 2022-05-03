@@ -4,6 +4,17 @@
     }
 }
 
+.header{
+    margin: auto;
+    font-size: 2rem;
+}
+
+@media (max-width: 800px){
+    .header{
+        display: none;
+    }
+}
+
 /* TODO Сделать еще расширения лого для разных экранов */
 .logo-img {
     height: 50px;
