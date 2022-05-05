@@ -28,20 +28,20 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active" style="--clr: #f44336" id="doTest">
                     <a class="nav-link" href="#">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
                         <span class="text">Пройти тестирование</span>
                     </a>
                 </li>
-                <li class="nav-item" style="--clr: #ffa117">
+                <li class="nav-item" style="--clr: #ffa117" id="showTest">
                     <a class="nav-link" href="#" id="historyTest">
-                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                        <span class="icon"><ion-icon name="documents-outline"></ion-icon></span>
                         <span class="text">История тестирования</span>
                     </a>
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="container mt-4" id="chooseTest" hidden style="margin-left: 2%">
+    <div class="container mt-4" id="chooseTest" style="margin-left: 2%">
         <h3 style="margin-left: -1%">Выберите опрос</h3>
         <form action="#" method="get" th:action="@{/loadQuizByUser}"  th:object="${uqModel}">
             <div class="form-group row" style="width: 60%">
@@ -60,12 +60,24 @@
         </form>
     </div>
 
-    <div id="contentAfterLoadPage">
-        <p>Кал</p>
-        <p>Ненужный хлам</p>
-        <p>Дерьмо</p>
+    <div class="container mt-4" id="chooseCompleteTest" hidden style="margin-left: 2%">
+        <h3 style="margin-left: -1%">Выберите опрос</h3>
+        <form action="#" method="get" th:action="@{/showCompleteTest}"  th:object="${uqModel}">
+            <div class="form-group row" style="width: 60%">
+                <input hidden th:field="${uqModel.userId}">
+                <select class="form-select form-control rounded-4" style="width: 100%" id="forCompleteUserQuiz" th:field="${uqModel.quizId}">
+                    <option th:each="quiz : ${userQuizzes}"
+                            th:value="${quiz.id}"
+                            th:utext="${quiz.quiz.title} + ', ' + ${quiz.completeDate}">
+                </select>
+                <div style="margin-top: 1%; margin-left: 1.5%">
+                    <button type="submit"
+                            class="btn btn-success" style="float: right">Посмотреть
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-
 
     <!-- jQuery && Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

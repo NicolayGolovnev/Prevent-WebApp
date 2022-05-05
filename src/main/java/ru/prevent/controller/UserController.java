@@ -10,7 +10,6 @@ import ru.prevent.service.UserService;
 @Controller
 public class UserController {
 
-    public Long ID_USER = 1L;
     @Autowired
     UserService userService;
 

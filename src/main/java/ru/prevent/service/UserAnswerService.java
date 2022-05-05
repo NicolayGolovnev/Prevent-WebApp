@@ -5,13 +5,16 @@ import org.springframework.stereotype.Service;
 import ru.prevent.entity.UserAndAnswersEntity;
 import ru.prevent.repository.UserAnswerRepository;
 
+import java.util.List;
+
 @Service
 public class UserAnswerService {
 
     @Autowired
-    UserAnswerRepository usersAnswerRepository;
+    UserAnswerRepository userAnswersRepository;
 
     public void save(UserAndAnswersEntity userAnswer){
-        usersAnswerRepository.save(userAnswer);
+        userAnswersRepository.save(userAnswer);
     }
+    public List<UserAndAnswersEntity> findAllByQuizId(Long quizId){return userAnswersRepository.findAllByUserQuizzes_Id(quizId);}
 }

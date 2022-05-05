@@ -9,8 +9,19 @@
     font-size: 2rem;
 }
 
+.header-user-page{
+    background-color: #f5f4f2;
+    height: 50%;
+    padding-top: 1%;
+    padding-bottom: 3%;
+    padding-left: 1%
+}
+
 @media (max-width: 800px){
     .header{
+        display: none;
+    }
+    .header-user-page{
         display: none;
     }
 }

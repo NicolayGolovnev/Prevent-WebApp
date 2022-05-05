@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import ru.prevent.entity.*;
 import ru.prevent.model.QAModelCreation;
 import ru.prevent.model.QuestionAnswersModel;
+import ru.prevent.model.ShowCompleteTestModel;
 import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TestController {
@@ -30,6 +34,9 @@ public class TestController {
     @Autowired
     UserAnswerService userAnswerService;
 
+    @Autowired
+    UserAndQuizService userAndQuizService;
+
     @GetMapping("/{userId}")
     public String loadTestIndex(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.findById(userId));
@@ -41,6 +48,7 @@ public class TestController {
         userNQuizModel.setUserId(userId);
 
         model.addAttribute("uqModel", userNQuizModel);
+        model.addAttribute("userQuizzes", userAndQuizService.findQuizzesByUserId(userId));
         return "userPage1";
         //return "/test/index";
     }
@@ -69,6 +77,31 @@ public class TestController {
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
         return "/test/quiz";
+    }
+
+    @GetMapping("/showCompleteTest")
+    public String showCompleteTest(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model){
+        List<UserAndAnswersEntity> userAnswers = userAnswerService.findAllByQuizId(quizId);
+
+        Map<String, String> questions = new HashMap<>();
+        String tmpAnswer;
+        for (UserAndAnswersEntity answer: userAnswers) {
+            if(answer.getContentAnswer().length() == 0)
+                tmpAnswer = answer.getAnswer().getContent();
+            else
+                tmpAnswer = answer.getContentAnswer();
+            questions.put(answer.getQuestion().getContent(), tmpAnswer);
+        }
+        UserAndQuizzesEntity quiz = userAndQuizService.findById(quizId);
+        ShowCompleteTestModel test = ShowCompleteTestModel.builder()
+                .questionsAndAnswers(questions)
+                .result(quiz.getResult())
+                .dateOfFinish(quiz.getCompleteDate().toString())
+                .title(quiz.getQuiz().getTitle())
+                .build();
+
+        model.addAttribute("test", test);
+        return "showTest";
     }
 
     @PostMapping("/saveResults")

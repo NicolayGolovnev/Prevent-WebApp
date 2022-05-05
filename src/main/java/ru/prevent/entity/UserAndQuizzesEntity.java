@@ -30,6 +30,7 @@ public class UserAndQuizzesEntity {
     String result;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_usr", nullable = false)
     UserEntity user;
 
