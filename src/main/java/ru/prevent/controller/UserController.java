@@ -16,7 +16,7 @@ public class UserController {
     UserRepository userService;
 
     @GetMapping("/create")
-    public ModelAndView getAll() {
+    public ModelAndView getPageForNewUser() {
         ModelAndView model = new ModelAndView("admin/createPatient");
         model.addObject("patient", new UserEntity());
         return model;
@@ -26,7 +26,7 @@ public class UserController {
     public String saveNewUser(@ModelAttribute("patient") UserEntity user) {
         //TODO предварительно для этого пользователя сразу добавить все общедоступные опросы
         userService.save(user);
-        return "redirect:/#2";
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")

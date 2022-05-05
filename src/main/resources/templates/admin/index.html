@@ -30,53 +30,36 @@
     <a class="navbar-brand" href="https://preventplus.ru">
         <img th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" style="margin-right: 1rem;" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#1" onclick="openPatientListContainer()">
+                <a class="nav-link" href="#" onclick="openPatientListContainer()">
                     <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
                     <span class="text">Список пациентов</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#2" onclick="openForm()">
+                <a class="nav-link" href="#" onclick="openQuizListContainer()">
                     <span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
                     <span class="text">Список опросов</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                    <span class="text">Регистрация</span>
+                    <span class="icon"><ion-icon name="megaphone-outline"></ion-icon></span>
+                    <span class="text">Назначение опроса</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                    <span class="text">Регистрация</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                    <span class="text">Регистрация</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                    <span class="text">Регистрация</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                    <span class="text">Регистрация</span>
+                <a class="nav-link" href="#" onclick="location.href='/logout'">
+                    <span class="icon"><ion-icon name="exit-outline"></ion-icon></span>
+                    <span class="text">Выход</span>
                 </a>
             </li>
         </ul>
@@ -88,8 +71,11 @@
 </div>
 <div class="main-container">
     <div class="row m-auto justify-content-around">
-        <input type="search" id="search" value="" class="form-control col-sm-7" placeholder="Поиск пациентов" style="margin: 0.3125rem">
-        <button type="button" class="btn btn-success col-sm-4 text-center" th:onclick="'location.href=\'/user/create/\''" style="margin: 0.3125rem">Зарегистрировать</button>
+        <input type="search" id="search" value="" class="form-control col-sm-7" placeholder="Поиск пациентов"
+               style="margin: 0.3125rem">
+        <button type="button" class="btn btn-success col-sm-4 text-center"
+                th:onclick="'location.href=\'/user/create/\''" style="margin: 0.3125rem">Зарегистрировать
+        </button>
     </div>
     <div class="col-sm-12">
         <div class="d-flex justify-content-center">
@@ -97,14 +83,17 @@
                 <tbody>
                 <th:block th:each="patient, state: ${patients}">
                     <tr style="display: flex">
-                        <td class="col-sm-10"><th:block th:utext="${patient.firstName} + ' ' + ${patient.lastName} + ' ' + ${patient.thirdName}"></th:block></td>
-                        <td class="icon col-sm-1 justify-content-end" >
+                        <td class="col-sm-10">
+                            <th:block th:utext="${patient.firstName} + ' ' + ${patient.lastName} + ' ' + ${patient.thirdName}"></th:block>
+                        </td>
+                        <td class="icon col-sm-1 justify-content-end">
                             <button class="btn" type="button">
                                 <ion-icon name="create-outline"></ion-icon>
                             </button>
                         </td>
-                        <td class="icon trash col-sm-1 justify-content-end" >
-                            <button class="btn" type="button" data-toggle="modal" data-target="#deleteModal" th:onclick="'giveIdToModal(' + ${patient.id} + ')'">
+                        <td class="icon trash col-sm-1 justify-content-end">
+                            <button class="btn" type="button" data-toggle="modal" data-target="#deleteModal"
+                                    th:onclick="'giveIdToModal(' + ${patient.id} + ')'">
                                 <ion-icon name="trash-outline"></ion-icon>
                             </button>
                         </td>
@@ -119,8 +108,8 @@
         $(function () {
             $('.patient-table').searchable({
                 striped: true,
-                oddRow: { 'background-color': '#f5f5f5' },
-                evenRow: { 'background-color': '#fff' },
+                oddRow: {'background-color': '#f5f5f5'},
+                evenRow: {'background-color': '#fff'},
                 searchType: 'fuzzy'
             });
         });
@@ -129,7 +118,8 @@
 
 <div class="input-modal">
     <!-- Модальное окно для удаления пацента-->
-    <div class="modal fade input-modal" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade input-modal" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -143,7 +133,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-danger btn-modal-delete" value="" onclick="deletePatient()">Удалить</button>
+                    <button type="button" class="btn btn-danger btn-modal-delete" value="" onclick="deletePatient()">
+                        Удалить
+                    </button>
                 </div>
             </div>
         </div>

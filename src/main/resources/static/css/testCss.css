@@ -139,9 +139,24 @@
     }
 }
 
-.patient-table {
+.table {
     width: 100%;
     max-width: 100%;
+}
+
+.table tr {
+    border-top: 1px solid #dee2e6;
+}
+
+.table td {
+    border-top: 0;
+}
+
+.table td.icon {
+    width: 45px;
+    padding: 0;
+    margin: auto;
+    text-align: center;
 }
 
 ion-icon {
@@ -149,10 +164,14 @@ ion-icon {
     height: 25px;
 }
 
-.patient-table tr td.icon {
-    width: 45px;
+.table td.trash {
+    color: red;
 }
 
-.patient-table td.trash {
-    color: red;
+/*div[class^="child-"], div[class*=" child-"],*/
+div[class^="question-"], div[class^="answer-"] {
+    border: 1px solid #3f3f40;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0.2rem;
 }
