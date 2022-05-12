@@ -52,9 +52,9 @@ public class QuizEntity {
 
     @OneToMany(mappedBy = "childQuiz", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<QuizAndQuiz> parents = new ArrayList<>();
+    List<QuizAndQuizEntity> parents = new ArrayList<>();
 
     @OneToMany(mappedBy = "parentQuiz", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<QuizAndQuiz> childrens = new ArrayList<>();
+    List<QuizAndQuizEntity> childrens = new ArrayList<>();
 }

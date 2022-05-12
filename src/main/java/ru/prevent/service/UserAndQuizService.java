@@ -26,8 +26,8 @@ public class UserAndQuizService {
         return userAndQuizeRepository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
     }
 
-    public List<UserAndQuizzesEntity> findQuizzesByUserId(Long idUser){
-        return userAndQuizeRepository.findAllByUserId(idUser);
+    public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser){
+        return userAndQuizeRepository.findByUser_IdAndStatus(idUser, "complete");
     }
 
     public String findQuizResult(Long id){
@@ -41,5 +41,9 @@ public class UserAndQuizService {
             return quiz.get();
         else
             throw new RuntimeException("Record with id=" + id + " not found!");
+    }
+
+    public List<UserAndQuizzesEntity> findAllOpenQuizzes(Long userId){
+        return userAndQuizeRepository.findByUser_IdAndStatus(userId, "open");
     }
 }

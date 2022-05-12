@@ -1,5 +1,6 @@
 package ru.prevent.controller;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,20 +38,29 @@ public class TestController {
     @Autowired
     UserAndQuizService userAndQuizService;
 
+    @Autowired
+    QuizAndQuizService quizAndQuizService;
+
     @GetMapping("/{userId}")
     public String loadTestIndex(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.findById(userId));
 
-        //TODO собирать не все тесты, а тесты доступные пользователю
-        model.addAttribute("quizzes", quizService.findAll());
+        List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllOpenQuizzes(userId);
+        List<QuizEntity> quizzes = new ArrayList<>();
+        for (UserAndQuizzesEntity test: openQuizzes) {
+            quizzes.add(quizService.findById(test.getQuiz().getId()));
+        }
+        model.addAttribute("quizzes", quizzes);
 
         UserNQuizModel userNQuizModel = new UserNQuizModel();
         userNQuizModel.setUserId(userId);
 
+        //TODO удалить
+        List<UserAndQuizzesEntity> a = userAndQuizService.findCompletedQuizzesByUserId(userId);
+
         model.addAttribute("uqModel", userNQuizModel);
-        model.addAttribute("userQuizzes", userAndQuizService.findQuizzesByUserId(userId));
+        model.addAttribute("userQuizzes", userAndQuizService.findCompletedQuizzesByUserId(userId));
         return "userPage1";
-        //return "/test/index";
     }
 
     @GetMapping("/loadQuizByUser")

@@ -10,6 +10,6 @@ public interface UserAndQuizeRepository extends JpaRepository<UserAndQuizzesEnti
 
     Optional<UserAndQuizzesEntity> findByUser_IdAndQuiz_Id(Long idUser, Long idQuiz);
 
-    List<UserAndQuizzesEntity> findAllByUserId(Long idUser);
+    List<UserAndQuizzesEntity> findByUser_IdAndStatus(Long idUser, String status);
 
 }
