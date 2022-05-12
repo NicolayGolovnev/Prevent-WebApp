@@ -59,7 +59,7 @@ public class TestController {
         List<UserAndQuizzesEntity> a = userAndQuizService.findCompletedQuizzesByUserId(userId);
 
         model.addAttribute("uqModel", userNQuizModel);
-        model.addAttribute("userQuizzes", userAndQuizService.findCompletedQuizzesByUserId(userId));
+        model.addAttribute("completedQuizzes", userAndQuizService.findCompletedQuizzesByUserId(userId));
         return "userPage1";
     }
 
