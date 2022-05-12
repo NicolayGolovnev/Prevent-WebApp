@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.prevent.entity.*;
-import ru.prevent.model.QAModelCreation;
-import ru.prevent.model.QuestionAnswersModel;
-import ru.prevent.model.ShowCompleteTestModel;
-import ru.prevent.model.UserNQuizModel;
+import ru.prevent.model.*;
 import ru.prevent.service.*;
 
 import java.time.LocalDate;
@@ -65,10 +62,30 @@ public class TestController {
         UserEntity user = userService.findById(userId);
         QuizEntity quiz = quizService.findById(quizId);
 
-        //TODO проверка имеет ли опросник опросников детей
+
+        //  пытаюсь сделать свое
         List<QuizAndQuizEntity> childQuizzes = quizAndQuizService.findAllChildTests(quizId);
+        QuizModel quizModel = new QuizModel();
+
+        for (QuizAndQuizEntity childQuiz: childQuizzes) {
+            ChildQuizModel childQuizModel = new ChildQuizModel();
+            List<QuestionEntity> entityQuestions = questionService.findQuestionsByQuizId(childQuiz.getChildQuiz().getId());
+            for (var question : entityQuestions) {
+                QuestionAnswersModel buf = QuestionAnswersModel.builder()
+                        .id(question.getId())
+                        .question(question)
+                        .answers(question.getAnswers())
+                        .userAnswer(new AnswerEntity())
+                        .build();
+                childQuizModel.add(buf);
+            }
+            childQuizModel.setTittle(childQuiz.getChildQuiz().getTitle());
+            quizModel.add(childQuizModel);
+        }
+
+        //TODO проверка имеет ли опросник опросников детей
+        /*List<QuizAndQuizEntity> childQuizzes = quizAndQuizService.findAllChildTests(quizId);
         QAModelCreation questions = new QAModelCreation();
-        List<String> quizzesTitles = new ArrayList<>();
         for (QuizAndQuizEntity childQuiz: childQuizzes) {
             List<QuestionEntity> entityQuestions = questionService.findQuestionsByQuizId(childQuiz.getChildQuiz().getId());
             for (var question : entityQuestions) {
@@ -80,13 +97,14 @@ public class TestController {
                         .build();
                 questions.add(buf);
             }
-            quizzesTitles.add(childQuiz.getChildQuiz().getTitle());
-        }
+        }*/
 
-        model.addAttribute("questions", questions);
+        //model.addAttribute("questions", questions);
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
-        model.addAttribute("quizzesTitles", quizzesTitles);
+        model.addAttribute("test", quizModel);
+
+        //model.addAttribute("quizzesTitles", quizzesTitles);
         return "/test/quiz";
     }
 
@@ -116,8 +134,9 @@ public class TestController {
     }
 
     @PostMapping("/saveResults")
-    public String saveResults(@ModelAttribute("questions") QAModelCreation resultForm, Model model){
-        List<QuestionAnswersModel> answeredQuestions = resultForm.getQuestions();
+    public String saveResults(@ModelAttribute("questions") QuizModel resultForm, Model model){
+        System.out.println();
+        /*List<QuestionAnswersModel> answeredQuestions = resultForm.getQuestions();
         UserEntity user = userService.findById(resultForm.getUserId());
         QuizEntity quiz = quizService.findById(resultForm.getQuizId());
 
@@ -151,7 +170,8 @@ public class TestController {
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
 
-        return "redirect:/showResult/" + newUserQuiz.getId();
+        return "redirect:/showResult/" + newUserQuiz.getId();*/
+        return "";
     }
 
     @GetMapping("/showResult/{id}")
