@@ -45,7 +45,7 @@ public class TestController {
     public String loadTestIndex(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.findById(userId));
 
-        List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllOpenQuizzes(userId);
+        List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllOpenQuizzesByUserId(userId);
         List<QuizEntity> quizzes = new ArrayList<>();
         for (UserAndQuizzesEntity test: openQuizzes) {
             quizzes.add(quizService.findById(test.getQuiz().getId()));
@@ -55,37 +55,38 @@ public class TestController {
         UserNQuizModel userNQuizModel = new UserNQuizModel();
         userNQuizModel.setUserId(userId);
 
-        //TODO удалить
-        List<UserAndQuizzesEntity> a = userAndQuizService.findCompletedQuizzesByUserId(userId);
-
         model.addAttribute("uqModel", userNQuizModel);
         model.addAttribute("completedQuizzes", userAndQuizService.findCompletedQuizzesByUserId(userId));
         return "userPage1";
     }
 
     @GetMapping("/loadQuizByUser")
-    public String loadQuiz(@RequestParam("userId") Long uid, @RequestParam("quizId") Long qid, Model model) {
-        UserEntity user = userService.findById(uid);
-        QuizEntity quiz = quizService.findById(qid);
+    public String loadQuiz(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model) {
+        UserEntity user = userService.findById(userId);
+        QuizEntity quiz = quizService.findById(quizId);
 
         //TODO проверка имеет ли опросник опросников детей
-
-        List<QuestionEntity> entityQuestionEntities = questionService.findQuestionsByQuizId(quiz.getId());
-
+        List<QuizAndQuizEntity> childQuizzes = quizAndQuizService.findAllChildTests(quizId);
         QAModelCreation questions = new QAModelCreation();
-        for (var question : entityQuestionEntities) {
-            QuestionAnswersModel buf = QuestionAnswersModel.builder()
-                    .id(question.getId())
-                    .question(question)
-                    .answers(question.getAnswers())
-                    .userAnswer(new AnswerEntity())
-                    .build();
-            questions.add(buf);
+        List<String> quizzesTitles = new ArrayList<>();
+        for (QuizAndQuizEntity childQuiz: childQuizzes) {
+            List<QuestionEntity> entityQuestions = questionService.findQuestionsByQuizId(childQuiz.getChildQuiz().getId());
+            for (var question : entityQuestions) {
+                QuestionAnswersModel buf = QuestionAnswersModel.builder()
+                        .id(question.getId())
+                        .question(question)
+                        .answers(question.getAnswers())
+                        .userAnswer(new AnswerEntity())
+                        .build();
+                questions.add(buf);
+            }
+            quizzesTitles.add(childQuiz.getChildQuiz().getTitle());
         }
 
         model.addAttribute("questions", questions);
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
+        model.addAttribute("quizzesTitles", quizzesTitles);
         return "/test/quiz";
     }
 

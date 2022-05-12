@@ -43,7 +43,7 @@ public class UserAndQuizService {
             throw new RuntimeException("Record with id=" + id + " not found!");
     }
 
-    public List<UserAndQuizzesEntity> findAllOpenQuizzes(Long userId){
+    public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId){
         return userAndQuizeRepository.findByUser_IdAndStatus(userId, "open");
     }
 }
