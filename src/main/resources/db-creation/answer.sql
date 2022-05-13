@@ -1,29 +1,62 @@
-INSERT INTO public.answer (id, content, weight_arg, id_question)
-VALUES (1, 'Нет или редко', 0, 1),
-       (2, 'Иногда', 1, 1),
-       (3, 'Часто', 4, 1),
-       (4, 'Очень', 8, 1),
-       (5, 'Нет или редко', 0, 2),
-       (6, 'Иногда', 1, 2),
-       (7, 'Часто', 4, 2),
-       (8, 'Очень', 8, 2),
-       (9, 'Нет или редко', 0, 3),
-       (10, 'Иногда', 1, 3),
-       (11, 'Часто', 4, 3),
-       (12, 'Очень', 8, 3),
-       (13, 'Нет или редко', 0, 4),
-       (14, 'Иногда', 1, 4),
-       (15, 'Часто', 4, 4),
-       (16, 'Очень', 8, 4),
-       (17, 'Нет или редко', 0, 5),
-       (18, 'Иногда', 1, 5),
-       (19, 'Часто', 4, 5),
-       (20, 'Очень', 8, 5),
-       (21, 'Нет или редко', 0, 6),
-       (22, 'Иногда', 1, 6),
-       (23, 'Часто', 4, 6),
-       (24, 'Очень', 8, 6),
-       (25, 'Нет или редко', 0, 7),
-       (26, 'Иногда', 1, 7),
-       (27, 'Часто', 4, 7),
-       (28, 'Очень', 8, 7);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (1, 'Нет или редко', 0, 1);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (2, 'Иногда', 1, 1);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (3, 'Часто', 4, 1);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (5, 'Нет или редко', 0, 2);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (6, 'Иногда', 1, 2);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (7, 'Часто', 4, 2);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (9, 'Нет или редко', 0, 3);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (10, 'Иногда', 1, 3);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (11, 'Часто', 4, 3);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (13, 'Нет или редко', 0, 4);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (14, 'Иногда', 1, 4);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (15, 'Часто', 4, 4);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (17, 'Нет или редко', 0, 5);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (18, 'Иногда', 1, 5);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (19, 'Часто', 4, 5);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (21, 'Нет или редко', 0, 6);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (22, 'Иногда', 1, 6);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (23, 'Часто', 4, 6);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (25, 'Нет или редко', 0, 7);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (26, 'Иногда', 1, 7);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (27, 'Часто', 4, 7);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (29, 'Нет или редко', 0, 8);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (30, 'Иногда', 1, 8);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (31, 'Часто', 4, 8);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (32, 'Очень часто', 8, 8);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (33, 'Нет или редко', 0, 9);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (34, 'Иногда', 1, 9);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (35, 'Часто', 4, 9);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (36, 'Очень часто', 8, 9);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (12, 'Очень часто', 8, 3);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (28, 'Очень часто', 8, 7);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (8, 'Очень часто', 8, 2);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (24, 'Очень часто', 8, 6);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (4, 'Очень часто', 8, 1);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (20, 'Очень часто', 8, 5);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (16, 'Очень часто', 8, 4);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (37, 'Нет или редко', 0, 10);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (38, 'Иногда', 1, 10);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (39, 'Часто', 4, 10);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (40, 'Очень часто', 8, 10);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (41, 'Нет или редко', 0, 11);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (42, 'Иногда', 1, 11);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (43, 'Часто', 4, 11);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (44, 'Очень часто', 8, 11);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (45, 'Нет или редко', 0, 12);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (46, 'Иногда', 1, 12);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (47, 'Часто', 4, 12);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (48, 'Очень часто', 8, 12);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (49, 'Нет или редко или иногда', 0, 13);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (50, 'Часто или очень часто', 8, 13);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (51, 'Нет или редко', 0, 14);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (52, 'Иногда', 1, 14);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (53, 'Часто', 4, 14);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (54, 'Очень часто', 8, 14);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (55, 'Нет или редко', 0, 15);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (56, 'Иногда', 1, 15);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (57, 'Часто', 4, 15);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (58, 'Очень часто', 8, 15);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (59, 'Нет или редко', 0, 16);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (60, 'Иногда', 1, 16);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (61, 'Часто', 4, 16);
+INSERT INTO public.answer (id, content, weight_arg, id_question) VALUES (62, 'Очень часто', 8, 16);
