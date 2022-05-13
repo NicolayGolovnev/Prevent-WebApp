@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.prevent.entity.UserEntity;
+import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.QuizService;
 import ru.prevent.service.UserService;
 
@@ -35,9 +36,11 @@ public class RestfulAdminController {
 
     @GetMapping("/getAssignPool")
     public ModelAndView getAssignPool() {
-        ModelAndView model = new ModelAndView("admin/includes/assignPool");
+        ModelAndView model = new ModelAndView("admin/includes/assignment");
+        model.addObject("uqModel", new UserNQuizModel());
         model.addObject("patients", userService.findAll());
         model.addObject("quizes", quizService.findAll());
         return model;
     }
+
 }

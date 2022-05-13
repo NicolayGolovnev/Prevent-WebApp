@@ -7,10 +7,12 @@ import ru.prevent.repository.QuizRepository;
 import ru.prevent.repository.UserAndQuizeRepository;
 import ru.prevent.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 public class UserAndQuizService {
     @Autowired
-    UserAndQuizeRepository userAndQuizeRepository;
+    UserAndQuizeRepository repository;
 
     @Autowired
     UserRepository userRepository;
@@ -19,6 +21,18 @@ public class UserAndQuizService {
     QuizRepository quizRepository;
 
     public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz){
-        return userAndQuizeRepository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
+        return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
+    }
+
+    public UserAndQuizzesEntity findById(Long id) {
+        Optional<UserAndQuizzesEntity> optionalUserAndQuiz = repository.findById(id);
+        if (optionalUserAndQuiz.isPresent())
+            return optionalUserAndQuiz.get();
+        else
+            throw new RuntimeException("Quiz with id=" + id + " by user don't found!");
+    }
+
+    public void save(UserAndQuizzesEntity entity) {
+        repository.save(entity);
     }
 }

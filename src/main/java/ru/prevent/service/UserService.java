@@ -26,6 +26,10 @@ public class UserService {
             throw new RuntimeException("User with id=" + id + " not found!");
     }
 
+    public void save(UserEntity user) {
+        repository.save(user);
+    }
+
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

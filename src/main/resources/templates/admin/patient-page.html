@@ -61,7 +61,7 @@
       <label for="forSex" class="col-md-3 col-form-label">Пол</label>
       <div class="col-md-8">
         <select class="custom-select" th:field="*{sex}" id="forSex">
-          <option selected disabled value="">Выберите свой пол...</option>
+          <option th:selected="selected" disabled value="">Выберите свой пол...</option>
           <option value="Мужчина">Мужчина</option>
           <option value="Женщина">Женщина</option>
         </select>

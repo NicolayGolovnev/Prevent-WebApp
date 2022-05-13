@@ -45,3 +45,21 @@ function openQuizListContainer() {
 
     //TODO сделать догрузку модального окна
 }
+
+function openAssignPoolContainer() {
+    $.ajax({
+        type: 'GET',
+        url: "/ajax/getAssignPool",
+        dataType: 'html'
+    }).done( function (response) {
+        let container = $('.main-container');
+        container.empty();
+        container.replaceWith(response);
+    });
+    if (window.innerWidth < 768 )
+        $('.navbar-toggler').click()
+
+    // $("#forPatient").removeAttr("value");
+    // $("#forQuiz").removeAttr("value");
+
+}

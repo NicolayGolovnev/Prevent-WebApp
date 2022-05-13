@@ -8,6 +8,6 @@ import lombok.*;
 @Setter
 @Builder
 public class UserNQuizModel {
-    Long userId = 0L;
-    Long quizId = 0L;
+    Long userId;
+    Long quizId;
 }

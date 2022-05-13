@@ -1,0 +1,20 @@
+<div class="main-container" xmlns:th="http://www.thymeleaf.org" xmlns="">
+  <h3 class="text-center">Назначение опроса пациенту</h3>
+  <form action="#" method="post" th:action="@{/user/assignPool}" th:object="${uqModel}">
+    <div class="form-group row justify-content-around">
+      <input class="form-control col-md-5 mx-3 my-1" list="patientList" id="forPatient" placeholder="Пациент" th:field="*{userId}">
+      <datalist id="patientList">
+        <option th:each="patient: ${patients}" th:value="${patient.id}"
+                th:label="${patient.firstName} + ' ' + ${patient.lastName} + ' ' + ${patient.thirdName}"></option>
+      </datalist>
+      <input class="form-control col-md-5 mx-3 my-1" list="quizList" id="forQuiz" placeholder="Опрос" th:field="*{quizId}">
+      <datalist id="quizList">
+        <option th:each="quiz: ${quizes}" th:value="${quiz.id}" th:label="${quiz.title}"></option>
+      </datalist>
+    </div>
+    <div class="form-group row justify-content-end">
+      <button type="submit" class="btn btn-success col-md-5 mx-3 my-1">Назначить</button>
+    </div>
+  </form>
+
+</div>
