@@ -27,13 +27,13 @@ public class UserAndQuizService {
     }
 
     public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser){
-        return userAndQuizeRepository.findByUser_IdAndStatus(idUser, "complete");
+        return userAndQuizeRepository.findByUser_IdAndStatus(idUser, "завершен");
     }
 
-    public String findQuizResult(Long id){
+    /*public String findQuizResult(Long id){
         UserAndQuizzesEntity quiz = userAndQuizeRepository.findById(id).get();
         return quiz.getResult();
-    }
+    }*/
 
     public UserAndQuizzesEntity findById(Long id){
         Optional<UserAndQuizzesEntity> quiz = userAndQuizeRepository.findById(id);
@@ -44,6 +44,8 @@ public class UserAndQuizService {
     }
 
     public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId){
-        return userAndQuizeRepository.findByUser_IdAndStatus(userId, "open");
+        return userAndQuizeRepository.findByUser_IdAndStatus(userId, "открытый");
     }
+
+    public void save(UserAndQuizzesEntity entity){userAndQuizeRepository.save(entity);}
 }

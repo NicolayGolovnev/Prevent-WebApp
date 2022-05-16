@@ -26,9 +26,6 @@ public class UserAndQuizzesEntity {
     @Column(name = "complete_date")
     LocalDate completeDate;
 
-    @Column(name = "result")
-    String result;
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_usr", nullable = false)

@@ -42,7 +42,7 @@ public class QuizEntity {
     @JsonIgnore
     List<UserAndQuizzesEntity> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "childrenQuiz")
     @JsonIgnore
     List<HistoryResultsEntity> results = new ArrayList<>();
 

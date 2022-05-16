@@ -1,5 +1,6 @@
 package ru.prevent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,5 +30,6 @@ public class AnswerEntity {
     QuestionEntity question;
 
     @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
+    @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }
