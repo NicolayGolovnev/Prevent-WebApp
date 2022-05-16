@@ -13,7 +13,7 @@
               <th:block th:utext="${quiz.title}"></th:block>
             </td>
             <td class="icon col-sm-1" >
-              <button class="btn" type="button">
+              <button class="btn" type="button" th:onclick="'location.href=\'/quiz/' + ${quiz.id} + '\''">
                 <ion-icon name="create-outline"></ion-icon>
               </button>
             </td>

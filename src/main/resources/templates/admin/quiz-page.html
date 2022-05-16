@@ -32,9 +32,10 @@
     Центр превентивной и эстетической медицины
 </div>
 <div class="main-container container">
-    <h3 class="text-center">Конструктор нового опросника</h3>
+    <h3 class="text-center">Редактирование опросника №[[${quiz.id}]]</h3>
 
-    <form action="#" method="post" th:action="@{/quiz/create}" th:object="${quiz}">
+    <form action="#" method="post" th:action="@{/quiz/update}" th:object="${quiz}">
+        <input hidden type="text" th:field="${quiz.id}">
         <div class="form-group row justify-content-end">
             <label for="forTitle" class="col-md-3 col-form-label">Название</label>
             <div class="col-md-8">
@@ -46,7 +47,7 @@
             <label for="forAccess" class="col-md-3 col-form-label">Общий доступ</label>
             <div class="col-md-8">
                 <select class="custom-select" th:field="*{access}" id="forAccess">
-                    <option th:selected="selected" disabled th:value="false">Выберите доступ опросника</option>
+                    <option disabled th:value="false">Выберите доступ опросника</option>
                     <option th:value="true">Открыт</option>
                     <option th:value="false">Закрыт</option>
                 </select>
@@ -56,7 +57,7 @@
             <label for="forGender" class="col-md-3 col-form-label">Гендерный доступ</label>
             <div class="col-md-8">
                 <select class="custom-select" th:field="*{gender}" id="forGender">
-                    <option selected disabled value="">Выберите гендер опросника</option>
+                    <option disabled value="">Выберите гендер опросника</option>
                     <option value="Мужчина">Мужчина</option>
                     <option value="Женщина">Женщина</option>
                     <option value="Любой">Любой</option>
@@ -90,6 +91,22 @@
             <div class="form-group">
                 <label>Дочерние опросники</label>
                 <div class="container children-group">
+                    <div th:each="quizAndQuiz, count: *{childQuizzes}" th:class="'form-group row child--1'+ ${count.index}" style="flex-wrap: nowrap">
+                        <div class="col-md-6" style="width: auto">
+                            <input hidden type="text" th:field="*{childQuizzes[__${count.index}__]}">
+                            <select class="custom-select" th:name="'childQuizzes[' + ${count.index} + '].childQuiz'" th:value="${quizAndQuiz.childQuiz.id}">
+                                <option disabled="disabled" value="none">-</option>
+                                <th:block th:each="optionQuiz : ${quizzes}">
+                                    <option th:value="${optionQuiz.id}"
+                                            th:selected="${quizAndQuiz.childQuiz.id == optionQuiz.id}">[[${optionQuiz.title}]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <button class="btn col-md-1" type="button" style="width: 50px"
+                                th:onclick="'deleteChildrenQuizSelect(-1' + ${count.index} + ')'">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="form-group row justify-content-end">
@@ -102,14 +119,74 @@
         <div class="container form-group">
             <label>Вопросы для прохождения</label>
             <div class="container question-group">
+                <div th:each="question, count: *{questions}" th:class="'question--1' + ${count.index}">
+                    <input hidden type="text" th:field="*{questions[__${count.index}__]}">
+                    <div class="form-group row justify-content-between" style="flex-wrap: nowrap">
+                        <div class="col-md-4 row justify-content-start align-items-center">
+                            <span class="mx-3">Вопрос №</span>
+                            <input type="text" class="form-control" placeholder="Номер вопроса" style="width: 55px"
+                                   th:name="'questions[' + ${count.index} + '].numQuestion'" th:value="${question.numQuestion}">
+                        </div>
+                        <button type="button" class="btn col-md-1 justify-content-end" style="width: 50px;"
+                                th:onclick="'deleteQuestion(-1' + ${count.index} + ')'">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
 
+                    <div class="form-group row">
+                        <div class="col-md-10 my-1">
+                            <input type="text" class="form-control" placeholder="Формулировка вопроса"
+                                   th:name="'questions[' + ${count.index} + '].content'" th:value="${question.content}">
+                        </div>
+                        <div class="col-md-2 my-1">
+                            <input type="text" class="form-control" placeholder="Вес вопроса"
+                                   th:name="'questions[' + ${count.index} + '].weight'" th:value="${question.weight}">
+                        </div>
+                    </div>
+
+                    <!-- Блок ответов для этого вопроса -->
+                    <hr>
+                    <div class="form-group">
+                        <label>Ответы</label>
+                        <div class="form-group answer-group">
+                            <div th:each="answer, count2: ${question.answers}" th:class="'form-group row answer--1' + ${count2.index}" style="flex-wrap: nowrap">
+                                <input hidden type="text" th:field="*{questions[__${count.index}__].answers[__${count2.index}__]}">
+                                <div class="col-md-5" style="width: auto">
+                                    <input type="text" class="form-control" list="answersList" placeholder="Формулировка ответа"
+                                           th:name="'questions[' + ${count.index} + '].answers[' + ${count2.index} + '].content'"
+                                           th:value="${answer.content}">
+                                    <datalist id="answersList">
+                                        <option value="Нет или редко"></option>
+                                        <option value="Иногда"></option>
+                                        <option value="Часто"></option>
+                                        <option value="Очень часто"></option>
+                                        <option value="Да"></option>
+                                        <option value="Нет"></option>
+                                    </datalist>
+                                </div>
+                                <div class="col-md-2" style="width: 80px;">
+                                    <input type="text" class="form-control" placeholder="Вес"
+                                           th:name="'questions[' + ${count.index} + '].answers[' + ${count2.index} + '].weight'"
+                                           th:value="${answer.weight}">
+                                </div>
+                                <button type="button" class="btn col-md-1" style="width: 50px"
+                                        th:onclick="'deleteAnswer(-1' + ${count.index} + ', -1' + ${count2.index} + ')'">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-end">
+                        <button type="button" th:onclick="'generateNewAnswerForQuestion(-1' + ${count.index} + ')'"
+                                class="btn btn-success col-md-5 m-2">Добавить ответ</button>
+                    </div>
+                </div>
             </div>
             <div class="form-group row justify-content-end">
                 <button type="button" onclick="generateNewQuestion()"
                         class="btn btn-success col-md-5 m-2">Добавить новый вопрос</button>
             </div>
         </div>
-        <hr>
 
         <div class="container form-group">
             <label>Ключи опросника</label>
@@ -121,7 +198,6 @@
                         class="btn btn-success col-md-5 m-2">Добавить новый ключ</button>
             </div>
         </div>
-        <hr>
 
         <div class="form-group row justify-content-end">
             <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-3 mx-3 my-1">Назад</button>
@@ -136,6 +212,11 @@
 
 <script th:src="@{~/js/loadModals.js}"></script>
 <script th:src="@{~/js/quiz-creator.js}"></script>
+<script type="text/javascript">
+    counterForChildrens = $('.children-group').children().length
+    counterForQuestion = $('.question-').length
+    counterForAnswers = $('.answer-').length
+</script>
 
 </body>
 </html>

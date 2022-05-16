@@ -3,7 +3,9 @@ var counterForQuestion = 1
 var counterForAnswers = 1
 $('#forWeightArg').val(1)
 
+
 function generateNewChildQuiz() {
+    // TODO реализовать так, чтобы повторно опросники не показывались в списке
     const insert = `<div class="form-group row child-${counterForChildrens}" style="flex-wrap: nowrap">
                     <div class="col-md-6" style="width: auto">
                         <select class="custom-select" name="children-quiz" id="childrenQuiz">
@@ -110,4 +112,8 @@ function generateNewAnswerForQuestion(questionId) {
 function deleteAnswer(questionId, answerId) {
     const answer = '.question-' + questionId + ' .answer-' + answerId
     $(answer).remove()
+}
+
+function generateNewKey() {
+
 }

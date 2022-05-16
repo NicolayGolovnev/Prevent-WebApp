@@ -49,11 +49,11 @@ public class QuizEntity {
     @JsonIgnore
     List<KeyQuizEntity> keys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "childQuiz")
     @JsonIgnore
     List<QuizAndQuizEntity> parentQuizzes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "childQuiz")
+    @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
 
