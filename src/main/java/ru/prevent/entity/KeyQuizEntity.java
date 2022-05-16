@@ -23,7 +23,7 @@ public class KeyQuizEntity {
     Long maxArg;
 
     @Column(name = "result_arg")
-    Long resultArg;
+    String resultArg;
 
     @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)

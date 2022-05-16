@@ -25,4 +25,8 @@ public class QuizService {
         else
             throw new RuntimeException("Quiz with id=" + id + " not found!");
     }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }

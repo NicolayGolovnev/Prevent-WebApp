@@ -16,8 +16,16 @@ function openPatientListContainer() {
         $('.navbar-toggler').click()
 
     //TODO сделать догрузку модального окна
+    $.ajax({
+        type: 'GET',
+        url: "/ajax/getPatientDeleteModal",
+        dataType: 'html'
+    }).done( function (response) {
+        let container = $('.input-modal');
+        // container.empty();
+        container.replaceWith(response);
+    });
 }
-
 
 function deletePatient() {
     const id = $(".btn-modal-delete").val();
@@ -29,6 +37,7 @@ function deletePatient() {
         location.reload();
     });
 }
+
 
 function openQuizListContainer() {
     $.ajax({
@@ -44,6 +53,15 @@ function openQuizListContainer() {
         $('.navbar-toggler').click()
 
     //TODO сделать догрузку модального окна
+    $.ajax({
+        type: 'GET',
+        url: "/ajax/getQuizDeleteModal",
+        dataType: 'html'
+    }).done( function (response) {
+        let container = $('.input-modal');
+        // container.empty();
+        container.replaceWith(response);
+    });
 }
 
 function openAssignPoolContainer() {
@@ -62,4 +80,15 @@ function openAssignPoolContainer() {
     // $("#forPatient").removeAttr("value");
     // $("#forQuiz").removeAttr("value");
 
+}
+
+function deleteQuiz() {
+    const id = $(".btn-modal-delete").val();
+    $.ajax({
+        type: 'GET',
+        url: '/quiz/delete/' + id
+    }).done( function (response) {
+        alert(response);
+        location.reload();
+    });
 }

@@ -13,7 +13,7 @@ import ru.prevent.service.UserService;
 
 @Controller
 @RequestMapping("ajax")
-public class RestfulAdminController {
+public class AdminAjaxController {
     @Autowired
     UserService userService;
 
@@ -22,25 +22,35 @@ public class RestfulAdminController {
 
     @GetMapping("/getPatientList")
     public ModelAndView getPatientList() {
-        ModelAndView model = new ModelAndView("admin/includes/patients");
+        ModelAndView model = new ModelAndView("includes/patients");
         model.addObject("patients", userService.findAll());
         return model;
     }
 
     @GetMapping("/getQuizList")
     public ModelAndView getQuizList() {
-        ModelAndView model = new ModelAndView("admin/includes/quizes");
+        ModelAndView model = new ModelAndView("includes/quizes");
         model.addObject("quizes", quizService.findAll());
         return model;
     }
 
     @GetMapping("/getAssignPool")
     public ModelAndView getAssignPool() {
-        ModelAndView model = new ModelAndView("admin/includes/assignment");
+        ModelAndView model = new ModelAndView("includes/assignment");
         model.addObject("uqModel", new UserNQuizModel());
         model.addObject("patients", userService.findAll());
         model.addObject("quizes", quizService.findAll());
         return model;
+    }
+
+    @GetMapping("/getPatientDeleteModal")
+    public String getPatientDeleteModal() {
+        return "includes/patient-delete-modal";
+    }
+
+    @GetMapping("/getQuizDeleteModal")
+    public String getQuizDeleteModal() {
+        return "includes/quiz-delete-modal";
     }
 
 }
