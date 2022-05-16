@@ -9,11 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
 import ru.prevent.model.UserNQuizModel;
-import ru.prevent.repository.UserAndQuizeRepository;
-import ru.prevent.repository.UserRepository;
 import ru.prevent.service.QuizService;
 import ru.prevent.service.UserAndQuizService;
 import ru.prevent.service.UserService;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("user")
@@ -29,14 +29,13 @@ public class UserController {
 
     @GetMapping("/create")
     public ModelAndView getPageForNewUser() {
-        ModelAndView model = new ModelAndView("admin/patient-page");
+        ModelAndView model = new ModelAndView("admin/patient-create-page");
         model.addObject("patient", new UserEntity());
         return model;
     }
 
     @PostMapping("/create")
     public String saveNewUser(@ModelAttribute("patient") UserEntity user) {
-        //TODO предварительно для этого пользователя сразу добавить все общедоступные опросы
         userService.save(user);
         return "redirect:/";
     }
@@ -47,10 +46,24 @@ public class UserController {
         return new ResponseEntity<>("User by id=" + id + " deleted successfully", HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ModelAndView getPageForUser(@PathVariable("id") Long id) {
+        ModelAndView model = new ModelAndView("admin/patient-page");
+        model.addObject("patient", userService.findById(id));
+        return model;
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("patient") UserEntity user) {
+        userService.update(user);
+        return "redirect:/";
+    }
+
     @PostMapping("/assignPool")
     public ResponseEntity<?> assignPoolById(@ModelAttribute("uqModel") UserNQuizModel uqModel) {
         UserAndQuizzesEntity userAndQuizEntity = UserAndQuizzesEntity.builder()
-                .status("assign")
+                .status("назначен")
+                .completeDate(LocalDate.now())
                 .user(userService.findById(uqModel.getUserId()))
                 .quiz(quizService.findById(uqModel.getQuizId()))
                 .build();

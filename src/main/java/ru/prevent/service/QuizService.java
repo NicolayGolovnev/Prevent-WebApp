@@ -17,6 +17,9 @@ public class QuizService {
     public List<QuizEntity> findAll() {
         return repository.findAll();
     }
+    public List<QuizEntity> findAllByAccessIsTrue() {
+        return repository.findAllByAccessIsTrue();
+    }
 
     public QuizEntity findById(Long id) {
         Optional<QuizEntity> optional = repository.findById(id);

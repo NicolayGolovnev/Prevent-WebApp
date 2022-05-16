@@ -162,7 +162,7 @@ ALTER TABLE "quiz_n_quiz" ADD CONSTRAINT "PK_quiz_n_quiz" PRIMARY KEY ("id_paren
 
 CREATE TABLE "history_results"
 (
-    "ID" BigSerial NOT NULL,
+    "id" BigSerial NOT NULL,
     "result" Text,
     "id_usr" Bigint NOT NULL,
     "id_user_n_quiz" Bigint NOT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE "history_results"
 CREATE INDEX "IX_Relationship9" ON "history_results" ("id_children_quiz")
 ;
 
-ALTER TABLE "history_results" ADD CONSTRAINT "PK_history_results" PRIMARY KEY ("id_usr","id_user_n_quiz","ID")
+ALTER TABLE "history_results" ADD CONSTRAINT "PK_history_results" PRIMARY KEY ("id_usr","id_user_n_quiz","id")
 ;
 
 -- Create foreign keys (relationships) section -------------------------------------------------

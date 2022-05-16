@@ -87,7 +87,7 @@
                             <th:block th:utext="${patient.firstName} + ' ' + ${patient.lastName} + ' ' + ${patient.thirdName}"></th:block>
                         </td>
                         <td class="icon col-sm-1 justify-content-end">
-                            <button class="btn" type="button">
+                            <button class="btn" type="button" th:onclick="'location.href=\'/user/' + ${patient.id} + '\''">
                                 <ion-icon name="create-outline"></ion-icon>
                             </button>
                         </td>

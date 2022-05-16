@@ -3,8 +3,8 @@ VALUES (default, 'Иванов', 'Иван', 'Иваныч', 'Мужчина', '
 
 INSERT INTO public.quiz (id, title, access, gender, min_age, max_age, weight_arg)
 VALUES (default, 'Большой функциональный опросник PLS', true, 'Любой', 1, 100, 1),
-       (default, 'Функция желудка', true, 'Любой', 1, 100, 1),
-       (default, 'Воспаление желудка', true, 'Любой', 1, 100, 1);
+       (default, 'Функция желудка', false, 'Любой', 1, 100, 1),
+       (default, 'Воспаление желудка', false, 'Любой', 1, 100, 1);
 
 INSERT INTO public.quiz_n_quiz (id, id_parent_quiz, id_child_quiz)
 VALUES (default, 1, 2),

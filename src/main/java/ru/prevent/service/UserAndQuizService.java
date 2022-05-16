@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.repository.QuizRepository;
-import ru.prevent.repository.UserAndQuizeRepository;
+import ru.prevent.repository.UserAndQuizRepository;
 import ru.prevent.repository.UserRepository;
 
 import java.util.Optional;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class UserAndQuizService {
     @Autowired
-    UserAndQuizeRepository repository;
+    UserAndQuizRepository repository;
 
     @Autowired
     UserRepository userRepository;

@@ -19,7 +19,7 @@ public class QuizController {
 
     @GetMapping("/create")
     public ModelAndView getPageForNewQuiz() {
-        ModelAndView model = new ModelAndView("admin/assign-pool");
+        ModelAndView model = new ModelAndView("admin/quiz-create-page");
         model.addObject("quiz", new QuizEntity());
         return model;
     }
