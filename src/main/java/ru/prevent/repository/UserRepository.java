@@ -1,10 +1,7 @@
 package ru.prevent.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.prevent.entity.User;
+import ru.prevent.entity.UserEntity;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 }

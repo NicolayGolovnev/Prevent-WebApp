@@ -13,8 +13,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "answer")
-
-public class Answer {
+public class AnswerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,7 +24,11 @@ public class Answer {
     @Column(name = "weight_arg")
     Long weight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_question", nullable = false)
-    Question question;
+    QuestionEntity question;
+
+    @OneToMany(mappedBy = "answer")
+    @JoinColumn
+    List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

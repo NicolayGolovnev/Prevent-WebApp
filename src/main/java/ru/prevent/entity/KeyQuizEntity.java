@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "key_quiz")
-public class keyQuiz {
+public class KeyQuizEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,7 +25,7 @@ public class keyQuiz {
     @Column(name = "result_arg")
     Long resultArg;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)
-    Quiz quiz;
+    QuizEntity quiz;
 }
