@@ -28,15 +28,15 @@ public class QuestionEntity {
     @Column(name = "weight_arg")
     Long weight;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_quiz", nullable = false)
     QuizEntity quiz;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question")
     @JsonIgnore
     List<AnswerEntity> answers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question")
     @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

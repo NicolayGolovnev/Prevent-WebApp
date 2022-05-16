@@ -1,23 +1,22 @@
 package ru.prevent.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
 @Setter
-@Entity
-@Table(name = "user_answer")
-public class UserAndAnswersEntity {
+@Table(name = "history_results")
+public class HistoryResultsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "content_answer")
-    String contentAnswer;
+    @Column(name = "result")
+    String result;
 
     @ManyToOne
     @JoinColumn(name = "id_user_n_quiz", nullable = false)
@@ -28,10 +27,6 @@ public class UserAndAnswersEntity {
     UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "id_question", nullable = false)
-    QuestionEntity question;
-
-    @ManyToOne
-    @JoinColumn(name = "id_answer")
-    AnswerEntity answer;
+    @JoinColumn(name = "id_children_quiz")
+    QuizEntity childrenQuiz;
 }

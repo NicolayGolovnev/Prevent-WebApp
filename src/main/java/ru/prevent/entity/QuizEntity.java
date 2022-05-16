@@ -37,23 +37,27 @@ public class QuizEntity {
     @Column(name = "weight_arg")
     Long weight;
 
-    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "quiz")
     @JsonIgnore
     List<UserAndQuizzesEntity> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "quiz")
+    @JsonIgnore
+    List<HistoryResultsEntity> results = new ArrayList<>();
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<KeyQuizEntity> keys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
-    @JsonIgnore
-    List<QuestionEntity> questions = new ArrayList<>();
-
     @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<QuizAndQuizEntity> parentQuizzes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "childQuiz", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "childQuiz")
     @JsonIgnore
     List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "quiz")
+    @JsonIgnore
+    List<QuestionEntity> questions = new ArrayList<>();
 }
