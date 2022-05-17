@@ -38,7 +38,7 @@
         <div class="form-group row justify-content-end">
             <label for="forTitle" class="col-md-3 col-form-label">Название</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="forTitle" placeholder="Введите название опросника"
+                <input type="text" class="form-control" id="forTitle" placeholder="Название опросника"
                        th:field="*{title}">
             </div>
         </div>
@@ -46,7 +46,7 @@
             <label for="forAccess" class="col-md-3 col-form-label">Общий доступ</label>
             <div class="col-md-8">
                 <select class="custom-select" th:field="*{access}" id="forAccess">
-                    <option th:selected="selected" disabled th:value="false">Выберите доступ опросника</option>
+                    <option th:selected="selected" disabled th:value="false">Доступ опросника</option>
                     <option th:value="true">Открыт</option>
                     <option th:value="false">Закрыт</option>
                 </select>
@@ -56,7 +56,7 @@
             <label for="forGender" class="col-md-3 col-form-label">Гендерный доступ</label>
             <div class="col-md-8">
                 <select class="custom-select" th:field="*{gender}" id="forGender">
-                    <option selected disabled value="">Выберите гендер опросника</option>
+                    <option selected disabled value="">Гендер опросника</option>
                     <option value="Мужчина">Мужчина</option>
                     <option value="Женщина">Женщина</option>
                     <option value="Любой">Любой</option>
@@ -66,21 +66,21 @@
         <div class="form-group row justify-content-end">
             <label for="forMinAge" class="col-md-3 col-form-label">Минимальный возраст прохождения</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="forMinAge" placeholder="Введите минимальный возраст"
+                <input type="text" class="form-control" id="forMinAge" placeholder="Минимальный возраст"
                        th:field="*{minAge}">
             </div>
         </div>
         <div class="form-group row justify-content-end">
             <label for="forMaxAge" class="col-md-3 col-form-label">Максимальный возраст прохождения</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="forMaxAge" placeholder="Введите максимальный возраст"
+                <input type="text" class="form-control" id="forMaxAge" placeholder="Максимальный возраст"
                        th:field="*{maxAge}">
             </div>
         </div>
         <div class="form-group row justify-content-end">
             <label for="forWeightArg" class="col-md-3 col-form-label">Вес опросника</label>
             <div class="col-md-8">
-                <input disabled type="text" class="form-control" id="forWeightArg" placeholder="Введите вес опросника"
+                <input disabled type="text" class="form-control" id="forWeightArg" placeholder="Вес опросника"
                        th:field="*{weight}">
             </div>
         </div>
@@ -89,43 +89,47 @@
         <div class="container">
             <div class="form-group">
                 <label>Дочерние опросники</label>
-                <div class="container children-group">
+                <div class="children-group">
+
                 </div>
             </div>
-            <div class="form-group row justify-content-end">
+            <div class="row justify-content-end">
                 <button type="button" onclick="generateNewChildQuiz()"
                         class="btn btn-success col-md-5 m-2">Добавить дочерний опросник</button>
             </div>
         </div>
         <hr>
 
-        <div class="container form-group">
-            <label>Вопросы для прохождения</label>
-            <div class="container question-group">
+        <div class="container">
+            <div class="form-group">
+                <label>Вопросы для прохождения</label>
+                <div class="group question-group">
 
+                </div>
             </div>
-            <div class="form-group row justify-content-end">
+            <div class="row justify-content-end">
                 <button type="button" onclick="generateNewQuestion()"
                         class="btn btn-success col-md-5 m-2">Добавить новый вопрос</button>
             </div>
         </div>
         <hr>
 
-        <div class="container form-group">
-            <label>Ключи опросника</label>
-            <div class="container keys-group">
+        <div class="container">
+            <div class="form-group">
+                <label>Ключи опросника</label>
+                <div class="group keys-group">
 
+                </div>
             </div>
             <div class="form-group row justify-content-end">
                 <button type="button" onclick="generateNewKey()"
                         class="btn btn-success col-md-5 m-2">Добавить новый ключ</button>
             </div>
         </div>
-        <hr>
 
         <div class="form-group row justify-content-end">
             <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-3 mx-3 my-1">Назад</button>
-            <button type="submit" class="btn btn-success col-md-5 mx-3 my-1">Создать</button>
+            <button type="submit" onclick="renameData()" class="btn btn-success col-md-5 mx-3 my-1">Создать</button>
         </div>
     </form>
 

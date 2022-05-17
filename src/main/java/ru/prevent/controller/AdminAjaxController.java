@@ -53,4 +53,11 @@ public class AdminAjaxController {
         return "includes/quiz-delete-modal";
     }
 
+    @GetMapping("/getListQuizzesForSelect")
+    public ModelAndView getListQuizzesForSelect() {
+        ModelAndView model = new ModelAndView("includes/list-quizzes-for-childrens");
+        model.addObject("quizzes", quizService.findAll());
+        return model;
+    }
+
 }

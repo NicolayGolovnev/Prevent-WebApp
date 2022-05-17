@@ -16,6 +16,9 @@ public class KeyQuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "gender")
+    String gender;
+
     @Column(name = "min_arg")
     Long minArg;
 

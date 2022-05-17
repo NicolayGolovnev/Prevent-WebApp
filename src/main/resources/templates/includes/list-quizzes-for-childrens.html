@@ -1,0 +1,6 @@
+<select class="custom-select" name="" id="childQuizzes" xmlns:th="http://www.thymeleaf.org" xmlns="">
+  <option selected="selected" disabled="disabled" value="none">-</option>
+  <th:block th:each="optionQuiz : ${quizzes}">
+    <option th:value="${optionQuiz.id}">[[${optionQuiz.title}]]</option>
+  </th:block>
+</select>

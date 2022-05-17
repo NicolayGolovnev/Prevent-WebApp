@@ -22,6 +22,12 @@ public class QuizController {
         return model;
     }
 
+    @PostMapping("/create")
+    public String createQuiz(@ModelAttribute("quiz") QuizEntity quiz) {
+        System.out.println(quiz.toString());
+        quizService.save(quiz);
+        return "redirect:/";
+    }
 
     @GetMapping("/{id}")
     public ModelAndView getPageForQuiz(@PathVariable("id") Long id) {

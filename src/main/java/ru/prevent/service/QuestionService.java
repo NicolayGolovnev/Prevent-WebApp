@@ -13,4 +13,12 @@ public class QuestionService {
     QuestionRepository repository;
 
     public List<QuestionEntity> findQuestionsByQuizId(Long id) { return repository.findAllByQuiz_Id(id);}
+
+    public void save(QuestionEntity question) {
+        repository.save(question);
+    }
+
+    public void saveAll(List<QuestionEntity> questions) {
+        repository.saveAll(questions);
+    }
 }
