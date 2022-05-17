@@ -131,9 +131,10 @@ public class TestController {
         userAndQuizService.save(userAndQuiz);
 
         if (childQuizzes.size() == 1){
-            //TODO сделать для опрсоов не состоящих из опросов
+            //TODO сделать для опросов, не состоящих из опросов
         }
         else {
+            List<HistoryResultsEntity> resultsToModel = new ArrayList<>();
             for (ChildQuizModel childQuiz: childQuizzes) {
                 int resultQuiz = 0;
                 QuestionEntity questionField;
@@ -158,6 +159,7 @@ public class TestController {
                         break;
                     }
                 }
+                QuizEntity ok = quizService.findById(childQuiz.getId());
                 HistoryResultsEntity newResult = HistoryResultsEntity.builder()
                         .result(resultTest)
                         .user(user)
@@ -165,9 +167,12 @@ public class TestController {
                         .childrenQuiz(quizService.findById(childQuiz.getId()))
                         .build();
                 historyResultService.save(newResult);
+                resultsToModel.add(newResult);
             }
+            model.addAttribute("results", resultsToModel);
         }
-        return "";
+        model.addAttribute("quizInfo", userAndQuiz);
+        return "showResult";
     }
 
     @GetMapping("/showResult/{id}")
