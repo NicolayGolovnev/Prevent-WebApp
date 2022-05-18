@@ -2,6 +2,7 @@ package ru.prevent.exception;
 
 public class AnswerNotFoundException extends RuntimeException {
     public AnswerNotFoundException() {
+        super();
     }
 
     public AnswerNotFoundException(String message) {

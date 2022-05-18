@@ -53,23 +53,17 @@ public class UserController {
         return model;
     }
 
-    @PostMapping("/update")
-    public String update(@ModelAttribute("patient") UserEntity user) {
-        userService.update(user);
-        return "redirect:/";
-    }
-
     @PostMapping("/assignPool")
-    public ResponseEntity<?> assignPoolById(@ModelAttribute("uqModel") UserNQuizModel uqModel) {
+    public ResponseEntity<?> assignPoolById(@ModelAttribute("user") String user, @ModelAttribute("quiz") String quiz) {
         UserAndQuizzesEntity userAndQuizEntity = UserAndQuizzesEntity.builder()
                 .status("назначен")
                 .completeDate(LocalDate.now())
-                .user(userService.findById(uqModel.getUserId()))
-                .quiz(quizService.findById(uqModel.getQuizId()))
+                .user(userService.findByFIO(user))
+                .quiz(quizService.findByTitle(quiz))
                 .build();
         userAndQuizService.save(userAndQuizEntity);
-        return new ResponseEntity<>("Quiz (id=" + uqModel.getQuizId() + ") for user (id=" +
-                uqModel.getUserId() + ") created successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Quiz (" + quiz + ") for user (" +
+                user + ") created successfully", HttpStatus.OK);
     }
 
 }

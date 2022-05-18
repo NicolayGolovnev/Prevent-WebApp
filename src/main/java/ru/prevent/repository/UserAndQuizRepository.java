@@ -6,6 +6,5 @@ import ru.prevent.entity.UserAndQuizzesEntity;
 import java.util.Optional;
 
 public interface UserAndQuizRepository extends JpaRepository<UserAndQuizzesEntity, Long> {
-
     Optional<UserAndQuizzesEntity> findByUser_IdAndQuiz_Id(Long idUser, Long idQuiz);
 }

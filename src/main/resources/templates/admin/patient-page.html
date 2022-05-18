@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
           integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
           crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" th:href="@{~/css/testCss.css}">
+    <link rel="stylesheet" th:href="@{~/css/styles.css}">
     <!--  <link rel="stylesheet" th:href="@{~/css/navbar-fixed-left.min.css}">-->
 
     <!-- jQuery (Cloudflare CDN) -->
@@ -34,7 +34,7 @@
 <div class="main-container container">
     <h3 class="text-center">Редактирование информации о пациенте №[[${patient.id}]]</h3>
 
-    <form action="#" method="post" th:action="@{/user/update}" th:object="${patient}">
+    <form action="#" method="post" th:action="@{/user/create}" th:object="${patient}">
         <input hidden th:field="${patient.id}">
         <div class="form-group row justify-content-end">
             <label for="forFirstName" class="col-md-3 col-form-label">Фамилия</label>

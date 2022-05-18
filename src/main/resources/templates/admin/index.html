@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
           integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
           crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" th:href="@{~/css/testCss.css}">
+    <link rel="stylesheet" th:href="@{~/css/styles.css}">
     <link rel="stylesheet" th:href="@{~/css/navbar-fixed-left.min.css}">
 
     <!-- jQuery (Cloudflare CDN) -->
@@ -84,10 +84,11 @@
                 <th:block th:each="patient, state: ${patients}">
                     <tr style="display: flex">
                         <td class="col-sm-10">
-                            <th:block th:utext="${patient.firstName} + ' ' + ${patient.lastName} + ' ' + ${patient.thirdName}"></th:block>
+                            [[${patient.firstName} + ' ' + ${patient.lastName} + ' ' + ${patient.thirdName}]]
                         </td>
                         <td class="icon col-sm-1 justify-content-end">
-                            <button class="btn" type="button" th:onclick="'location.href=\'/user/' + ${patient.id} + '\''">
+                            <button class="btn" type="button"
+                                    th:onclick="'location.href=\'/user/' + ${patient.id} + '\''">
                                 <ion-icon name="create-outline"></ion-icon>
                             </button>
                         </td>

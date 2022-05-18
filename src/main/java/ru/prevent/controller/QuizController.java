@@ -24,7 +24,6 @@ public class QuizController {
 
     @PostMapping("/create")
     public String createQuiz(@ModelAttribute("quiz") QuizEntity quiz) {
-        System.out.println(quiz.toString());
         quizService.save(quiz);
         return "redirect:/";
     }

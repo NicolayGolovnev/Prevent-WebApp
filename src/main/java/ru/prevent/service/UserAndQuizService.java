@@ -20,7 +20,7 @@ public class UserAndQuizService {
     @Autowired
     QuizRepository quizRepository;
 
-    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz){
+    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz) {
         return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
     }
 

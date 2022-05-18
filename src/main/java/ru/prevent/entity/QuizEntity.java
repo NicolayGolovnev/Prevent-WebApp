@@ -35,7 +35,7 @@ public class QuizEntity {
     Long maxAge;
 
     @Column(name = "weight_arg")
-    Long weight;
+    Long weight = 1L;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

@@ -11,7 +11,7 @@ import ru.prevent.service.UserService;
 import java.util.List;
 
 @Controller
-//@RequestMapping("admin")
+@RequestMapping("admin")
 public class AdminController {
     @Autowired
     UserService userService;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.prevent.entity.QuizEntity;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
+import ru.prevent.exception.UserNotFoundException;
 import ru.prevent.repository.QuizRepository;
 import ru.prevent.repository.UserRepository;
 
@@ -25,6 +26,20 @@ public class UserService {
         return repository.findAll();
     }
 
+    public UserEntity findByFIO(String fio) {
+        String[] names = fio.split(" ");
+        Optional<UserEntity> optionalUser = Optional.empty();
+        if (names.length == 2)
+            optionalUser = repository.findByFirstNameAndLastName(names[0], names[1]);
+        else if (names.length == 3)
+            optionalUser = repository.findByFirstNameAndLastNameAndThirdName(names[0], names[1], names[2]);
+
+        if (optionalUser.isPresent())
+            return optionalUser.get();
+        else
+            throw new UserNotFoundException("User[firstName=" + names[0] + ", lastName=" + names[1] + "] not found!");
+    }
+
     public UserEntity findById(Long id) {
         Optional<UserEntity> optionalUser = repository.findById(id);
         if (optionalUser.isPresent())
@@ -43,10 +58,6 @@ public class UserService {
                     .quiz(quiz)
                     .build());
         user.setQuizzes(userQuizzes);
-        repository.save(user);
-    }
-
-    public void update(UserEntity user) {
         repository.save(user);
     }
 
