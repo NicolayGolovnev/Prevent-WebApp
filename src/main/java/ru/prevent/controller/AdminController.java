@@ -18,7 +18,7 @@ public class AdminController {
 
     @GetMapping("/")
     public ModelAndView loadIndex() {
-        ModelAndView model = new ModelAndView("/admin/index");
+        ModelAndView model = new ModelAndView("admin/index");
         List<UserEntity> users = userService.findAll();
         model.addObject("patients", users);
         return model;

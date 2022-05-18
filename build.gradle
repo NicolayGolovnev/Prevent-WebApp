@@ -6,8 +6,9 @@ plugins {
 }
 
 group = 'ru.prevent'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+version = '1.0'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = sourceCompatibility
 
 configurations {
 	compileOnly {
@@ -37,4 +38,12 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+task stage {
+	dependsOn build
+}
+
+war {
+	baseName = 'heroku-prevent-demo'
 }
