@@ -1,8 +1,6 @@
 package ru.prevent.model;
 
 import lombok.*;
-import ru.prevent.entity.Quiz;
-import ru.prevent.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

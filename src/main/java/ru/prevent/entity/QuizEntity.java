@@ -15,12 +15,11 @@ import java.util.List;
 @Entity
 @Table(name = "quiz")
 public class QuizEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title")
     String title;
 
     @Column(name = "access")
@@ -36,13 +35,13 @@ public class QuizEntity {
     Long maxAge;
 
     @Column(name = "weight_arg")
-    Long weight;
+    Long weight = 1L;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<UserAndQuizzesEntity> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "childrenQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<HistoryResultsEntity> results = new ArrayList<>();
 
@@ -50,15 +49,15 @@ public class QuizEntity {
     @JsonIgnore
     List<KeyQuizEntity> keys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "childQuiz")
     @JsonIgnore
     List<QuizAndQuizEntity> parentQuizzes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "childQuiz")
+    @OneToMany(mappedBy = "parentQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<QuestionEntity> questions = new ArrayList<>();
 }

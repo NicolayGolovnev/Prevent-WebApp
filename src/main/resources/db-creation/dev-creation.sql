@@ -2,9 +2,9 @@ INSERT INTO public.usr (id, first_name, last_name, third_name, sex, birthday, te
 VALUES (default, 'Иванов', 'Иван', 'Иваныч', 'Мужчина', '1960-04-28 22:17:51.000000', '88005553535');
 
 INSERT INTO public.quiz (id, title, access, gender, min_age, max_age, weight_arg)
-VALUES (default, 'Большой функциональный опросник PLS', true, 'all', 1, 100, 1),
-       (default, 'Функция желудка', true, 'all', 1, 100, 1),
-       (default, 'Воспаление желудка', true, 'all', 1, 100, 1);
+VALUES (default, 'Большой функциональный опросник PLS', true, 'Любой', 1, 100, 1),
+       (default, 'Функция желудка', false, 'Любой', 1, 100, 1),
+       (default, 'Воспаление желудка', false, 'Любой', 1, 100, 1);
 
 INSERT INTO public.quiz_n_quiz (id, id_parent_quiz, id_child_quiz)
 VALUES (default, 1, 2),

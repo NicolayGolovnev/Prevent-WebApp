@@ -32,11 +32,11 @@ public class QuestionEntity {
     @JoinColumn(name = "id_quiz", nullable = false)
     QuizEntity quiz;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<AnswerEntity> answers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

@@ -6,8 +6,9 @@ plugins {
 }
 
 group = 'ru.prevent'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+version = '0.8.1'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = sourceCompatibility
 
 configurations {
 	compileOnly {
@@ -29,6 +30,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql:42.2.23'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
+	developmentOnly("org.springframework.boot:spring-boot-devtools:2.6.0")
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -36,4 +38,12 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+task stage {
+	dependsOn build
+}
+
+war {
+	baseName = 'heroku-prevent-demo'
 }

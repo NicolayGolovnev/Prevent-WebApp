@@ -1,6 +1,6 @@
 ﻿/*
 Created: 19.01.2022
-Modified: 13.05.2022
+Modified: 16.05.2022
 Model: PostgreSQL 12
 Database: PostgreSQL 12
 */
@@ -53,7 +53,7 @@ CREATE TABLE "question"
     "content" Text,
     "num_question" Bigint,
     "weight_arg" Bigint,
-    "id_quiz" Bigint
+    "id_quiz" Bigint NOT NULL
 )
     WITH (
         autovacuum_enabled=true)
@@ -78,10 +78,7 @@ CREATE TABLE "answer"
         autovacuum_enabled=true)
 ;
 
-CREATE INDEX "IX_Relationship3" ON "answer" ("id_question")
-;
-
-ALTER TABLE "answer" ADD CONSTRAINT "PK_answer" PRIMARY KEY ("id")
+ALTER TABLE "answer" ADD CONSTRAINT "PK_answer" PRIMARY KEY ("id","id_question")
 ;
 
 -- Table key_quiz
@@ -89,6 +86,7 @@ ALTER TABLE "answer" ADD CONSTRAINT "PK_answer" PRIMARY KEY ("id")
 CREATE TABLE "key_quiz"
 (
     "id" BigSerial NOT NULL,
+    "gender" Text,
     "min_arg" Bigint,
     "max_arg" Bigint,
     "result_arg" Text,
@@ -109,17 +107,14 @@ CREATE TABLE "user_answer"
     "content_answer" Text,
     "id_user_n_quiz" Bigint NOT NULL,
     "id_usr" Bigint NOT NULL,
-    "id_question" Bigint NOT NULL,
-    "id_answer" Bigint
+    "id_answer" Bigint,
+    "id_question" Bigint
 )
     WITH (
         autovacuum_enabled=true)
 ;
 
-CREATE INDEX "IX_Relationship4" ON "user_answer" ("id_question")
-;
-
-CREATE INDEX "IX_Relationship11" ON "user_answer" ("id_answer")
+CREATE INDEX "IX_Relationship11" ON "user_answer" ("id_answer","id_question")
 ;
 
 ALTER TABLE "user_answer" ADD CONSTRAINT "PK_user_answer" PRIMARY KEY ("id","id_usr","id_user_n_quiz")
@@ -197,8 +192,8 @@ ALTER TABLE "user_n_quiz"
     ADD CONSTRAINT "Relationship2"
         FOREIGN KEY ("id_quiz")
             REFERENCES "quiz" ("id")
-            ON DELETE RESTRICT
-            ON UPDATE RESTRICT
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 ;
 
 ALTER TABLE "key_quiz"
@@ -213,40 +208,32 @@ ALTER TABLE "question"
     ADD CONSTRAINT "Relationship7"
         FOREIGN KEY ("id_quiz")
             REFERENCES "quiz" ("id")
-            ON DELETE RESTRICT
-            ON UPDATE RESTRICT
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 ;
 
 ALTER TABLE "answer"
     ADD CONSTRAINT "Relationship3"
         FOREIGN KEY ("id_question")
             REFERENCES "question" ("id")
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-;
-
-ALTER TABLE "user_answer"
-    ADD CONSTRAINT "Relationship4"
-        FOREIGN KEY ("id_question")
-            REFERENCES "question" ("id")
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 ;
 
 ALTER TABLE "quiz_n_quiz"
     ADD CONSTRAINT "Relationship15"
         FOREIGN KEY ("id_parent_quiz")
             REFERENCES "quiz" ("id")
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 ;
 
 ALTER TABLE "quiz_n_quiz"
     ADD CONSTRAINT "Relationship16"
         FOREIGN KEY ("id_child_quiz")
             REFERENCES "quiz" ("id")
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 ;
 
 ALTER TABLE "history_results"
@@ -275,8 +262,9 @@ ALTER TABLE "user_answer"
 
 ALTER TABLE "user_answer"
     ADD CONSTRAINT "Relationship11"
-        FOREIGN KEY ("id_answer")
-            REFERENCES "answer" ("id")
-            ON DELETE RESTRICT
-            ON UPDATE RESTRICT
+        FOREIGN KEY ("id_answer", "id_question")
+            REFERENCES "answer" ("id", "id_question")
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 ;
+
