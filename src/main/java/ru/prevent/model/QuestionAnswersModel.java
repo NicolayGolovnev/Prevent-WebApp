@@ -1,7 +1,7 @@
 package ru.prevent.model;
 
 import lombok.*;
-import ru.prevent.entity.Answer;
+import ru.prevent.entity.AnswerEntity;
 
 import java.util.List;
 
@@ -15,6 +15,6 @@ public class QuestionAnswersModel {
     String content;
     Long numQuestion;
     Long weight;
-    List<Answer> answers;
-    Answer userAnswer;
+    List<AnswerEntity> answers;
+    AnswerEntity userAnswer;
 }

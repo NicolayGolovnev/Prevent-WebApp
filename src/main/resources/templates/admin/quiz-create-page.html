@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Личный кабинет врача</title>
+
+    <!-- Bootstrap CSS (Cloudflare CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
+          integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" th:href="@{~/css/styles.css}">
+    <!--  <link rel="stylesheet" th:href="@{~/css/navbar-fixed-left.min.css}">-->
+
+    <!-- jQuery (Cloudflare CDN) -->
+    <!--    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"-->
+    <!--            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="-->
+    <!--            crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap Bundle JS (Cloudflare CDN) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+            integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+<a class="logo-header" th:href="@{/admin/}">
+    <img th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
+</a>
+<div class="header">
+    Центр превентивной и эстетической медицины
+</div>
+<div class="main-container container">
+    <h3 class="text-center">Конструктор нового опросника</h3>
+
+    <form action="#" method="post" th:action="@{/quiz/create}" th:object="${quiz}">
+        <div class="form-group row justify-content-end">
+            <label for="forTitle" class="col-md-3 col-form-label">Название</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="forTitle" placeholder="Название опросника"
+                       th:field="*{title}">
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="forAccess" class="col-md-3 col-form-label">Общий доступ</label>
+            <div class="col-md-8">
+                <select class="custom-select" th:field="*{access}" id="forAccess">
+                    <option th:selected="selected" disabled th:value="false">Доступ опросника</option>
+                    <option th:value="true">Открыт</option>
+                    <option th:value="false">Закрыт</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="forGender" class="col-md-3 col-form-label">Гендерный доступ</label>
+            <div class="col-md-8">
+                <select class="custom-select" th:field="*{gender}" id="forGender">
+                    <option selected disabled value="">Гендер опросника</option>
+                    <option value="Мужчина">Мужчина</option>
+                    <option value="Женщина">Женщина</option>
+                    <option value="Любой">Любой</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="forMinAge" class="col-md-3 col-form-label">Минимальный возраст прохождения</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="forMinAge" placeholder="Минимальный возраст"
+                       th:field="*{minAge}">
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="forMaxAge" class="col-md-3 col-form-label">Максимальный возраст прохождения</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="forMaxAge" placeholder="Максимальный возраст"
+                       th:field="*{maxAge}">
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="forWeightArg" class="col-md-3 col-form-label">Вес опросника</label>
+            <div class="col-md-8">
+                <input disabled type="text" class="form-control" id="forWeightArg" placeholder="Вес опросника"
+                       th:field="*{weight}">
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="form-group">
+                <label>Дочерние опросники</label>
+                <div class="children-group">
+
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <button type="button" onclick="generateNewChildQuiz()"
+                        class="btn btn-success col-md-5 m-2">Добавить дочерний опросник</button>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="form-group">
+                <label>Вопросы для прохождения</label>
+                <div class="group question-group">
+
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <button type="button" onclick="generateNewQuestion()"
+                        class="btn btn-success col-md-5 m-2">Добавить новый вопрос</button>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="form-group">
+                <label>Ключи опросника</label>
+                <div class="group keys-group">
+
+                </div>
+            </div>
+            <div class="form-group row justify-content-end">
+                <button type="button" onclick="generateNewKey()"
+                        class="btn btn-success col-md-5 m-2">Добавить новый ключ</button>
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-end">
+            <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-3 mx-3 my-1">Назад</button>
+            <button type="submit" onclick="renameData()" class="btn btn-success col-md-5 mx-3 my-1">Создать</button>
+        </div>
+    </form>
+
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<script th:src="@{~/js/loadModals.js}"></script>
+<script th:src="@{~/js/quiz-creator.js}"></script>
+
+</body>
+</html>

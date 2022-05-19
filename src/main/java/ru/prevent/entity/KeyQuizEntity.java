@@ -16,6 +16,9 @@ public class KeyQuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "gender")
+    String gender;
+
     @Column(name = "min_arg")
     Long minArg;
 
@@ -23,7 +26,7 @@ public class KeyQuizEntity {
     Long maxArg;
 
     @Column(name = "result_arg")
-    Long resultArg;
+    String resultArg;
 
     @ManyToOne
     @JoinColumn(name = "id_quiz", nullable = false)
