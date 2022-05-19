@@ -26,7 +26,7 @@ function generateNewChildQuiz() {
         url: "/ajax/getListQuizzesForSelect",
         dataType: 'html',
         success: function (response) {
-            let select = $('.child-' + ' select');
+            let select = $('.child-' + (counterForChildrens - 1) + ' select');
             select.empty();
             select.replaceWith(response);
         }
