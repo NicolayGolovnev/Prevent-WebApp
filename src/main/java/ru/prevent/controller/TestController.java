@@ -96,7 +96,7 @@ public class TestController {
         model.addAttribute("quiz", quiz);
         model.addAttribute("test", quizModel);
 
-        return "/test/quiz";
+        return "quiz";
     }
 
     @GetMapping("/showCompleteTest")
