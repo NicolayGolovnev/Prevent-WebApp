@@ -13,9 +13,6 @@ import java.util.List;
 @Builder
 public class QuestionAnswersModel {
     Long id;
-    /*String content;
-    Long numQuestion;
-    Long weight;*/
     QuestionEntity question;
     List<AnswerEntity> answers;
     AnswerEntity userAnswer;

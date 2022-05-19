@@ -80,11 +80,18 @@ public class TestController {
                         .build();
                 childQuizModel.add(buf);
             }
+
             childQuizModel.setTittle(childQuiz.getChildQuiz().getTitle());
             childQuizModel.setId(childQuiz.getChildQuiz().getId());
             quizModel.add(childQuizModel);
         }
 
+        int countQuiz = childQuizzes.size();
+        int[] countQuestionInBlocks = new int[countQuiz];
+        for (int i = 0; i < countQuiz; i++)
+            countQuestionInBlocks[i] = quizModel.getChildQuizzes().get(i).getQuestions().size();
+        model.addAttribute("countBlocks", countQuiz);
+        model.addAttribute("countQuestionsInBlocks", countQuestionInBlocks);
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
         model.addAttribute("test", quizModel);
@@ -94,26 +101,11 @@ public class TestController {
 
     @GetMapping("/showCompleteTest")
     public String showCompleteTest(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model){
-        List<UserAndAnswersEntity> userAnswers = userAnswerService.findAllByQuizId(quizId);
+        UserAndQuizzesEntity userAndQuiz = userAndQuizService.findById(quizId);
+        model.addAttribute("results", historyResultService.findAllByIdUserAndQuiz(quizId));
+        model.addAttribute("quizInfo", userAndQuiz);
 
-        Map<String, String> questions = new HashMap<>();
-        String tmpAnswer;
-        for (UserAndAnswersEntity answer: userAnswers) {
-            if(answer.getContentAnswer().length() == 0)
-                tmpAnswer = answer.getAnswer().getContent();
-            else
-                tmpAnswer = answer.getContentAnswer();
-            questions.put(answer.getQuestion().getContent(), tmpAnswer);
-        }
-        UserAndQuizzesEntity quiz = userAndQuizService.findById(quizId);
-        ShowCompleteTestModel test = ShowCompleteTestModel.builder()
-                .questionsAndAnswers(questions)
-                .dateOfFinish(quiz.getCompleteDate().toString())
-                .title(quiz.getQuiz().getTitle())
-                .build();
-
-        model.addAttribute("test", test);
-        return "showTest";
+        return "showResult";
     }
 
     @PostMapping("/saveResults")
@@ -159,7 +151,6 @@ public class TestController {
                         break;
                     }
                 }
-                QuizEntity ok = quizService.findById(childQuiz.getId());
                 HistoryResultsEntity newResult = HistoryResultsEntity.builder()
                         .result(resultTest)
                         .user(user)

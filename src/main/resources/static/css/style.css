@@ -6,7 +6,8 @@
 
 .divs-with-select{
     width: 60%;
-    margin-left: 3%;
+    margin-left: 2rem;
+    margin-top: 1.5rem;
 }
 
 .header{
@@ -17,9 +18,16 @@
 .header-user-page{
     background-color: #f5f4f2;
     height: 50%;
-    padding-top: 1%;
-    padding-bottom: 3%;
-    padding-left: 1%
+}
+
+.button-start{
+    float:right;
+}
+
+.button-on-main-page{
+    margin-bottom: 4rem;
+    float: right;
+    margin-right: 5rem;
 }
 
 @media (max-width: 800px){
@@ -36,6 +44,14 @@
     .buttons-mainpage{
         margin-top: 1%;
         margin-left: 5%;
+    }
+    .button-start{
+        float: none;
+        width: 100%;
+    }
+    .button-on-main-page{
+        margin-bottom: 2rem;
+        margin-right: 2rem;
     }
 }
 
