@@ -21,17 +21,17 @@ public class UserAndAnswersEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_user_n_quiz", nullable = false)
-    UserAndQuizzesEntity userQuiz;
+    UserAndQuizzesEntity userQuizzes;
 
     @ManyToOne
-    @JoinColumn(name = "id_usr", nullable = false)
-    UserEntity user;
+    @JoinColumn(name = "id_answer", nullable = false)
+    AnswerEntity answer;
 
     @ManyToOne
     @JoinColumn(name = "id_question", nullable = false)
     QuestionEntity question;
 
     @ManyToOne
-    @JoinColumn(name = "id_answer")
-    AnswerEntity answer;
+    @JoinColumn(name = "id_usr", nullable = false)
+    UserEntity user;
 }

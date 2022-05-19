@@ -27,18 +27,15 @@ public class UserAndQuizzesEntity {
     LocalDate completeDate;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_usr", nullable = false)
     UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "id_quiz")
+    @JoinColumn(name = "id_quiz", nullable = false)
     QuizEntity quiz;
 
-    @OneToMany(mappedBy = "userQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "userQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    List<HistoryResultsEntity> results = new ArrayList<>();
 }

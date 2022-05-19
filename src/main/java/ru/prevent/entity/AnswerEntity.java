@@ -29,7 +29,7 @@ public class AnswerEntity {
     @JoinColumn(name = "id_question", nullable = false)
     QuestionEntity question;
 
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
     @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 }

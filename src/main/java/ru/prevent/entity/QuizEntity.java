@@ -20,7 +20,7 @@ public class QuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title")
     String title;
 
     @Column(name = "access")
@@ -42,7 +42,7 @@ public class QuizEntity {
     @JsonIgnore
     List<UserAndQuizzesEntity> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "childrenQuiz")
     @JsonIgnore
     List<HistoryResultsEntity> results = new ArrayList<>();
 

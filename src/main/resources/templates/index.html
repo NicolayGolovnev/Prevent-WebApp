@@ -25,7 +25,20 @@
 
 </head>
 <body>
-<h1 th:inline="text">Hello user!</h1>
+<h4>Для перехода к рабочему месту администратора нажмите на ссылку ниже</h4>
 <a href="admin/" style="text-align: center">АРМ администратора</a>
+<h4>Для перехода к рабочему месту пользователя выберите пользователя и нажмите кнопку "выбрать"</h4>
+<form action="#" method="post" th:action="@{/loadUser}" th:object="${chooseUser}">
+    <select class="form-select form-control rounded-4" style="width: 100%" id="forCompleteUserQuiz" th:field="${chooseUser.userId}">
+        <option th:each="user : ${users}"
+                th:value="${user.id}"
+                th:utext="${user.getFirstName()} + ' ' + ${user.getLastName()}">
+    </select>
+    <div style="margin-top: 0.5rem">
+        <button type="submit"
+                class="btn btn-success button-start">Выбрать
+        </button>
+    </div>
+</form>
 </body>
 </html>
