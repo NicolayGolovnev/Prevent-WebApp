@@ -2,7 +2,7 @@ function giveIdToModal(id) {
     $(".btn-modal-delete").attr("value", id)
 }
 
-function openPatientListContainer() {
+function getPatientListHtml() {
     $.ajax({
         type: 'GET',
         url: "/ajax/getPatientList",
@@ -12,6 +12,10 @@ function openPatientListContainer() {
             container.replaceWith(response);
         }
     });
+}
+
+function openPatientListContainer() {
+    getPatientListHtml()
     if (window.innerWidth < 768)
         $('.navbar-toggler').click()
 
@@ -33,13 +37,13 @@ function deletePatient() {
         url: '/user/delete/' + id,
         success: function (response) {
             alert(response);
-            location.reload();
+            getPatientListHtml()
+            $('#deleteModal').modal('hide')
         }
     });
 }
 
-
-function openQuizListContainer() {
+function getQuizListHtml() {
     $.ajax({
         type: 'GET',
         url: "/ajax/getQuizList",
@@ -49,6 +53,10 @@ function openQuizListContainer() {
             container.replaceWith(response);
         }
     });
+}
+
+function openQuizListContainer() {
+    getQuizListHtml()
     if (window.innerWidth < 768)
         $('.navbar-toggler').click()
 
@@ -63,7 +71,7 @@ function openQuizListContainer() {
     });
 }
 
-function openAssignPoolContainer() {
+function getAssignPoolHtml() {
     $.ajax({
         type: 'GET',
         url: "/ajax/getAssignPool",
@@ -73,6 +81,10 @@ function openAssignPoolContainer() {
             container.replaceWith(response);
         }
     });
+}
+
+function openAssignPoolContainer() {
+    getAssignPoolHtml()
     if (window.innerWidth < 768)
         $('.navbar-toggler').click()
 }
@@ -89,7 +101,7 @@ function assignPool() {
         data: form,
         success: function (response) {
             alert(response);
-            location.reload();
+            getAssignPoolHtml()
         },
         error: function (response) {
             alert(response.responseText);
@@ -104,7 +116,8 @@ function deleteQuiz() {
         url: '/quiz/delete/' + id,
         success: function (response) {
             alert(response);
-            location.reload();
+            getQuizListHtml()
+            $('#deleteModal').modal('hide')
         }
     });
 }

@@ -17,7 +17,6 @@ function generateNewChildQuiz() {
                         <ion-icon name="trash-outline"></ion-icon>
                     </button>
                 </div>`
-    counterForChildrens += 1
 
     $(".children-group").append(insert)
 
@@ -25,12 +24,15 @@ function generateNewChildQuiz() {
     $.ajax({
         type: 'GET',
         url: "/ajax/getListQuizzesForSelect",
-        dataType: 'html'
-    }).done(function (response) {
-        let select = $('.children-group select');
-        select.empty();
-        select.replaceWith(response);
+        dataType: 'html',
+        success: function (response) {
+            let select = $('.child-' + ' select');
+            select.empty();
+            select.replaceWith(response);
+        }
     });
+
+    counterForChildrens += 1
 }
 
 function deleteChildrenQuizSelect(childId) {
