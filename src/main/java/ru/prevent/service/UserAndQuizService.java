@@ -7,6 +7,7 @@ import ru.prevent.repository.QuizRepository;
 import ru.prevent.repository.UserAndQuizRepository;
 import ru.prevent.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,10 +30,17 @@ public class UserAndQuizService {
         if (optionalUserAndQuiz.isPresent())
             return optionalUserAndQuiz.get();
         else
-            throw new RuntimeException("Quiz with id=" + id + " by user don't found!");
+            throw new RuntimeException("Record quiz-user[id=" + id + "] not found!");
     }
 
-    public void save(UserAndQuizzesEntity entity) {
-        repository.save(entity);
+    public List<UserAndQuizzesEntity> findAllOpenAndAssignedQuizzesByUserId(Long userId) {
+        List<UserAndQuizzesEntity> opened = repository.findByUser_IdAndStatus(userId, "открытый");
+        List<UserAndQuizzesEntity> assigned = repository.findByUser_IdAndStatus(userId, "назначен");
+        opened.addAll(assigned);
+
+        return opened;
     }
+
+    public void save(UserAndQuizzesEntity entity){
+        repository.save(entity);}
 }

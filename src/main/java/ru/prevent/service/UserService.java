@@ -45,7 +45,7 @@ public class UserService {
         if (optionalUser.isPresent())
             return optionalUser.get();
         else
-            throw new RuntimeException("User with id=" + id + " not found!");
+            throw new UserNotFoundException("User[id=" + id + "] not found!");
     }
 
     public void save(UserEntity user) {

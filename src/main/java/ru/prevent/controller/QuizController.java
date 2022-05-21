@@ -25,7 +25,7 @@ public class QuizController {
     @PostMapping("/create")
     public String createQuiz(@ModelAttribute("quiz") QuizEntity quiz) {
         quizService.save(quiz);
-        return "redirect:/";
+        return "redirect:/admin/";
     }
 
     @GetMapping("/{id}")
@@ -36,15 +36,9 @@ public class QuizController {
         return model;
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateQuiz(@ModelAttribute("quiz") QuizEntity quiz) {
-        System.out.println(quiz.toString());
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> deleteQuizById(@PathVariable Long id) {
         quizService.deleteById(id);
-        return new ResponseEntity<>("Quiz by id=" + id + " deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Quiz[id=" + id + "] deleted successfully", HttpStatus.OK);
     }
 }

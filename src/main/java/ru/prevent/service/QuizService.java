@@ -12,12 +12,11 @@ import java.util.Optional;
 
 @Service
 public class QuizService {
+    @Autowired
+    private QuizRepository repository;
 
     @Autowired
-    QuizRepository repository;
-
-    @Autowired
-    UserService userService;
+    private UserService userService;
 
     public List<QuizEntity> findAll() {
         return repository.findAll();

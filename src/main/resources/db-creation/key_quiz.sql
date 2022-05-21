@@ -1,0 +1,12 @@
+INSERT INTO public.key_quiz (id, gender, min_arg, max_arg, result_arg, id_quiz)
+VALUES (6, 'любой', 8, 72, 'Высокая степень отклонения', 3);
+INSERT INTO public.key_quiz (id, gender, min_arg, max_arg, result_arg, id_quiz)
+VALUES (1, 'любой', 0, 3, 'Низкая степень отклонения', 2);
+INSERT INTO public.key_quiz (id, gender, min_arg, max_arg, result_arg, id_quiz)
+VALUES (4, 'любой', 0, 3, 'Низкая степень отклонения', 3);
+INSERT INTO public.key_quiz (id, gender, min_arg, max_arg, result_arg, id_quiz)
+VALUES (2, 'любой', 4, 7, 'Средняя степень отклонения', 2);
+INSERT INTO public.key_quiz (id, gender, min_arg, max_arg, result_arg, id_quiz)
+VALUES (5, 'любой', 4, 7, 'Средняя степень отклонения', 3);
+INSERT INTO public.key_quiz (id, gender, min_arg, max_arg, result_arg, id_quiz)
+VALUES (3, 'любой', 8, 56, 'Высокая степень отклонения', 2);

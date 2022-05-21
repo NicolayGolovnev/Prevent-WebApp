@@ -19,7 +19,7 @@ public class QuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     String title;
 
     @Column(name = "access")
