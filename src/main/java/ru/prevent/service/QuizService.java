@@ -7,6 +7,7 @@ import ru.prevent.exception.QuizNotFoundException;
 import ru.prevent.repository.QuizRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -61,12 +62,21 @@ public class QuizService {
         // если опросник открытый - сразу даем всем пользователям к нему доступ
         if (quiz.isAccess()) {
             List<UserEntity> users = userService.findAll();
-            for (UserEntity user : users)
+            for (UserEntity user : users) {
+                // проверяем пол пользователя и опроса
+                if (!Objects.equals(user.getSex(), quiz.getGender()) && !quiz.getGender().equals("Любой"))
+                    continue;
+
+                // проверяем возраст пользователя
+                if (user.getAge() < quiz.getMinAge() || user.getAge() > quiz.getMaxAge())
+                    continue;
+
                 quiz.getUsers().add(UserAndQuizzesEntity.builder()
                         .status("открытый")
                         .user(user)
                         .quiz(quiz)
                         .build());
+            }
         }
 
 
