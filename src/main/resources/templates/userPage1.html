@@ -47,9 +47,10 @@
                 <h3>Выберите опрос</h3>
                 <input hidden th:field="${uqModel.userId}">
                 <select class="form-select form-control rounded-4" style="width: 100%" id="forQuiz" th:field="${uqModel.quizId}">
-                    <option th:each="quiz : ${quizzes}"
-                            th:value="${quiz.id}"
-                            th:utext="${quiz.title}">
+                    <th:block th:each="quiz: ${quizzes}">
+                        <!--/*@thymesVar id="quiz" type="ru.prevent.entity.QuizEntity"*/-->
+                        <option th:value="${quiz.id}" th:utext="${quiz.title}">
+                    </th:block>
                 </select>
                 <div style="margin-top: 0.5rem">
                     <button type="submit"
@@ -66,6 +67,8 @@
                 <h3>Выберите опрос</h3>
                 <input hidden th:field="${uqModel.userId}">
                 <select class="form-select form-control rounded-4" style="width: 100%" id="forCompleteUserQuiz" th:field="${uqModel.quizId}">
+                    <!--/*@thymesVar id="completedQuizzes" type="java.util.ArrayList<ru.prevent.entity.UserAndQuizzesEntity>"*/-->
+                    <!--/*@thymesVar id="quiz" type="ru.prevent.entity.UserAndQuizzesEntity"*/-->
                     <option th:each="quiz : ${completedQuizzes}"
                             th:value="${quiz.id}"
                             th:utext="${quiz.quiz.title} + ', ' + ${quiz.completeDate}">

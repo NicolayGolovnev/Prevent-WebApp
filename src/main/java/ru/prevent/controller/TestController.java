@@ -54,6 +54,7 @@ public class TestController {
         userNQuizModel.setUserId(userId);
 
         model.addAttribute("uqModel", userNQuizModel);
+        model.addAttribute("completedQuizzes", new ArrayList<QuizEntity>());
         return "userPage1";
     }
 

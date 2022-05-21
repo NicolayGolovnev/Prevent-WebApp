@@ -6,8 +6,8 @@ import ru.prevent.entity.*;
 import ru.prevent.exception.QuizNotFoundException;
 import ru.prevent.repository.QuizRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -44,9 +44,16 @@ public class QuizService {
 
     public void save(QuizEntity quiz) {
         // устанавливаем двустороннюю связь
-        if (!quiz.getChildQuizzes().isEmpty())
+        if (!quiz.getChildQuizzes().isEmpty()) {
+            // для начала проверяем все дочерние опросники (есть ли среди них пустые)
+            List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
             for (QuizAndQuizEntity child : quiz.getChildQuizzes())
-                child.setParentQuiz(quiz);
+                if (child != null) {
+                    child.setParentQuiz(quiz);
+                    childQuizzes.add(child);
+                }
+            quiz.setChildQuizzes(childQuizzes);
+        }
         if (!quiz.getKeys().isEmpty())
             for (KeyQuizEntity key : quiz.getKeys())
                 key.setQuiz(quiz);
@@ -59,25 +66,18 @@ public class QuizService {
             }
 
         // если опросник открытый - сразу даем всем пользователям к нему доступ
+        quiz.setUsers(new ArrayList<>());
         if (quiz.isAccess()) {
             List<UserEntity> users = userService.findAll();
             for (UserEntity user : users) {
-                // проверяем пол пользователя и опроса
-                if (!Objects.equals(user.getSex(), quiz.getGender()) && !quiz.getGender().equals("Любой"))
-                    continue;
-
-                // проверяем возраст пользователя
-                if (user.getAge() < quiz.getMinAge() || user.getAge() > quiz.getMaxAge())
-                    continue;
-
-                quiz.getUsers().add(UserAndQuizzesEntity.builder()
-                        .status("открытый")
-                        .user(user)
-                        .quiz(quiz)
-                        .build());
+                if (UserAndQuizzesEntity.isCompatible(quiz, user))
+                    quiz.getUsers().add(UserAndQuizzesEntity.builder()
+                            .status("открытый")
+                            .user(user)
+                            .quiz(quiz)
+                            .build());
             }
         }
-
 
         repository.save(quiz);
     }

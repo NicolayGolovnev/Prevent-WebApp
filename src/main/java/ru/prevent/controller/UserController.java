@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("/create")
     public String saveNewUser(@ModelAttribute("patient") UserEntity user) {
         userService.save(user);
-        return "redirect:/";
+        return "redirect:/admin/";
     }
 
     @GetMapping("/delete/{id}")
