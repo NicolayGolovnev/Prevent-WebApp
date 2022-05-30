@@ -29,7 +29,7 @@
 </div>
 <div class="container" style="margin-top: 7rem">
     <h3>
-        <th:block th:utext="'Прохождение опросника ' + ${quiz.title}"/>
+        <th:block th:utext="'Прохождение опросника ' + '&quot;' + ${quiz.title} + '&quot;'"/>
     </h3>
     <form action="#" method="post" th:action="@{/saveResults}" th:object="${test}">
         <input type="hidden" th:name="userId" th:value="${user.id}">
@@ -37,7 +37,7 @@
         <div th:each="childQuiz, stateQuiz: *{childQuizzes}" class="quiz">
             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].id}" th:value="${childQuiz.id}">
             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].weight}" th:value="${childQuiz.weight}">
-            <h4 th:text="'Блок ' + ${childQuiz.tittle}"></h4>
+            <h4 th:text="'Блок &quot;' + ${childQuiz.tittle} + '&quot;'"></h4>
             <div th:each="question, state: ${childQuiz.questions}" class="form-group"
                  style="background-color: #f5f4f2; height: 40%; border-radius: 10px">
                 <div style="padding: 0.5rem 0.5rem 0.5rem 0.5rem">
