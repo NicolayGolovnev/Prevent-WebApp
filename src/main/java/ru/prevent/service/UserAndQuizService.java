@@ -42,5 +42,9 @@ public class UserAndQuizService {
         return userAndQuizeRepository.findByUser_IdAndStatus(userId, "открытый");
     }
 
+    public List<UserAndQuizzesEntity> findAllAppointedQuizzesByUserId(Long userId){
+        return userAndQuizeRepository.findByUser_IdAndStatus(userId, "назначен");
+    }
+
     public void save(UserAndQuizzesEntity entity){userAndQuizeRepository.save(entity);}
 }

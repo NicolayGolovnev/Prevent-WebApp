@@ -36,6 +36,7 @@
         <input type="hidden" th:name="quizId" th:value="${quiz.id}">
         <div th:each="childQuiz, stateQuiz: *{childQuizzes}" class="quiz">
             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].id}" th:value="${childQuiz.id}">
+            <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].weight}" th:value="${childQuiz.weight}">
             <h4 th:text="'Блок ' + ${childQuiz.tittle}"></h4>
             <div th:each="question, state: ${childQuiz.questions}" class="form-group"
                  style="background-color: #f5f4f2; height: 40%; border-radius: 10px">
@@ -48,6 +49,8 @@
                              th:each="answer: ${question.answers}">
                             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].questions[__${state.index}__].id}"
                                    th:value="${question.getId()}">
+                            <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].questions[__${state.index}__].weight}"
+                                   th:value="${question.getWeight()}">
                             <div>
                                 <input class="form-check-input" type="radio" th:id="${answer.id}" th:attr="onclick=|checkTapAnswers('${stateQuiz.index}', '${state.index}')|"
                                        style="background-color: green"

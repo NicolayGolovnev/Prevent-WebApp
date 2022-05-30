@@ -38,4 +38,5 @@ public class UserAndQuizzesEntity {
     @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
+
 }

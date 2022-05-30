@@ -32,7 +32,7 @@
         <h3 th:text="'Результат тестирования &quot;' + ${quizInfo.getQuiz().getTitle()} + '&quot;'"></h3>
         <hr>
         <div th:each="quiz: *{results}">
-            <h5 th:text="'Блок &quot;' + ${quiz.getChildrenQuiz().getTitle()} + '&quot;'" ></h5>
+            <h5 th:if="${quiz.checkChildrenQuiz()}" th:text="'Блок &quot;' + ${quiz.getChildrenQuiz().getTitle()} + '&quot;'" ></h5>
             <h4 th:switch="${quiz.getResult()}">
                 <span th:case="'Низкая степень отклонения'" th:text="${quiz.getResult()}" style="color: green"></span>
                 <span th:case="'Средняя степень отклонения'" th:text="${quiz.getResult()}" style="color: orange"></span>
