@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.QuestionEntity;
-import ru.prevent.exception.QuestionNotFoundException;
+import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.QuestionRepository;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class QuestionService {
         if (optional.isPresent())
             return optional.get();
         else
-            throw new QuestionNotFoundException("Question[id=" + id + "] not found!");
+            throw new ObjectNotFoundException("Question[id=" + id + "] not found!");
     }
 
 

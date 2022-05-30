@@ -39,7 +39,7 @@ public class AdminAjaxController {
         ModelAndView model = new ModelAndView("includes/assignment");
         model.addObject("uqModel", new UserNQuizModel());
         model.addObject("patients", userService.findAll());
-        model.addObject("quizes", quizService.findAll());
+        model.addObject("quizes", quizService.findAllClosed());
         return model;
     }
 

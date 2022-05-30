@@ -3,7 +3,7 @@ package ru.prevent.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.prevent.entity.*;
-import ru.prevent.exception.QuizNotFoundException;
+import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.QuizRepository;
 
 import java.util.ArrayList;
@@ -22,6 +22,10 @@ public class QuizService {
         return repository.findAll();
     }
 
+    public List<QuizEntity> findAllClosed() {
+        return repository.findAllByAccessIsFalse();
+    }
+
     public List<QuizEntity> findAllByAccessIsTrue() {
         return repository.findAllByAccessIsTrue();
     }
@@ -31,7 +35,7 @@ public class QuizService {
         if (optional.isPresent())
             return optional.get();
         else
-            throw new QuizNotFoundException("Quiz[id=" + id + "] not found!");
+            throw new ObjectNotFoundException("Quiz[id=" + id + "] not found!");
     }
 
     public QuizEntity findByTitle(String title) {
@@ -39,7 +43,7 @@ public class QuizService {
         if (optional.isPresent())
             return optional.get();
         else
-            throw new QuizNotFoundException("Quiz[title=" + title + "] not found!");
+            throw new ObjectNotFoundException("Quiz[title=" + title + "] not found!");
     }
 
     public void save(QuizEntity quiz) {

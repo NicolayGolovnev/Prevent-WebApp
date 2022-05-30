@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.prevent.entity.QuizEntity;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
-import ru.prevent.exception.UserNotFoundException;
-import ru.prevent.repository.QuizRepository;
+import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class UserService {
         if (optionalUser.isPresent())
             return optionalUser.get();
         else
-            throw new UserNotFoundException("User[firstName=" + names[0] + ", lastName=" + names[1] + "] not found!");
+            throw new ObjectNotFoundException("User[firstName=" + names[0] + ", lastName=" + names[1] + "] not found!");
     }
 
     public UserEntity findById(Long id) {
@@ -45,7 +44,7 @@ public class UserService {
         if (optionalUser.isPresent())
             return optionalUser.get();
         else
-            throw new UserNotFoundException("User[id=" + id + "] not found!");
+            throw new ObjectNotFoundException("User[id=" + id + "] not found!");
     }
 
     public void save(UserEntity user) {

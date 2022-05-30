@@ -38,7 +38,7 @@ public class TestController {
     @Autowired
     HistoryResultService historyResultService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/lk/{userId}")
     public String loadTestIndex(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.findById(userId));
 
