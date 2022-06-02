@@ -14,6 +14,8 @@ import ru.prevent.service.UserAndQuizService;
 import ru.prevent.service.UserService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String saveNewUser(@ModelAttribute("patient") UserEntity user) {
+    public String saveUser(@ModelAttribute("patient") UserEntity user) {
         userService.save(user);
         return "redirect:/admin/";
     }

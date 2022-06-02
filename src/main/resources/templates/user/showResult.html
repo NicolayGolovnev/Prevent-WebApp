@@ -42,7 +42,7 @@
     </div>
     <div class="fixed-bottom">
         <div class="button-on-main-page">
-            <a th:href="${quizInfo.getUser().getId()}">
+            <a th:href="'/lk/' + ${quizInfo.getUser().getId()}">
                 <button type="button" class="btn btn-success border-2">На главную</button>
             </a>
         </div>

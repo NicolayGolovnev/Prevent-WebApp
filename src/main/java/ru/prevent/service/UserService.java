@@ -48,15 +48,34 @@ public class UserService {
     }
 
     public void save(UserEntity user) {
-        List<QuizEntity> openQuizzes = quizService.findAllByAccessIsTrue();
-        List<UserAndQuizzesEntity> userQuizzes = new ArrayList<>();
-        for (QuizEntity quiz : openQuizzes)
-            userQuizzes.add(UserAndQuizzesEntity.builder()
-                    .status("открытый")
-                    .user(user)
-                    .quiz(quiz)
-                    .build());
-        user.setQuizzes(userQuizzes);
+        if (user.getId() == null) {
+            List<QuizEntity> openQuizzes = quizService.findAllByAccessIsTrue();
+            List<UserAndQuizzesEntity> userQuizzes = new ArrayList<>();
+            for (QuizEntity quiz : openQuizzes)
+                if (UserAndQuizzesEntity.isCompatible(quiz, user))
+                    userQuizzes.add(UserAndQuizzesEntity.builder()
+                            .status("открытый")
+                            .user(user)
+                            .quiz(quiz)
+                            .build());
+            user.setQuizzes(userQuizzes);
+        }
+        else {
+            // update
+            List<UserAndQuizzesEntity> checkQuizzes = new ArrayList<>();
+            for (UserAndQuizzesEntity userQuiz : user.getQuizzes()) {
+                if (userQuiz.getStatus().equals("назначен")) {
+                    checkQuizzes.add(userQuiz);
+                    continue;
+                }
+
+                if (UserAndQuizzesEntity.isCompatible(userQuiz.getQuiz(), user))
+                    checkQuizzes.add(userQuiz);
+            }
+
+            user.setQuizzes(checkQuizzes);
+        }
+
         repository.save(user);
     }
 
