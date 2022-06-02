@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS $JAR_OPTS -Dserver.port=$PORT -jar build/libs/prevent-webapp-0.8.7.war
+web: java $JAVA_OPTS $JAR_OPTS -Dserver.port=$PORT -jar build/libs/prevent-webapp-0.8.11.war

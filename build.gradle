@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'ru.prevent'
-version = '0.8.7'
+version = '0.8.11'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = sourceCompatibility
 
