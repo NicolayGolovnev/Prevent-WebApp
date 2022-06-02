@@ -84,14 +84,41 @@
         </div>
         <input hidden th:field="${patient.quizzes}">
         <div class="form-group row justify-content-end">
-            <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-3 mx-3 my-1">Назад</button>
-            <button type="submit" class="btn btn-success col-md-5 mx-3 my-1">Редактировать</button>
+            <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-2 mx-1 my-1">Назад</button>
+            <button type="button" class="btn btn-danger col-md-2 mx-1 my-1 " data-toggle="modal" data-target="#deleteModal">Удалить</button>
+            <button type="submit" class="btn btn-success col-md-2 mx-1 my-1">Редактировать</button>
         </div>
     </form>
 
+    <div class="input-modal">
+        <!-- Модальное окно для удаления пацента-->
+        <div class="modal fade input-modal" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Удаление пациента</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Вы действительно хотите удалить этого пациента?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-danger btn-modal-delete" th:value="*{id}" onclick="deletePatient()">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script th:src="@{~/js/admin-ajax-delete.js}"></script>
 </body>
 </html>
