@@ -21,8 +21,12 @@ public class UserAndQuizService {
     @Autowired
     QuizRepository quizRepository;
 
-    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz) {
+    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz){
         return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
+    }
+
+    public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser){
+        return repository.findByUser_IdAndStatus(idUser, "завершен");
     }
 
     public UserAndQuizzesEntity findById(Long id) {
@@ -30,17 +34,16 @@ public class UserAndQuizService {
         if (optionalUserAndQuiz.isPresent())
             return optionalUserAndQuiz.get();
         else
-            throw new RuntimeException("Record quiz-user[id=" + id + "] not found!");
+            throw new RuntimeException("Record with id=" + id + " not found!");
     }
 
-    public List<UserAndQuizzesEntity> findAllOpenAndAssignedQuizzesByUserId(Long userId) {
-        List<UserAndQuizzesEntity> opened = repository.findByUser_IdAndStatus(userId, "открытый");
-        List<UserAndQuizzesEntity> assigned = repository.findByUser_IdAndStatus(userId, "назначен");
-        opened.addAll(assigned);
-
-        return opened;
+    public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId){
+        return repository.findByUser_IdAndStatus(userId, "открытый");
     }
 
-    public void save(UserAndQuizzesEntity entity){
-        repository.save(entity);}
+    public List<UserAndQuizzesEntity> findAllAppointedQuizzesByUserId(Long userId){
+        return repository.findByUser_IdAndStatus(userId, "назначен");
+    }
+
+    public void save(UserAndQuizzesEntity entity){repository.save(entity);}
 }

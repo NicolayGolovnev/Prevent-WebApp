@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "quiz")
 public class QuizEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

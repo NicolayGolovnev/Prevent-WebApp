@@ -29,4 +29,8 @@ public class HistoryResultsEntity {
     @ManyToOne
     @JoinColumn(name = "id_children_quiz")
     QuizEntity childrenQuiz;
+
+    public boolean checkChildrenQuiz(){
+        return childrenQuiz != null;
+    }
 }

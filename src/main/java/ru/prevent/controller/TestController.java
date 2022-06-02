@@ -39,13 +39,13 @@ public class TestController {
     HistoryResultService historyResultService;
 
     @GetMapping("/lk/{userId}")
-    public String loadTestIndex(@PathVariable("userId") Long userId, Model model) {
+    public String loadUserPage(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.findById(userId));
 
-        List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllOpenAndAssignedQuizzesByUserId(userId);
+        List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllAppointedQuizzesByUserId(userId);
+        openQuizzes.addAll(userAndQuizService.findAllOpenQuizzesByUserId(userId));
         List<QuizEntity> quizzes = new ArrayList<>();
         for (UserAndQuizzesEntity test: openQuizzes) {
-//            quizzes.add(quizService.findById(test.getQuiz().getId()));
             quizzes.add(test.getQuiz());
         }
         model.addAttribute("quizzes", quizzes);
@@ -54,8 +54,8 @@ public class TestController {
         userNQuizModel.setUserId(userId);
 
         model.addAttribute("uqModel", userNQuizModel);
-        model.addAttribute("completedQuizzes", new ArrayList<QuizEntity>());
-        return "userPage1";
+        model.addAttribute("completedQuizzes", userAndQuizService.findCompletedQuizzesByUserId(userId));
+        return "user/userPage";
     }
 
     @GetMapping("/loadQuizByUser")
@@ -75,13 +75,20 @@ public class TestController {
                         .question(question)
                         .answers(question.getAnswers())
                         .userAnswer(new AnswerEntity())
+                        .weight(question.getWeight())
                         .build();
                 childQuizModel.add(buf);
             }
 
             childQuizModel.setTittle(childQuiz.getChildQuiz().getTitle());
             childQuizModel.setId(childQuiz.getChildQuiz().getId());
+            childQuizModel.setWeight(childQuiz.getChildQuiz().getWeight());
             quizModel.add(childQuizModel);
+        }
+
+        if(childQuizzes.size() == 1 &&
+                (childQuizzes.get(0).getParentQuiz().getId().equals(childQuizzes.get(0).getChildQuiz().getId()))){
+            quizModel.getChildQuizzes().get(0).setTittle("");
         }
 
         int countQuiz = childQuizzes.size();
@@ -94,7 +101,7 @@ public class TestController {
         model.addAttribute("quiz", quiz);
         model.addAttribute("test", quizModel);
 
-        return "quiz";
+        return "user/quiz";
     }
 
     @GetMapping("/showCompleteTest")
@@ -103,7 +110,42 @@ public class TestController {
         model.addAttribute("results", historyResultService.findAllByIdUserAndQuiz(quizId));
         model.addAttribute("quizInfo", userAndQuiz);
 
-        return "showResult";
+        return "user/showResult";
+    }
+
+    private HistoryResultsEntity saveBlock(UserEntity user, UserAndQuizzesEntity userAndQuiz, ChildQuizModel childQuiz)
+    {
+        int resultQuiz = 0;
+        QuestionEntity questionField;
+        for(QuestionAnswersModel question: childQuiz.getQuestions())
+        {
+            questionField = questionService.findById(question.getId());
+            UserAndAnswersEntity newUserAnswer = UserAndAnswersEntity.builder()
+                    .contentAnswer("")
+                    .answer(question.getUserAnswer())
+                    .question(questionField)
+                    .user(user)
+                    .userQuiz(userAndQuiz)
+                    .build();
+            userAnswerService.save(newUserAnswer);
+            resultQuiz += question.getUserAnswer().getWeight() * question.getWeight();
+        }
+        resultQuiz *= childQuiz.getWeight();
+        List<KeyQuizEntity> keysQuiz = keyQuizService.findAllByQuizId(childQuiz.getId());
+        String resultTest = "";
+        for(KeyQuizEntity keyQuiz: keysQuiz){
+            if(resultQuiz >= keyQuiz.getMinArg() && resultQuiz <= keyQuiz.getMaxArg()){
+                resultTest = keyQuiz.getResultArg();
+                break;
+            }
+        }
+        HistoryResultsEntity newResult = HistoryResultsEntity.builder()
+                .result(resultTest)
+                .user(user)
+                .userQuiz(userAndQuiz)
+                .build();
+        historyResultService.save(newResult);
+        return newResult;
     }
 
     @PostMapping("/saveResults")
@@ -120,13 +162,15 @@ public class TestController {
                 .build();
         userAndQuizService.save(userAndQuiz);
 
-        if (childQuizzes.size() == 1){
-            //TODO сделать для опросов, не состоящих из опросов
+        List<HistoryResultsEntity> resultsToModel = new ArrayList<>();
+        if (childQuizzes.size() == 1 && (childQuizzes.get(0).getId().equals(resultForm.getQuizId()))){
+            HistoryResultsEntity result = saveBlock(user, userAndQuiz, childQuizzes.get(0));
+            historyResultService.save(result);
+            resultsToModel.add(result);
         }
         else {
-            List<HistoryResultsEntity> resultsToModel = new ArrayList<>();
             for (ChildQuizModel childQuiz: childQuizzes) {
-                int resultQuiz = 0;
+                /*int resultQuiz = 0;
                 QuestionEntity questionField;
                 for(QuestionAnswersModel question: childQuiz.getQuestions())
                 {
@@ -136,7 +180,7 @@ public class TestController {
                             .answer(question.getUserAnswer())
                             .question(questionField)
                             .user(user)
-                            .userQuiz(userAndQuiz)
+                            .userQuizzes(userAndQuiz)
                             .build();
                     userAnswerService.save(newUserAnswer);
                     resultQuiz += question.getUserAnswer().getWeight();
@@ -156,17 +200,21 @@ public class TestController {
                         .childrenQuiz(quizService.findById(childQuiz.getId()))
                         .build();
                 historyResultService.save(newResult);
-                resultsToModel.add(newResult);
+                resultsToModel.add(newResult);*/
+                HistoryResultsEntity resultBlock = saveBlock(user, userAndQuiz, childQuiz);
+                resultBlock.setChildrenQuiz(quizService.findById(childQuiz.getId()));
+                historyResultService.save(resultBlock);
+                resultsToModel.add(resultBlock);
             }
-            model.addAttribute("results", resultsToModel);
         }
+        model.addAttribute("results", resultsToModel);
         model.addAttribute("quizInfo", userAndQuiz);
-        return "showResult";
+        return "user/showResult";
     }
 
     @GetMapping("/showResult/{id}")
     public String showResult(@PathVariable Long id, Model model){
         model.addAttribute("result", userAndQuizService.findById(id));
-        return "showResult";
+        return "user/showResult";
     }
 }

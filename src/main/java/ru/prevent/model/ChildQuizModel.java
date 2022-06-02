@@ -14,6 +14,7 @@ public class ChildQuizModel {
     private Long id;
     private List<QuestionAnswersModel> questions = new ArrayList<>();
     private String tittle;
+    private Long weight;
 
     public void add(QuestionAnswersModel question) {
         questions.add(question);

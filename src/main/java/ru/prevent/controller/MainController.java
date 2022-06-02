@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.prevent.model.UserNQuizModel;
-import ru.prevent.service.EmailSenderService;
 import ru.prevent.service.UserService;
+import ru.prevent.service.EmailSenderService;
 
 @Controller
 public class MainController {
-
     @Autowired
     UserService userService;
 
@@ -21,7 +20,7 @@ public class MainController {
 
     @PostMapping("/loadUser")
     public String loadUser(@ModelAttribute("chooseUser") UserNQuizModel m) {
-        return "redirect:/" + m.getUserId().toString();
+        return "redirect:/lk/" + m.getUserId().toString();
     }
 
     @GetMapping("/")
