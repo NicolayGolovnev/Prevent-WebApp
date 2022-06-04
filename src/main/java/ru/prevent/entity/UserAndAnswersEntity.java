@@ -24,11 +24,11 @@ public class UserAndAnswersEntity {
     UserAndQuizzesEntity userQuiz;
 
     @ManyToOne
-    @JoinColumn(name = "id_answer", nullable = false)
+    @JoinColumn(name = "id_answer")
     AnswerEntity answer;
 
     @ManyToOne
-    @JoinColumn(name = "id_question", nullable = false)
+    @JoinColumn(name = "id_question")
     QuestionEntity question;
 
     @ManyToOne

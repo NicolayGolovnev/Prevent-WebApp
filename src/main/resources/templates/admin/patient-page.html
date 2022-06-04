@@ -83,7 +83,7 @@
                        th:field="*{telephone}">
             </div>
         </div>
-        <input hidden th:field="${patient.quizzes}">
+        <input hidden th:field="*{quizzes}">
         <div class="form-group row justify-content-end">
             <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-2 mx-1 my-1">Назад</button>
             <button type="button" class="btn btn-danger col-md-2 mx-1 my-1 " data-toggle="modal" data-target="#deleteModal">Удалить</button>

@@ -33,7 +33,7 @@ public class UserAndQuizzesEntity {
     UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "id_quiz", nullable = false)
+    @JoinColumn(name = "id_quiz")
     QuizEntity quiz;
 
     @OneToMany(mappedBy = "userQuiz", cascade = CascadeType.ALL, orphanRemoval = true)

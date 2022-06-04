@@ -47,43 +47,57 @@ public class QuizService {
     }
 
     public void save(QuizEntity quiz) {
-        // устанавливаем двустороннюю связь
-        if (!quiz.getChildQuizzes().isEmpty()) {
-            // для начала проверяем все дочерние опросники (есть ли среди них пустые)
-            List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
-            for (QuizAndQuizEntity child : quiz.getChildQuizzes())
-                if (child != null) {
-                    child.setParentQuiz(quiz);
-                    childQuizzes.add(child);
-                }
-            quiz.setChildQuizzes(childQuizzes);
-        }
-        if (!quiz.getKeys().isEmpty())
-            for (KeyQuizEntity key : quiz.getKeys())
-                key.setQuiz(quiz);
-        if (!quiz.getQuestions().isEmpty())
-            for (QuestionEntity question : quiz.getQuestions()) {
-                question.setQuiz(quiz);
-                if (!question.getAnswers().isEmpty())
-                    for (AnswerEntity answer : question.getAnswers())
-                        answer.setQuestion(question);
+        if (quiz.getId() == null) {
+            // устанавливаем двустороннюю связь
+            if (!quiz.getChildQuizzes().isEmpty()) {
+                // для начала проверяем все дочерние опросники (есть ли среди них пустые)
+                List<QuizAndQuizEntity> childQuizzes = new ArrayList<>();
+                for (QuizAndQuizEntity child : quiz.getChildQuizzes())
+                    if (child != null) {
+                        child.setParentQuiz(quiz);
+                        childQuizzes.add(child);
+                    }
+                quiz.setChildQuizzes(childQuizzes);
             }
+            if (!quiz.getKeys().isEmpty())
+                for (KeyQuizEntity key : quiz.getKeys())
+                    key.setQuiz(quiz);
+            if (!quiz.getQuestions().isEmpty())
+                for (QuestionEntity question : quiz.getQuestions()) {
+                    question.setQuiz(quiz);
+                    if (!question.getAnswers().isEmpty())
+                        for (AnswerEntity answer : question.getAnswers())
+                            answer.setQuestion(question);
+                }
 
-        // если опросник открытый - сразу даем всем пользователям к нему доступ
-        quiz.setUsers(new ArrayList<>());
-        if (quiz.isAccess()) {
-            List<UserEntity> users = userService.findAll();
-            for (UserEntity user : users) {
-                if (UserAndQuizzesEntity.isCompatible(quiz, user))
-                    quiz.getUsers().add(UserAndQuizzesEntity.builder()
-                            .status("открытый")
-                            .user(user)
-                            .quiz(quiz)
-                            .build());
+            // если опросник открытый - сразу даем всем пользователям к нему доступ
+            quiz.setUsers(new ArrayList<>());
+            if (quiz.isAccess()) {
+                List<UserEntity> users = userService.findAll();
+                for (UserEntity user : users) {
+                    if (UserAndQuizzesEntity.isCompatible(quiz, user))
+                        quiz.getUsers().add(UserAndQuizzesEntity.builder()
+                                .status("открытый")
+                                .user(user)
+                                .quiz(quiz)
+                                .build());
+                }
             }
         }
 
         repository.save(quiz);
+    }
+
+    private void editUserAnswers(List<UserAndAnswersEntity> answers) {
+        // для каждого ответа мы убираем ссылку на вопрос и ответ -
+        // записываем их в html форме в поле развернутого ответа
+        for (UserAndAnswersEntity answer : answers) {
+            String contentAnswer = "Вопрос: " + answer.getQuestion().getContent() +
+                    "<br>" + "Ответ: " + answer.getAnswer().getContent();
+            answer.setContentAnswer(contentAnswer);
+            answer.setQuestion(null);
+            answer.setAnswer(null);
+        }
     }
 
     public void deleteById(Long id) {

@@ -42,7 +42,7 @@ public class QuizEntity {
     @JsonIgnore
     List<UserAndQuizzesEntity> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "childrenQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "childrenQuiz")
     @JsonIgnore
     List<HistoryResultsEntity> results = new ArrayList<>();
 
@@ -61,4 +61,21 @@ public class QuizEntity {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<QuestionEntity> questions = new ArrayList<>();
+
+    public boolean hasUserAnswers() {
+        if (!parentQuizzes.isEmpty()) {
+            for (QuizAndQuizEntity parent : parentQuizzes) {
+                for (UserAndQuizzesEntity userQuiz : parent.parentQuiz.users) {
+                    if (!userQuiz.userAnswers.isEmpty())
+                        return true;
+                }
+            }
+        }
+
+        for (UserAndQuizzesEntity userQuiz : users) {
+            if (!userQuiz.userAnswers.isEmpty())
+                return true;
+        }
+        return false;
+    }
 }

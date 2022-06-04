@@ -87,8 +87,8 @@
                        th:field="*{weight}">
             </div>
         </div>
-        <input hidden type="text" th:field="*{results}">
-        <input hidden type="text" th:field="*{users}">
+        <input hidden th:field="*{results}">
+        <input hidden th:field="*{users}">
         <hr>
 
         <div class="container">
@@ -239,11 +239,19 @@
                         class="btn btn-success col-md-5 m-2">Добавить новый ключ</button>
             </div>
         </div>
-
+        <input hidden th:field="*{parentQuizzes}">
+        <input hidden th:field="*{childQuizzes}">
         <div class="form-group row justify-content-end">
             <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-2 mx-3 my-1">Назад</button>
             <button type="button" class="btn btn-danger col-md-2 mx-3 my-1" data-toggle="modal" data-target="#deleteModal">Удалить</button>
-            <button type="submit" onclick="renameData()" class="btn btn-success col-md-2 mx-3 my-1">Изменить</button>
+            <th:block th:switch="${quiz.hasUserAnswers()}">
+                <button th:case="false" type="submit" onclick="renameData()"
+                        class="btn btn-success col-md-2 mx-3 my-1">Изменить
+                </button>
+                <button th:case="*" title="Нельзя изменить данные об опросе, так как присутствуют ответы пользователей"
+                        type="submit" onclick="renameData()" class="btn btn-success col-md-2 mx-3 my-1" disabled>Изменить
+                </button>
+            </th:block>
         </div>
     </form>
 

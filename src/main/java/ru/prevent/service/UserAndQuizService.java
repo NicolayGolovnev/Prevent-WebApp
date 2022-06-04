@@ -21,11 +21,11 @@ public class UserAndQuizService {
     @Autowired
     QuizRepository quizRepository;
 
-    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz){
+    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz) {
         return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
     }
 
-    public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser){
+    public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser) {
         return repository.findByUser_IdAndStatus(idUser, "завершен");
     }
 
@@ -37,13 +37,15 @@ public class UserAndQuizService {
             throw new RuntimeException("Record with id=" + id + " not found!");
     }
 
-    public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId){
+    public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId) {
         return repository.findByUser_IdAndStatus(userId, "открытый");
     }
 
-    public List<UserAndQuizzesEntity> findAllAppointedQuizzesByUserId(Long userId){
+    public List<UserAndQuizzesEntity> findAllAppointedQuizzesByUserId(Long userId) {
         return repository.findByUser_IdAndStatus(userId, "назначен");
     }
 
-    public void save(UserAndQuizzesEntity entity){repository.save(entity);}
+    public void save(UserAndQuizzesEntity entity) {
+        repository.save(entity);
+    }
 }
