@@ -2,6 +2,7 @@ package ru.prevent.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.UserAndAnswersEntity;
 import ru.prevent.repository.UserAndAnswerRepository;
 
@@ -11,10 +12,15 @@ import java.util.List;
 public class UserAnswerService {
 
     @Autowired
-    UserAndAnswerRepository repository;
+    private UserAndAnswerRepository repository;
 
-    public void save(UserAndAnswersEntity userAnswer){
+    @Transactional
+    public void save(UserAndAnswersEntity userAnswer) {
         repository.save(userAnswer);
     }
-    public List<UserAndAnswersEntity> findAllByQuizId(Long quizId){return repository.findAllByUserQuizzes_Id(quizId);}
+
+    @Transactional(readOnly = true)
+    public List<UserAndAnswersEntity> findAllByQuizId(Long quizId) {
+        return repository.findAllByUserQuizzes_Id(quizId);
+    }
 }

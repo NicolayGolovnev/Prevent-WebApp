@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.prevent.entity.*;
-import ru.prevent.model.*;
+import ru.prevent.model.ChildQuizModel;
+import ru.prevent.model.QuestionAnswersModel;
+import ru.prevent.model.QuizModel;
+import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.*;
 
 import java.time.LocalDate;
@@ -13,30 +16,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class TestController {
+public class ClientController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
 
     @Autowired
-    UserAnswerService userAnswerService;
+    private UserAnswerService userAnswerService;
 
     @Autowired
-    UserAndQuizService userAndQuizService;
+    private UserAndQuizService userAndQuizService;
 
     @Autowired
-    QuizAndQuizService quizAndQuizService;
+    private QuizAndQuizService quizAndQuizService;
 
     @Autowired
-    KeyQuizService keyQuizService;
+    private KeyQuizService keyQuizService;
 
     @Autowired
-    HistoryResultService historyResultService;
+    private HistoryResultService historyResultService;
 
     @GetMapping("/lk/{userId}")
     public String loadUserPage(@PathVariable("userId") Long userId, Model model) {

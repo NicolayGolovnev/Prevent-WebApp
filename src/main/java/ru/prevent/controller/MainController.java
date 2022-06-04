@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.prevent.model.UserNQuizModel;
-import ru.prevent.service.UserService;
 import ru.prevent.service.EmailSenderService;
+import ru.prevent.service.UserService;
 
 @Controller
 public class MainController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    EmailSenderService emailService;
+    private EmailSenderService emailService;
 
     @PostMapping("/loadUser")
     public String loadUser(@ModelAttribute("chooseUser") UserNQuizModel m) {

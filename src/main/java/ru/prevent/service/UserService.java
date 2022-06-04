@@ -2,6 +2,7 @@ package ru.prevent.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.QuizEntity;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
@@ -16,15 +17,17 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
+    @Transactional(readOnly = true)
     public List<UserEntity> findAll() {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public UserEntity findByFIO(String fio) {
         String[] names = fio.split(" ");
         Optional<UserEntity> optionalUser = Optional.empty();
@@ -39,6 +42,7 @@ public class UserService {
             throw new ObjectNotFoundException("User[firstName=" + names[0] + ", lastName=" + names[1] + "] not found!");
     }
 
+    @Transactional(readOnly = true)
     public UserEntity findById(Long id) {
         Optional<UserEntity> optionalUser = repository.findById(id);
         if (optionalUser.isPresent())
@@ -47,6 +51,7 @@ public class UserService {
             throw new ObjectNotFoundException("User[id=" + id + "] not found!");
     }
 
+    @Transactional
     public void save(UserEntity user) {
         if (user.getId() == null) {
             List<QuizEntity> openQuizzes = quizService.findAllByAccessIsTrue();
@@ -59,8 +64,7 @@ public class UserService {
                             .quiz(quiz)
                             .build());
             user.setQuizzes(userQuizzes);
-        }
-        else {
+        } else {
             // update
             List<UserAndQuizzesEntity> checkQuizzes = new ArrayList<>();
             for (UserAndQuizzesEntity userQuiz : user.getQuizzes()) {
@@ -79,6 +83,7 @@ public class UserService {
         repository.save(user);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

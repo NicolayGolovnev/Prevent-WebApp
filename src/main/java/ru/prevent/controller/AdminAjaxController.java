@@ -3,10 +3,8 @@ package ru.prevent.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.prevent.entity.UserEntity;
 import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.QuizService;
 import ru.prevent.service.UserService;
@@ -15,10 +13,10 @@ import ru.prevent.service.UserService;
 @RequestMapping("ajax")
 public class AdminAjaxController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
     @GetMapping("/getPatientList")
     public ModelAndView getPatientList() {
@@ -59,5 +57,4 @@ public class AdminAjaxController {
         model.addObject("quizzes", quizService.findAll());
         return model;
     }
-
 }

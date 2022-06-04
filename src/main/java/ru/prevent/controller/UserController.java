@@ -8,26 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
-import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.QuizService;
 import ru.prevent.service.UserAndQuizService;
 import ru.prevent.service.UserService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("user")
 public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
     @Autowired
-    UserAndQuizService userAndQuizService;
+    private UserAndQuizService userAndQuizService;
 
     @GetMapping("/create")
     public ModelAndView getPageForNewUser() {
@@ -67,5 +64,4 @@ public class UserController {
         return new ResponseEntity<>("Quiz (" + quiz + ") for user (" +
                 user + ") created successfully", HttpStatus.OK);
     }
-
 }

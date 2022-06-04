@@ -13,7 +13,7 @@ import ru.prevent.service.QuizService;
 @RequestMapping("/quiz")
 public class QuizController {
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
     @GetMapping("/create")
     public ModelAndView getPageForNewQuiz() {

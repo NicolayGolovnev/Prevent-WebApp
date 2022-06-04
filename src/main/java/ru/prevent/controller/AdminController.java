@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("admin")
 public class AdminController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("/")
     public ModelAndView loadIndex() {

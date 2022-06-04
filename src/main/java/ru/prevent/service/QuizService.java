@@ -2,6 +2,7 @@ package ru.prevent.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.*;
 import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.QuizRepository;
@@ -30,6 +31,7 @@ public class QuizService {
         return repository.findAllByAccessIsTrue();
     }
 
+    @Transactional(readOnly = true)
     public QuizEntity findById(Long id) {
         Optional<QuizEntity> optional = repository.findById(id);
         if (optional.isPresent())
@@ -38,6 +40,7 @@ public class QuizService {
             throw new ObjectNotFoundException("Quiz[id=" + id + "] not found!");
     }
 
+    @Transactional(readOnly = true)
     public QuizEntity findByTitle(String title) {
         Optional<QuizEntity> optional = repository.findByTitle(title);
         if (optional.isPresent())
@@ -46,6 +49,7 @@ public class QuizService {
             throw new ObjectNotFoundException("Quiz[title=" + title + "] not found!");
     }
 
+    @Transactional
     public void save(QuizEntity quiz) {
         if (quiz.getId() == null) {
             // устанавливаем двустороннюю связь
@@ -100,6 +104,7 @@ public class QuizService {
         }
     }
 
+    @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

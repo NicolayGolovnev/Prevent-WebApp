@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class QuestionService {
     @Autowired
-    QuestionRepository repository;
+    private QuestionRepository repository;
 
     public List<QuestionEntity> findQuestionsByQuizId(Long id) {
         return repository.findAllByQuiz_Id(id);
@@ -27,6 +27,4 @@ public class QuestionService {
         else
             throw new ObjectNotFoundException("Question[id=" + id + "] not found!");
     }
-
-
 }
