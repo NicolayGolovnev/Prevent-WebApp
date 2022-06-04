@@ -114,7 +114,7 @@ function generateNewAnswerForQuestion(questionId) {
                     <option value="Нет"></option>
                 </datalist>
             </div>
-            <div class="col-md-2" style="width: 80px;">
+            <div class="col-md-2" style="width: 90px;">
                 <input type="text" class="form-control" placeholder="Вес"
                        name="" id="answerWeight" value="">
             </div>

@@ -1,0 +1,43 @@
+.logo-img {
+    height: 50px;
+}
+
+.logo-header, .header {
+    position: fixed;
+    top: 0;
+    z-index: 1030;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0rem;
+    background-color: #f5f4f2;
+}
+
+.logo-header {
+    left: 0;
+    width: 232px;
+}
+
+.header {
+    left: 232px;
+    right: 0;
+    font-size: larger;
+}
+
+.main-container {
+    position: relative;
+    top: 70px;
+    padding: .5rem;
+}
+
+
+@media (max-width: 767px) {
+    .header, .logo-header {
+        display: none;
+    }
+
+    .main-container {
+        top: 0;
+    }
+}

@@ -18,16 +18,18 @@
             integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{~/css/style.css}">
+    <link rel="stylesheet" th:href="@{~/css/headers.css}">
 </head>
 <body>
-<div class="row" style="background-color: #f5f4f2; position: fixed; z-index: 1000; top: 0; left: 0; right: 0">
-    <a class="navbar-brand" href="https://preventplus.ru">
-        <img style="height: 5rem; padding: 0 0 0 2rem" th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
-    </a>
-    <header class="header">Центр превентивной и эстетической медицины</header>
+<a class="logo-header" th:href="@{/}">
+    <img th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
+</a>
+<div class="header">
+    Центр превентивной и эстетической медицины
 </div>
-<div class="container" style="margin-top: 7rem">
+
+<div class="main-container container">
     <h3>
         <th:block th:utext="'Прохождение опросника ' + '&quot;' + ${quiz.title} + '&quot;'"/>
     </h3>
