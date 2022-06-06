@@ -1,5 +1,7 @@
 package ru.prevent.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("user")
+@Api(tags = "Контроллер пользователя")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -26,6 +29,7 @@ public class UserController {
     @Autowired
     private UserAndQuizService userAndQuizService;
 
+    @ApiOperation(value = "Загрузка страницы регистрации пользователя с пустой формой")
     @GetMapping("/create")
     public ModelAndView getPageForNewUser() {
         ModelAndView model = new ModelAndView("admin/patient-create-page");
@@ -33,18 +37,21 @@ public class UserController {
         return model;
     }
 
+    @ApiOperation(value = "Операция создания/редактирования полученного пользователя")
     @PostMapping("/create")
     public String saveUser(@ModelAttribute("patient") UserEntity user) {
         userService.save(user);
         return "redirect:/admin/";
     }
 
+    @ApiOperation(value = "Операция удаления пользователя по уникальному идентификатору")
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
         return new ResponseEntity<>("User by id=" + id + " deleted successfully", HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Загрузка страницы с информацией пользователя по уникальному идентификатору")
     @GetMapping("/{id}")
     public ModelAndView getPageForUser(@PathVariable("id") Long id) {
         ModelAndView model = new ModelAndView("admin/patient-page");
@@ -52,6 +59,7 @@ public class UserController {
         return model;
     }
 
+    @ApiOperation(value = "Операция назначения опроса")
     @PostMapping("/assignPool")
     public ResponseEntity<?> assignPoolById(@ModelAttribute("user") String user, @ModelAttribute("quiz") String quiz) {
         UserAndQuizzesEntity userAndQuizEntity = UserAndQuizzesEntity.builder()

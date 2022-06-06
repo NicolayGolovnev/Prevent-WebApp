@@ -1,5 +1,7 @@
 package ru.prevent.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Api(tags = "Контроллер конечного пользователя (клиента)")
 public class ClientController {
     @Autowired
     private UserService userService;
@@ -41,6 +44,7 @@ public class ClientController {
     @Autowired
     private HistoryResultService historyResultService;
 
+    @ApiOperation(value = "Загрузка главной страницы пользователя по уникальному идентификатору")
     @GetMapping("/lk/{userId}")
     public String loadUserPage(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.findById(userId));
@@ -61,6 +65,7 @@ public class ClientController {
         return "user/userPage";
     }
 
+    @ApiOperation(value = "Загрузка страницы прохождения опроса для пользователя")
     @GetMapping("/loadQuizByUser")
     public String loadQuiz(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model) {
         UserEntity user = userService.findById(userId);
@@ -107,6 +112,7 @@ public class ClientController {
         return "user/quiz";
     }
 
+    @ApiOperation(value = "Загрузка страницы просмотра результата опроса для пользователя")
     @GetMapping("/showCompleteTest")
     public String showCompleteTest(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model){
         UserAndQuizzesEntity userAndQuiz = userAndQuizService.findById(quizId);
@@ -151,6 +157,7 @@ public class ClientController {
         return newResult;
     }
 
+    @ApiOperation(value = "Операция сохранение и подсчет баллов результатов опроса")
     @PostMapping("/saveResults")
     public String saveResults(@ModelAttribute("questions") QuizModel resultForm, Model model){
         UserEntity user = userService.findById(resultForm.getUserId());
@@ -215,6 +222,8 @@ public class ClientController {
         return "user/showResult";
     }
 
+
+    @ApiOperation(value = "", hidden = true)
     @GetMapping("/showResult/{id}")
     public String showResult(@PathVariable Long id, Model model){
         model.addAttribute("result", userAndQuizService.findById(id));
