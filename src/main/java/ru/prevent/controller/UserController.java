@@ -3,11 +3,13 @@ package ru.prevent.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.prevent.entity.QuizEntity;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
 import ru.prevent.service.QuizService;
@@ -62,14 +64,26 @@ public class UserController {
     @ApiOperation(value = "Операция назначения опроса")
     @PostMapping("/assignPool")
     public ResponseEntity<?> assignPoolById(@ModelAttribute("user") String user, @ModelAttribute("quiz") String quiz) {
-        UserAndQuizzesEntity userAndQuizEntity = UserAndQuizzesEntity.builder()
-                .status("назначен")
-                .completeDate(LocalDate.now())
-                .user(userService.findByFIO(user))
-                .quiz(quizService.findByTitle(quiz))
-                .build();
-        userAndQuizService.save(userAndQuizEntity);
-        return new ResponseEntity<>("Quiz (" + quiz + ") for user (" +
-                user + ") created successfully", HttpStatus.OK);
+        UserEntity userEntity = userService.findByFIO(user);
+        QuizEntity quizEntity = quizService.findByTitle(quiz);
+
+        if (userAndQuizService.findAllByUserIdAndQuizId(userEntity.getId(), quizEntity.getId()).isEmpty()) {
+            UserAndQuizzesEntity userAndQuizEntity = UserAndQuizzesEntity.builder()
+                    .status("назначен")
+                    .completeDate(LocalDate.now())
+                    .user(userEntity)
+                    .quiz(quizEntity)
+                    .build();
+            userAndQuizService.save(userAndQuizEntity);
+
+            return new ResponseEntity<>("Quiz (" + quiz + ") for user (" +
+                    user + ") created successfully", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>("Данный опрос уже назначен этому пациенту!",
+                    HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 }

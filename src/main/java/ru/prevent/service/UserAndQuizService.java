@@ -25,7 +25,13 @@ public class UserAndQuizService {
 
     @Transactional(readOnly = true)
     public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz) {
-        return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
+        return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow(
+                () -> new ObjectNotFoundException("Record [userId=" + idUser + ", quizId=" + idQuiz + "] not found!"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserAndQuizzesEntity> findAllByUserIdAndQuizId(Long userId, Long quizId) {
+        return repository.findAllByUserIdAndQuizId(userId, quizId);
     }
 
     @Transactional(readOnly = true)
