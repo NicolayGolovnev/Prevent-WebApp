@@ -21,7 +21,7 @@ public class UserAndAnswersEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_user_n_quiz", nullable = false)
-    UserAndQuizzesEntity userQuiz;
+    UserAndQuizzesEntity userQuizzes;
 
     @ManyToOne
     @JoinColumn(name = "id_answer")

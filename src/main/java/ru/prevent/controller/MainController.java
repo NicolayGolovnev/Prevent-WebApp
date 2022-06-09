@@ -1,5 +1,6 @@
 package ru.prevent.controller;
 
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class MainController {
     public String loadIndex(Model model) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("chooseUser", new UserNQuizModel());
+
         return "index";
     }
 

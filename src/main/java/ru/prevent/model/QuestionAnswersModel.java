@@ -15,6 +15,7 @@ public class QuestionAnswersModel {
     Long id;
     QuestionEntity question;
     Long weight;
+
     List<AnswerEntity> answers;
     AnswerEntity userAnswer;
 }

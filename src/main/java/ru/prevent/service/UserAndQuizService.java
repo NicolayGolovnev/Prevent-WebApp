@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.QuizRepository;
-import ru.prevent.repository.UserAndQuizRepository;
+import ru.prevent.repository.UserAndQuizeRepository;
 import ru.prevent.repository.UserRepository;
 
 import java.util.List;
@@ -56,4 +56,6 @@ public class UserAndQuizService {
     public void save(UserAndQuizzesEntity entity) {
         repository.save(entity);
     }
+
+    public void save(UserAndQuizzesEntity entity){userAndQuizeRepository.save(entity);}
 }
