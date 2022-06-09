@@ -1,0 +1,28 @@
+.table {
+    width: 100%;
+    max-width: 100%;
+}
+
+.table tr {
+    border-top: 1px solid #dee2e6;
+}
+
+.table td {
+    border-top: 0;
+}
+
+.table td.icon {
+    width: 45px;
+    padding: 0;
+    margin: auto;
+    text-align: center;
+}
+
+ion-icon {
+    width: 25px;
+    height: 25px;
+}
+
+/*.table td.trash {
+    color: red;
+}*/

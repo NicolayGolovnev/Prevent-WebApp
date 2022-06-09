@@ -2,10 +2,11 @@ package ru.prevent.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.prevent.entity.UserAndAnswersEntity;
+import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.UserAndQuizzesEntity;
+import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.QuizRepository;
-import ru.prevent.repository.UserAndQuizeRepository;
+import ru.prevent.repository.UserAndQuizRepository;
 import ru.prevent.repository.UserRepository;
 
 import java.util.List;
@@ -14,33 +15,51 @@ import java.util.Optional;
 @Service
 public class UserAndQuizService {
     @Autowired
-    UserAndQuizeRepository userAndQuizeRepository;
+    private UserAndQuizRepository repository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    QuizRepository quizRepository;
+    private QuizRepository quizRepository;
 
-    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz){
-        return userAndQuizeRepository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow();
+    @Transactional(readOnly = true)
+    public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz) {
+        return repository.findByUser_IdAndQuiz_Id(idUser, idQuiz).orElseThrow(
+                () -> new ObjectNotFoundException("Record [userId=" + idUser + ", quizId=" + idQuiz + "] not found!"));
     }
 
-    public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser){
-        return userAndQuizeRepository.findByUser_IdAndStatus(idUser, "завершен");
+    @Transactional(readOnly = true)
+    public List<UserAndQuizzesEntity> findAllByUserIdAndQuizId(Long userId, Long quizId) {
+        return repository.findAllByUserIdAndQuizId(userId, quizId);
     }
 
-    public UserAndQuizzesEntity findById(Long id){
-        Optional<UserAndQuizzesEntity> quiz = userAndQuizeRepository.findById(id);
-        if(quiz.isPresent())
-            return quiz.get();
+    @Transactional(readOnly = true)
+    public List<UserAndQuizzesEntity> findCompletedQuizzesByUserId(Long idUser) {
+        return repository.findByUser_IdAndStatus(idUser, "завершен");
+    }
+
+    @Transactional(readOnly = true)
+    public UserAndQuizzesEntity findById(Long id) {
+        Optional<UserAndQuizzesEntity> optionalUserAndQuiz = repository.findById(id);
+        if (optionalUserAndQuiz.isPresent())
+            return optionalUserAndQuiz.get();
         else
-            throw new RuntimeException("Record with id=" + id + " not found!");
+            throw new ObjectNotFoundException("Record [id=" + id + "] not found!");
     }
 
-    public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId){
-        return userAndQuizeRepository.findByUser_IdAndStatus(userId, "открытый");
+    @Transactional(readOnly = true)
+    public List<UserAndQuizzesEntity> findAllOpenQuizzesByUserId(Long userId) {
+        return repository.findByUser_IdAndStatus(userId, "открытый");
     }
 
-    public void save(UserAndQuizzesEntity entity){userAndQuizeRepository.save(entity);}
+    @Transactional(readOnly = true)
+    public List<UserAndQuizzesEntity> findAllAppointedQuizzesByUserId(Long userId) {
+        return repository.findByUser_IdAndStatus(userId, "назначен");
+    }
+
+    @Transactional
+    public void save(UserAndQuizzesEntity entity) {
+        repository.save(entity);
+    }
 }

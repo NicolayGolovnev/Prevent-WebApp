@@ -1,0 +1,15 @@
+/*div[class^="child-"], div[class*=" child-"],*/
+/*, div[class^="answer-"]*/
+div[class^="question-"], div[class^="key-"] {
+    /*border: 1px solid #3f3f40;*/
+    border: 0 solid #3f3f40;
+    background-color: #f5f4f2;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0.7rem;
+}
+
+ion-icon {
+    width: 25px;
+    height: 25px;
+}

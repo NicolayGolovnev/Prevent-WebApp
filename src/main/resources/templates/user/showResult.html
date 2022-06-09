@@ -19,30 +19,33 @@
             integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{~/css/headers.css}">
+    <link rel="stylesheet" th:href="@{~/css/style.css}">
 </head>
 <body>
-    <div class="row" style="background-color: #f5f4f2; position: fixed; z-index: 1000; top: 0; left: 0; right: 0">
-        <a class="navbar-brand" href="https://preventplus.ru">
-            <img style="height: 5rem; padding: 0 0 0 2rem" th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
-        </a>
-        <header class="header">Центр превентивной и эстетической медицины</header>
+    <a class="logo-header" th:href="@{/}">
+        <img th:src="@{~/img/logo.svg}" class="logo-img" alt="Prevent+">
+    </a>
+    <div class="header">
+        Центр превентивной и эстетической медицины
     </div>
-    <div class="container" style="margin-top: 7rem">
+    <div class="main-container container">
         <h3 th:text="'Результат тестирования &quot;' + ${quizInfo.getQuiz().getTitle()} + '&quot;'"></h3>
         <hr>
         <div th:each="quiz: *{results}">
-            <h5 th:text="'Блок &quot;' + ${quiz.getChildrenQuiz().getTitle()} + '&quot;'" ></h5>
+            <h5 th:if="${quiz.checkChildrenQuiz()}" th:text="'Блок &quot;' + ${quiz.getChildrenQuiz().getTitle()} + '&quot;'" ></h5>
             <h4 th:switch="${quiz.getResult()}">
                 <span th:case="'Низкая степень отклонения'" th:text="${quiz.getResult()}" style="color: green"></span>
                 <span th:case="'Средняя степень отклонения'" th:text="${quiz.getResult()}" style="color: orange"></span>
                 <span th:case="'Высокая степень отклонения'" th:text="${quiz.getResult()}" style="color: red"></span>
+                <!-- default case -->
+                <span th:case="*" th:text="${quiz.getResult()}"></span>
             </h4>
         </div>
     </div>
     <div class="fixed-bottom">
         <div class="button-on-main-page">
-            <a th:href="${quizInfo.getUser().getId()}">
+            <a th:href="'/lk/' + ${quizInfo.getUser().getId()}">
                 <button type="button" class="btn btn-success border-2">На главную</button>
             </a>
         </div>

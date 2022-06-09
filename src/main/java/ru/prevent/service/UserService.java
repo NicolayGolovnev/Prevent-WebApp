@@ -2,11 +2,11 @@ package ru.prevent.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.QuizEntity;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.entity.UserEntity;
-import ru.prevent.exception.UserNotFoundException;
-import ru.prevent.repository.QuizRepository;
+import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -17,15 +17,17 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
+    @Transactional(readOnly = true)
     public List<UserEntity> findAll() {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public UserEntity findByFIO(String fio) {
         String[] names = fio.split(" ");
         Optional<UserEntity> optionalUser = Optional.empty();
@@ -37,30 +39,51 @@ public class UserService {
         if (optionalUser.isPresent())
             return optionalUser.get();
         else
-            throw new UserNotFoundException("User[firstName=" + names[0] + ", lastName=" + names[1] + "] not found!");
+            throw new ObjectNotFoundException("User[firstName=" + names[0] + ", lastName=" + names[1] + "] not found!");
     }
 
+    @Transactional(readOnly = true)
     public UserEntity findById(Long id) {
         Optional<UserEntity> optionalUser = repository.findById(id);
         if (optionalUser.isPresent())
             return optionalUser.get();
         else
-            throw new RuntimeException("User with id=" + id + " not found!");
+            throw new ObjectNotFoundException("User[id=" + id + "] not found!");
     }
 
+    @Transactional
     public void save(UserEntity user) {
-        List<QuizEntity> openQuizzes = quizService.findAllByAccessIsTrue();
-        List<UserAndQuizzesEntity> userQuizzes = new ArrayList<>();
-        for (QuizEntity quiz : openQuizzes)
-            userQuizzes.add(UserAndQuizzesEntity.builder()
-                    .status("открытый")
-                    .user(user)
-                    .quiz(quiz)
-                    .build());
-        user.setQuizzes(userQuizzes);
+        if (user.getId() == null) {
+            List<QuizEntity> openQuizzes = quizService.findAllByAccessIsTrue();
+            List<UserAndQuizzesEntity> userQuizzes = new ArrayList<>();
+            for (QuizEntity quiz : openQuizzes)
+                if (UserAndQuizzesEntity.isCompatible(quiz, user))
+                    userQuizzes.add(UserAndQuizzesEntity.builder()
+                            .status("открытый")
+                            .user(user)
+                            .quiz(quiz)
+                            .build());
+            user.setQuizzes(userQuizzes);
+        } else {
+            // update
+            List<UserAndQuizzesEntity> checkQuizzes = new ArrayList<>();
+            for (UserAndQuizzesEntity userQuiz : user.getQuizzes()) {
+                if (userQuiz.getStatus().equals("назначен")) {
+                    checkQuizzes.add(userQuiz);
+                    continue;
+                }
+
+                if (UserAndQuizzesEntity.isCompatible(userQuiz.getQuiz(), user))
+                    checkQuizzes.add(userQuiz);
+            }
+
+            user.setQuizzes(checkQuizzes);
+        }
+
         repository.save(user);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

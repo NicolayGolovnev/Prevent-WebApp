@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface QuizRepository extends JpaRepository<QuizEntity, Long> {
     List<QuizEntity> findAllByAccessIsTrue();
+    List<QuizEntity> findAllByAccessIsFalse();
     Optional<QuizEntity> findByTitle(String title);
 }

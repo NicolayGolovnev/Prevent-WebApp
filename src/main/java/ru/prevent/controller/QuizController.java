@@ -1,5 +1,7 @@
 package ru.prevent.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +13,12 @@ import ru.prevent.service.QuizService;
 
 @Controller
 @RequestMapping("/quiz")
+@Api(tags = "Контроллер опросов")
 public class QuizController {
     @Autowired
-    QuizService quizService;
+    private QuizService quizService;
 
+    @ApiOperation(value = "Загрузка страницы создания опроса с пустой формой")
     @GetMapping("/create")
     public ModelAndView getPageForNewQuiz() {
         ModelAndView model = new ModelAndView("admin/quiz-create-page");
@@ -22,12 +26,14 @@ public class QuizController {
         return model;
     }
 
+    @ApiOperation(value = "Операция создания нового опроса")
     @PostMapping("/create")
     public String createQuiz(@ModelAttribute("quiz") QuizEntity quiz) {
         quizService.save(quiz);
-        return "redirect:/";
+        return "redirect:/admin/";
     }
 
+    @ApiOperation(value = "Загрузка страницы с информацией об опросе по уникальному идентификатору")
     @GetMapping("/{id}")
     public ModelAndView getPageForQuiz(@PathVariable("id") Long id) {
         ModelAndView model = new ModelAndView("admin/quiz-page");
@@ -36,15 +42,10 @@ public class QuizController {
         return model;
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateQuiz(@ModelAttribute("quiz") QuizEntity quiz) {
-        System.out.println(quiz.toString());
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
+    @ApiOperation(value = "Операция удаления данных об опросе по уникальному идентификатору")
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> deleteQuizById(@PathVariable Long id) {
         quizService.deleteById(id);
-        return new ResponseEntity<>("Quiz by id=" + id + " deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Quiz[id=" + id + "] deleted successfully", HttpStatus.OK);
     }
 }
