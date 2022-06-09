@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.prevent.exception.ObjectNotFoundException;
 import ru.prevent.model.UserNQuizModel;
 import ru.prevent.service.EmailSenderService;
 import ru.prevent.service.UserService;
@@ -44,5 +45,10 @@ public class MainController {
                 "Welcome by Spring!";
         emailService.sendSimpleEmail(to, header, message);
         return "redirect:/";
+    }
+
+    @GetMapping("/throw")
+    public void throwException() {
+        throw new ObjectNotFoundException("Something checkers!");
     }
 }
