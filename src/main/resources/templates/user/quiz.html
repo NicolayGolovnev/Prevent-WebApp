@@ -39,7 +39,10 @@
         <div th:each="childQuiz, stateQuiz: *{childQuizzes}" class="quiz">
             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].id}" th:value="${childQuiz.id}">
             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].weight}" th:value="${childQuiz.weight}">
-            <h4 th:text="'Блок &quot;' + ${childQuiz.tittle} + '&quot;'"></h4>
+
+
+            <h4 th:if="${childQuiz.checkTitle()}" th:text="'Блок &quot;' + ${childQuiz.tittle} + '&quot;'"></h4>
+
             <div th:each="question, state: ${childQuiz.questions}" class="form-group"
                  style="background-color: #f5f4f2; height: 40%; border-radius: 10px">
                 <div style="padding: 0.5rem 0.5rem 0.5rem 0.5rem">
