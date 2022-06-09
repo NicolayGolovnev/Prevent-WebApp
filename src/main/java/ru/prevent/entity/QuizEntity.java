@@ -79,5 +79,4 @@ public class QuizEntity {
         }
         return false;
     }
-
 }

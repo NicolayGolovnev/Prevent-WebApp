@@ -56,4 +56,8 @@ public class UserAndQuizService {
     public void save(UserAndQuizzesEntity entity) {
         repository.save(entity);
     }
+
+    public UserAndQuizzesEntity findByUserAndQuizId(Long userId, Long quizId){
+        return repository.findByUser_IdAndQuiz_Id(userId, quizId).orElseThrow();
+    }
 }

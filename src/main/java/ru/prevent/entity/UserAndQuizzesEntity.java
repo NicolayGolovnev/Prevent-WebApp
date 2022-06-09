@@ -55,4 +55,8 @@ public class UserAndQuizzesEntity {
 
         return true;
     }
+
+    public boolean checkStatus(){
+        return Objects.equals(status, "назначен");
+    }
 }

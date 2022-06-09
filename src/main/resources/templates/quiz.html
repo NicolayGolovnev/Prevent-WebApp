@@ -31,9 +31,12 @@
     <h3>
         <th:block th:utext="'Прохождение опросника ' + ${quiz.title}"/>
     </h3>
+    <!--/*@thymesVar id="test" type="ru.prevent.model.QuizModel"*/-->
+    <!--/*@thymesVar id="userNQuiz" type="ru.prevent.entity.UserAndQuizzesEntity"*/-->
     <form action="#" method="post" th:action="@{/saveResults}" th:object="${test}">
         <input type="hidden" th:name="userId" th:value="${user.id}">
         <input type="hidden" th:name="quizId" th:value="${quiz.id}">
+        <input type="hidden" th:name="recordId" th:value="${userNQuiz.id}">
         <div th:each="childQuiz, stateQuiz: *{childQuizzes}" class="quiz">
             <input type="hidden" th:field="*{childQuizzes[__${stateQuiz.index}__].id}" th:value="${childQuiz.id}">
             <h4 th:text="'Блок ' + ${childQuiz.tittle}"></h4>

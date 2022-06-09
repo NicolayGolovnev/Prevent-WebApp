@@ -51,14 +51,15 @@ public class ClientController {
 
         List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllAppointedQuizzesByUserId(userId);
         openQuizzes.addAll(userAndQuizService.findAllOpenQuizzesByUserId(userId));
-        List<QuizEntity> quizzes = new ArrayList<>();
+        /*List<QuizEntity> quizzes = new ArrayList<>();
         for (UserAndQuizzesEntity test: openQuizzes) {
             quizzes.add(test.getQuiz());
         }
-        model.addAttribute("quizzes", quizzes);
+        model.addAttribute("quizzes", quizzes);*/
+        model.addAttribute("quizzes", openQuizzes);
 
         UserNQuizModel userNQuizModel = new UserNQuizModel();
-        userNQuizModel.setUserId(userId);
+        //userNQuizModel.setUserId(userId);
 
         model.addAttribute("uqModel", userNQuizModel);
         model.addAttribute("completedQuizzes", userAndQuizService.findCompletedQuizzesByUserId(userId));
@@ -67,11 +68,12 @@ public class ClientController {
 
     @ApiOperation(value = "Загрузка страницы прохождения опроса для пользователя")
     @GetMapping("/loadQuizByUser")
-    public String loadQuiz(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model) {
-        UserEntity user = userService.findById(userId);
-        QuizEntity quiz = quizService.findById(quizId);
+    public String loadQuiz(@RequestParam("id") Long id, Model model) {
+        UserAndQuizzesEntity record = userAndQuizService.findById(id);
+        UserEntity user = record.getUser();
+        QuizEntity quiz = record.getQuiz();
 
-        List<QuizAndQuizEntity> childQuizzes = quizAndQuizService.findAllChildTests(quizId);
+        List<QuizAndQuizEntity> childQuizzes = quizAndQuizService.findAllChildTests(quiz.getId());
         QuizModel quizModel = new QuizModel();
 
         for (QuizAndQuizEntity childQuiz: childQuizzes) {
@@ -99,6 +101,8 @@ public class ClientController {
             quizModel.getChildQuizzes().get(0).setTittle("");
         }
 
+        quizModel.setRecordId(record.getId());
+
         int countQuiz = childQuizzes.size();
         int[] countQuestionInBlocks = new int[countQuiz];
         for (int i = 0; i < countQuiz; i++)
@@ -107,6 +111,7 @@ public class ClientController {
         model.addAttribute("countQuestionsInBlocks", countQuestionInBlocks);
         model.addAttribute("user", user);
         model.addAttribute("quiz", quiz);
+        model.addAttribute("userNQuiz", record);
         model.addAttribute("test", quizModel);
 
         return "user/quiz";
@@ -164,12 +169,19 @@ public class ClientController {
         QuizEntity quiz = quizService.findById(resultForm.getQuizId());
         List<ChildQuizModel> childQuizzes = resultForm.getChildQuizzes();
 
-        UserAndQuizzesEntity userAndQuiz = UserAndQuizzesEntity.builder()
-                .user(user)
-                .quiz(quiz)
-                .completeDate(LocalDate.now())
-                .status("завершен")
-                .build();
+        UserAndQuizzesEntity userAndQuiz = userAndQuizService.findByUserAndQuizId(user.getId(), quiz.getId());
+        if (userAndQuiz.getStatus().equals("назначен")){
+            userAndQuiz.setStatus("завершен");
+            userAndQuiz.setCompleteDate(LocalDate.now());
+        }
+        else{
+            userAndQuiz = UserAndQuizzesEntity.builder()
+                    .user(user)
+                    .quiz(quiz)
+                    .completeDate(LocalDate.now())
+                    .status("завершен")
+                    .build();
+        }
         userAndQuizService.save(userAndQuiz);
 
         List<HistoryResultsEntity> resultsToModel = new ArrayList<>();
@@ -180,37 +192,6 @@ public class ClientController {
         }
         else {
             for (ChildQuizModel childQuiz: childQuizzes) {
-                /*int resultQuiz = 0;
-                QuestionEntity questionField;
-                for(QuestionAnswersModel question: childQuiz.getQuestions())
-                {
-                    questionField = questionService.findById(question.getId());
-                    UserAndAnswersEntity newUserAnswer = UserAndAnswersEntity.builder()
-                            .contentAnswer("")
-                            .answer(question.getUserAnswer())
-                            .question(questionField)
-                            .user(user)
-                            .userQuizzes(userAndQuiz)
-                            .build();
-                    userAnswerService.save(newUserAnswer);
-                    resultQuiz += question.getUserAnswer().getWeight();
-                }
-                List<KeyQuizEntity> keysQuiz = keyQuizService.findAllByQuizId(childQuiz.getId());
-                String resultTest = "";
-                for(KeyQuizEntity keyQuiz: keysQuiz){
-                    if(resultQuiz >= keyQuiz.getMinArg() && resultQuiz <= keyQuiz.getMaxArg()){
-                        resultTest = keyQuiz.getResultArg();
-                        break;
-                    }
-                }
-                HistoryResultsEntity newResult = HistoryResultsEntity.builder()
-                        .result(resultTest)
-                        .user(user)
-                        .userQuiz(userAndQuiz)
-                        .childrenQuiz(quizService.findById(childQuiz.getId()))
-                        .build();
-                historyResultService.save(newResult);
-                resultsToModel.add(newResult);*/
                 HistoryResultsEntity resultBlock = saveBlock(user, userAndQuiz, childQuiz);
                 resultBlock.setChildrenQuiz(quizService.findById(childQuiz.getId()));
                 historyResultService.save(resultBlock);
