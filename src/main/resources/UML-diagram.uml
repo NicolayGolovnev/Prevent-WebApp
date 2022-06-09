@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ru.prevent.controller.UserController</OriginalElement>
+  <nodes>
+    <node x="803.6875233483721" y="38.37805684071378">ru.prevent.service.UserService</node>
+    <node x="489.35657633840043" y="804.3417052214145">ru.prevent.controller.MainController</node>
+    <node x="1290.9023463317913" y="332.8592200925315">ru.prevent.controller.QuizController</node>
+    <node x="1178.9596827495045" y="837.3417052214145">ru.prevent.controller.AdminController</node>
+    <node x="880.8658294778585" y="771.3417052214145">ru.prevent.controller.AdminAjaxController</node>
+    <node x="1269.9023463317913" y="539.967614011897">ru.prevent.controller.UserController</node>
+    <node x="1065.7600793126242" y="5.378056840713782">ru.prevent.service.QuizService</node>
+    <node x="361.3565763384005" y="358.595836087244">ru.prevent.controller.ClientController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ru.prevent.service.UserService" target="ru.prevent.service.QuizService" relationship="TO_ONE">
+      <point x="4.766516278777999E-4" y="105.9999431592862" />
+      <point x="901.688" y="331.0" />
+      <point x="1227.26" y="331.0" />
+      <point x="-7.931262416605023E-5" y="138.9999431592862" />
+    </edge>
+    <edge source="ru.prevent.service.QuizService" target="ru.prevent.service.UserService" relationship="TO_ONE">
+      <point x="-161.50007931262417" y="-5.684071379619127E-5" />
+      <point x="98.00047665162788" y="-5.684071379619127E-5" />
+    </edge>
+    <edge source="ru.prevent.controller.AdminAjaxController" target="ru.prevent.service.UserService" relationship="TO_ONE">
+      <point x="1.7052214150226064E-4" y="-116.9997052214145" />
+      <point x="1012.866" y="748.0" />
+      <point x="1033.0" y="748.0" />
+      <point x="1033.0" y="144.378" />
+      <point x="98.00047665162788" y="-5.684071379619127E-5" />
+    </edge>
+    <edge source="ru.prevent.controller.QuizController" target="ru.prevent.service.QuizService" relationship="TO_ONE">
+      <point x="-133.5003463317912" y="-2.200925314923552E-4" />
+      <point x="1198.0" y="416.859" />
+      <point x="1198.0" y="331.0" />
+      <point x="1227.26" y="331.0" />
+      <point x="-7.931262416605023E-5" y="138.9999431592862" />
+    </edge>
+    <edge source="ru.prevent.controller.AdminController" target="ru.prevent.service.UserService" relationship="TO_ONE">
+      <point x="-28.95968274950451" y="-50.9997052214145" />
+      <point x="1246.5" y="748.0" />
+      <point x="1033.0" y="748.0" />
+      <point x="1033.0" y="144.378" />
+      <point x="98.00047665162788" y="-5.684071379619127E-5" />
+    </edge>
+    <edge source="ru.prevent.controller.UserController" target="ru.prevent.service.UserService" relationship="TO_ONE">
+      <point x="-154.5003463317912" y="3.8598810294843133E-4" />
+      <point x="1033.0" y="656.968" />
+      <point x="1033.0" y="144.378" />
+      <point x="98.00047665162788" y="-5.684071379619127E-5" />
+    </edge>
+    <edge source="ru.prevent.controller.ClientController" target="ru.prevent.service.UserService" relationship="TO_ONE">
+      <point x="4.236615994841486E-4" y="183.00016391275608" />
+      <point x="602.857" y="748.0" />
+      <point x="1033.0" y="748.0" />
+      <point x="1033.0" y="144.378" />
+      <point x="98.00047665162788" y="-5.684071379619127E-5" />
+    </edge>
+    <edge source="ru.prevent.controller.MainController" target="ru.prevent.service.UserService" relationship="TO_ONE">
+      <point x="4.2366159959783545E-4" y="-83.9997052214145" />
+      <point x="602.857" y="748.0" />
+      <point x="1033.0" y="748.0" />
+      <point x="1033.0" y="144.378" />
+      <point x="98.00047665162788" y="-5.684071379619127E-5" />
+    </edge>
+    <edge source="ru.prevent.controller.AdminAjaxController" target="ru.prevent.service.QuizService" relationship="TO_ONE">
+      <point x="132.0001705221415" y="-73.84170522141449" />
+      <point x="1198.0" y="814.5" />
+      <point x="1198.0" y="331.0" />
+      <point x="1227.26" y="331.0" />
+      <point x="-7.931262416605023E-5" y="138.9999431592862" />
+    </edge>
+    <edge source="ru.prevent.controller.UserController" target="ru.prevent.service.QuizService" relationship="TO_ONE">
+      <point x="-154.5003463317912" y="-96.46761401189701" />
+      <point x="1198.0" y="560.5" />
+      <point x="1198.0" y="331.0" />
+      <point x="1227.26" y="331.0" />
+      <point x="-7.931262416605023E-5" y="138.9999431592862" />
+    </edge>
+    <edge source="ru.prevent.controller.ClientController" target="ru.prevent.service.QuizService" relationship="TO_ONE">
+      <point x="4.236615994841486E-4" y="-182.99983608724392" />
+      <point x="602.857" y="331.0" />
+      <point x="1227.26" y="331.0" />
+      <point x="-7.931262416605023E-5" y="138.9999431592862" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.851435002813731" showDependencies="true" x="890.5" y="531.2980832782551" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

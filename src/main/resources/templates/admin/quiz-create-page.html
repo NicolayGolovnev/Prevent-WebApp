@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="icon" type="image/ico" th:href="@{~/static/favicon.ico}">
     <title>Личный кабинет врача</title>
 
     <!-- Bootstrap CSS (Cloudflare CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
           integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
           crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" th:href="@{~/css/styles.css}">
+    <link rel="stylesheet" th:href="@{~/css/headers.css}">
+    <link rel="stylesheet" th:href="@{~/css/quiz.css}">
     <!--  <link rel="stylesheet" th:href="@{~/css/navbar-fixed-left.min.css}">-->
 
     <!-- jQuery (Cloudflare CDN) -->
@@ -95,7 +97,7 @@
             </div>
             <div class="row justify-content-end">
                 <button type="button" onclick="generateNewChildQuiz()"
-                        class="btn btn-success col-md-5 m-2">Добавить дочерний опросник</button>
+                        class="btn btn-success btn-children col-md-5 m-2">Добавить дочерний опросник</button>
             </div>
         </div>
         <hr>
@@ -109,7 +111,7 @@
             </div>
             <div class="row justify-content-end">
                 <button type="button" onclick="generateNewQuestion()"
-                        class="btn btn-success col-md-5 m-2">Добавить новый вопрос</button>
+                        class="btn btn-success btn-question col-md-5 m-2">Добавить новый вопрос</button>
             </div>
         </div>
         <hr>

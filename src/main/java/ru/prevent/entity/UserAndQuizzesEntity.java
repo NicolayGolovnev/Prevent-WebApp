@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Builder
@@ -27,16 +28,31 @@ public class UserAndQuizzesEntity {
     LocalDate completeDate;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "id_usr", nullable = false)
     UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "id_quiz", nullable = false)
+    @JoinColumn(name = "id_quiz")
     QuizEntity quiz;
 
-    @OneToMany(mappedBy = "userQuizzes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<UserAndAnswersEntity> userAnswers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userQuiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    List<HistoryResultsEntity> results = new ArrayList<>();
+
+    public static boolean isCompatible(QuizEntity quiz, UserEntity user) {
+        // проверяем пол пользователя и опроса
+        if (!Objects.equals(user.getSex(), quiz.getGender()) && !quiz.getGender().equals("Любой"))
+            return false;
+
+        // проверяем возраст пользователя
+        if (user.getAge() < quiz.getMinAge() || user.getAge() > quiz.getMaxAge())
+            return false;
+
+        return true;
+    }
 }

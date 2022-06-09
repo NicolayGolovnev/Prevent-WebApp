@@ -6,6 +6,5 @@ import ru.prevent.entity.QuizAndQuizEntity;
 import java.util.List;
 
 public interface QuizAndQuizRepository extends JpaRepository<QuizAndQuizEntity, Long> {
-
-    public List<QuizAndQuizEntity> findAllByParentQuiz_Id(Long quizId);
+    List<QuizAndQuizEntity> findAllByParentQuiz_Id(Long quizId);
 }

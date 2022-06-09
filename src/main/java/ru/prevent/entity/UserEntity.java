@@ -44,4 +44,18 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<UserAndQuizzesEntity> quizzes = new ArrayList<>();
+
+    public int getAge() {
+        LocalDate timeNow = LocalDate.now();
+        LocalDate birthday = this.getBirthday();
+        int years = timeNow.getYear() - birthday.getYear();
+        if (timeNow.getMonthValue() > birthday.getMonthValue())
+            return years;
+        else {
+            if (timeNow.getDayOfMonth() >= birthday.getDayOfMonth())
+                return years;
+            else
+                return years - 1;
+        }
+    }
 }

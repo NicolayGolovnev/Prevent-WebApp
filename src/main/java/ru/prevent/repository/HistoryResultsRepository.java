@@ -6,6 +6,5 @@ import ru.prevent.entity.HistoryResultsEntity;
 import java.util.List;
 
 public interface HistoryResultsRepository extends JpaRepository<HistoryResultsEntity, Long> {
-
-    public List<HistoryResultsEntity> findAllByUserQuiz_Id(Long id);
+    List<HistoryResultsEntity> findAllByUserQuiz_Id(Long id);
 }

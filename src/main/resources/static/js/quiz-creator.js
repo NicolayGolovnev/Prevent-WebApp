@@ -4,6 +4,11 @@ var counterForAnswers = 0
 var counterForKeys = 0
 $('#forWeightArg').val(1)
 
+if ($('.children-group').children().length !== 0)
+    $('.btn-question').prop("disabled", true)
+else if ($('.question-group').children().length !== 0)
+    $('.btn-children').prop("disabled", true)
+
 function generateNewChildQuiz() {
     const insert = `<div class="form-group row child-${counterForChildrens}" style="flex-wrap: nowrap">
                     <div class="col-md-6" style="width: auto">
@@ -19,6 +24,7 @@ function generateNewChildQuiz() {
                 </div>`
 
     $(".children-group").append(insert)
+    $('.btn-question').prop("disabled", true)
 
     // добавления списка сгенерированных всех опросников с бека
     $.ajax({
@@ -26,7 +32,7 @@ function generateNewChildQuiz() {
         url: "/ajax/getListQuizzesForSelect",
         dataType: 'html',
         success: function (response) {
-            let select = $('.child-' + ' select');
+            let select = $('.child-' + (counterForChildrens - 1) + ' select');
             select.empty();
             select.replaceWith(response);
         }
@@ -38,6 +44,8 @@ function generateNewChildQuiz() {
 function deleteChildrenQuizSelect(childId) {
     const childRow = '.child-' + childId
     $(childRow).remove()
+    if ($('.children-group').children().length === 0)
+        $('.btn-question').prop("disabled", false)
 }
 
 function generateNewQuestion() {
@@ -62,7 +70,7 @@ function generateNewQuestion() {
                 <div class="col-md-2 my-1">
                     <input type="text" class="form-control" placeholder="Вес"
                            name=""
-                           id="questionWeight" value="">
+                           id="questionWeight" value="1">
                 </div>
             </div>
             <!-- Блок ответов для этого вопроса -->
@@ -81,11 +89,14 @@ function generateNewQuestion() {
     counterForQuestion += 1
 
     $('.question-group').append(insert)
+    $('.btn-children').prop("disabled", true)
 }
 
 function deleteQuestion(questionId) {
     const question = '.question-' + questionId
     $(question).remove()
+    if ($('.question-group').children().length === 0)
+        $('.btn-children').prop("disabled", false)
 }
 
 function generateNewAnswerForQuestion(questionId) {
@@ -103,7 +114,7 @@ function generateNewAnswerForQuestion(questionId) {
                     <option value="Нет"></option>
                 </datalist>
             </div>
-            <div class="col-md-2" style="width: 80px;">
+            <div class="col-md-2" style="width: 90px;">
                 <input type="text" class="form-control" placeholder="Вес"
                        name="" id="answerWeight" value="">
             </div>
