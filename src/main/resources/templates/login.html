@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Spring Security Example</title>
 </head>
@@ -12,14 +11,9 @@
     You have been logged out.
 </div>
 <form th:action="@{/login}" method="post">
-    <h3>SMS verification code login</h3>
-    <div>Phone: <input type="text" placeholder="cell-phone number" name="mobile" value="999-999" required="required"/></div>
-    <br>
-    <span style="display: inline">
-            <input type="text" name="smsCode" placeholder="SMS verification code"/>
-            <a href="/code/sms?mobile=999-999">Send verification code</a>
-        </span>
-    <br>
+    <h3>Login page</h3>
+    <div>Username: <input type="text" placeholder="cell-phone number" name="username" required="required"/></div>
+    <div>Password: <input type="password" name="password" required="required"/></div>
     <button type="submit">Sign in</button>
 </form>
 <div><a href="/signup">Sign Up</a></div>

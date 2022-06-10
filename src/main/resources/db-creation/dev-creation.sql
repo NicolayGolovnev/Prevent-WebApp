@@ -1,5 +1,5 @@
-INSERT INTO public.usr (id, first_name, last_name, third_name, sex, birthday, telephone)
-VALUES (default, 'Иванов', 'Иван', 'Иваныч', 'Мужчина', '1960-04-28 22:17:51.000000', '88005553535');
+INSERT INTO public.usr (id, first_name, last_name, third_name, sex, birthday, telephone, email, password)
+VALUES (default, 'Иванов', 'Иван', 'Иваныч', 'Мужчина', '1960-04-28 22:17:51.000000', '88005553535', 'qqq@qqq.qq', '123');
 
 INSERT INTO public.quiz (id, title, access, gender, min_age, max_age, weight_arg)
 VALUES (default, 'Большой функциональный опросник PLS', true, 'Любой', 1, 100, 1),

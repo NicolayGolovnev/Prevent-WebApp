@@ -8,9 +8,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableEncryptableProperties
 public class MvcConfig implements WebMvcConfigurer {
-
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
-
 }
