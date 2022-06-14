@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.UserAndQuizzesEntity;
 import ru.prevent.exception.ObjectNotFoundException;
-import ru.prevent.repository.QuizRepository;
 import ru.prevent.repository.UserAndQuizRepository;
-import ru.prevent.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +14,6 @@ import java.util.Optional;
 public class UserAndQuizService {
     @Autowired
     private UserAndQuizRepository repository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private QuizRepository quizRepository;
 
     @Transactional(readOnly = true)
     public UserAndQuizzesEntity findQuizResult(Long idUser, Long idQuiz) {

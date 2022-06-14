@@ -1,9 +1,7 @@
 package ru.prevent.model;
 
 import lombok.*;
-import ru.prevent.entity.QuestionEntity;
 
-import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor

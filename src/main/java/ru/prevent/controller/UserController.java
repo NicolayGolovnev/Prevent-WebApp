@@ -3,7 +3,6 @@ package ru.prevent.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -78,8 +77,7 @@ public class UserController {
 
             return new ResponseEntity<>("Quiz (" + quiz + ") for user (" +
                     user + ") created successfully", HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>("Данный опрос уже назначен этому пациенту!",
                     HttpStatus.BAD_REQUEST);
         }
