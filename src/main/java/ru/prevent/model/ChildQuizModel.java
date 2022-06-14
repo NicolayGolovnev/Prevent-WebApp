@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,4 +20,6 @@ public class ChildQuizModel {
     public void add(QuestionAnswersModel question) {
         questions.add(question);
     }
+
+    public boolean checkTitle(){return !Objects.equals(tittle, "");}
 }

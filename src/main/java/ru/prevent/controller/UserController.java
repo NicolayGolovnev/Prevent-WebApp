@@ -3,7 +3,6 @@ package ru.prevent.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,13 +34,13 @@ public class UserController {
     @GetMapping("/create")
     public ModelAndView getPageForNewUser() {
         ModelAndView model = new ModelAndView("admin/patient-create-page");
-        model.addObject("patient", new UserEntity());
+        model.addObject("user", new UserEntity());
         return model;
     }
 
     @ApiOperation(value = "Операция создания/редактирования полученного пользователя")
     @PostMapping("/create")
-    public String saveUser(@ModelAttribute("patient") UserEntity user) {
+    public String saveUser(@ModelAttribute("user") UserEntity user) {
         userService.save(user);
         return "redirect:/admin/";
     }
@@ -57,7 +56,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ModelAndView getPageForUser(@PathVariable("id") Long id) {
         ModelAndView model = new ModelAndView("admin/patient-page");
-        model.addObject("patient", userService.findById(id));
+        model.addObject("user", userService.findById(id));
         return model;
     }
 
@@ -78,8 +77,7 @@ public class UserController {
 
             return new ResponseEntity<>("Quiz (" + quiz + ") for user (" +
                     user + ") created successfully", HttpStatus.OK);
-        }
-        else {
+        } else {
             return new ResponseEntity<>("Данный опрос уже назначен этому пациенту!",
                     HttpStatus.BAD_REQUEST);
         }

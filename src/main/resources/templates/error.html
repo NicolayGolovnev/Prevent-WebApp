@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+    <link rel="icon" type="image/ico" th:href="@{~/static/favicon.ico}">
+    <title>Происходят странности</title>
+    <style>
+        body {
+            display: block;
+            max-width: 330px;
+            min-height: 180px;
+            margin: 4rem auto 0;
+        }
+
+        img {
+            max-width: 290px;
+        }
+
+        ins {
+            color: #777;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <a href="/">
+        <img th:src="@{~/img/logo.svg}" alt="Prevent+">
+    </a>
+    <p>
+        <b>Сожалеем,</b>
+        <ins>что-то пошло не так!</ins>
+    </p>
+    <p>
+        Наши разработчики уже работают над этой проблемой.
+        <ins>Это все, что мы знаем.</ins>
+    </p>
+
+
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <!--/*@thymesVar id="exception" type="java.lang.Throwable"*/-->
+    <div th:if="${exception != null}" th:utext="'Exception: ' + ${exception}" th:remove="tag"></div>
+    <div th:if="${exception != null}" th:utext="'Caused by: ' + ${exception.cause}" th:remove="tag"></div>
+    <div th:if="${exception != null}" th:utext="'Stack trace: '" th:remove="tag"></div>
+    <ul th:if="${exception != null}" th:remove="tag">
+        <li th:if="${exception != null}" th:each="ste : ${exception.stackTrace}" th:remove="tag"><span
+                th:utext="${ste}" th:remove="tag">${ste}</span></li>
+    </ul>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+
+</div>
+</body>
+</html>
