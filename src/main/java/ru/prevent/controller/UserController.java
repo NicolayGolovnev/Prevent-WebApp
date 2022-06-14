@@ -35,13 +35,13 @@ public class UserController {
     @GetMapping("/create")
     public ModelAndView getPageForNewUser() {
         ModelAndView model = new ModelAndView("admin/patient-create-page");
-        model.addObject("patient", new UserEntity());
+        model.addObject("user", new UserEntity());
         return model;
     }
 
     @ApiOperation(value = "Операция создания/редактирования полученного пользователя")
     @PostMapping("/create")
-    public String saveUser(@ModelAttribute("patient") UserEntity user) {
+    public String saveUser(@ModelAttribute("user") UserEntity user) {
         userService.save(user);
         return "redirect:/admin/";
     }
@@ -57,7 +57,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ModelAndView getPageForUser(@PathVariable("id") Long id) {
         ModelAndView model = new ModelAndView("admin/patient-page");
-        model.addObject("patient", userService.findById(id));
+        model.addObject("user", userService.findById(id));
         return model;
     }
 

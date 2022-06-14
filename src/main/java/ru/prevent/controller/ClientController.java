@@ -2,7 +2,11 @@ package ru.prevent.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.util.List;
 
 @Controller
 @Api(tags = "Контроллер конечного пользователя (клиента)")
+@Slf4j
 public class ClientController {
     @Autowired
     private UserService userService;
@@ -45,8 +50,9 @@ public class ClientController {
     private HistoryResultService historyResultService;
 
     @ApiOperation(value = "Загрузка главной страницы пользователя по уникальному идентификатору")
-    @GetMapping("/lk/{userId}")
-    public String loadUserPage(@PathVariable("userId") Long userId, Model model) {
+    @GetMapping("/")
+    public String loadUserPage(@AuthenticationPrincipal UserDetails user, Model model) {
+        Long userId = userService.findByUsername(user.getUsername()).getId();
         model.addAttribute("user", userService.findById(userId));
 
         List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllAppointedQuizzesByUserId(userId);

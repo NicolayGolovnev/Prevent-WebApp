@@ -1,9 +1,14 @@
 package ru.prevent.service;
 
+import lombok.AllArgsConstructor;
+import net.bytebuddy.utility.RandomString;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.prevent.entity.QuizEntity;
@@ -18,12 +23,17 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private UserRepository repository;
 
     @Autowired
     private QuizService quizService;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     @Transactional(readOnly = true)
     public List<UserEntity> findAll() {
@@ -54,6 +64,15 @@ public class UserService implements UserDetailsService {
             throw new ObjectNotFoundException("User[id=" + id + "] not found!");
     }
 
+    @Transactional(readOnly = true)
+    public UserEntity findByUsername(String username) {
+        Optional<UserEntity> optionalUser = repository.findByTelephone(username);
+        if (optionalUser.isPresent())
+            return optionalUser.get();
+        else
+            throw new ObjectNotFoundException("User[telephone=" + username + "] not found!");
+    }
+
     @Transactional
     public void save(UserEntity user) {
         if (user.getId() == null) {
@@ -67,6 +86,10 @@ public class UserService implements UserDetailsService {
                             .quiz(quiz)
                             .build());
             user.setQuizzes(userQuizzes);
+
+            user.setPassword(RandomStringUtils.randomAlphanumeric(6, 12));
+            emailSenderService.sendCredentials(user);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         } else {
             // update
             List<UserAndQuizzesEntity> checkQuizzes = new ArrayList<>();
@@ -95,5 +118,11 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> userEntity = repository.findByTelephone(username);
         return userEntity.orElseThrow(() -> new ObjectNotFoundException("User [telephone=" + username + "] not found!"));
+    }
+
+    @Transactional
+    public void register(UserEntity user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        repository.save(user);
     }
 }
