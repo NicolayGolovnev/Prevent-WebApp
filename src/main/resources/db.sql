@@ -1,6 +1,6 @@
 ﻿/*
 Created: 19.01.2022
-Modified: 16.05.2022
+Modified: 03.06.2022
 Model: PostgreSQL 12
 Database: PostgreSQL 12
 */
@@ -17,7 +17,9 @@ CREATE TABLE "usr"
     "third_name" Text,
     "sex" Text NOT NULL,
     "birthday" Timestamp,
-    "telephone" Text NOT NULL
+    "telephone" Text NOT NULL,
+    "email" Text,
+    "password" Text NOT NULL
 )
     WITH (
         autovacuum_enabled=true)
@@ -31,12 +33,12 @@ ALTER TABLE "usr" ADD CONSTRAINT "PK_usr" PRIMARY KEY ("id")
 CREATE TABLE "quiz"
 (
     "id" BigSerial NOT NULL,
-    "title" Text,
-    "access" Boolean,
+    "title" Text NOT NULL,
+    "access" Boolean NOT NULL,
     "gender" Text,
     "min_age" Bigint,
     "max_age" Bigint,
-    "weight_arg" Bigint
+    "weight_arg" Bigint NOT NULL
 )
     WITH (
         autovacuum_enabled=true)
@@ -50,9 +52,9 @@ ALTER TABLE "quiz" ADD CONSTRAINT "PK_quiz" PRIMARY KEY ("id")
 CREATE TABLE "question"
 (
     "id" BigSerial NOT NULL,
-    "content" Text,
+    "content" Text NOT NULL,
     "num_question" Bigint,
-    "weight_arg" Bigint,
+    "weight_arg" Bigint NOT NULL,
     "id_quiz" Bigint NOT NULL
 )
     WITH (
@@ -71,7 +73,7 @@ CREATE TABLE "answer"
 (
     "id" BigSerial NOT NULL,
     "content" Text,
-    "weight_arg" Bigint,
+    "weight_arg" Bigint NOT NULL,
     "id_question" Bigint NOT NULL
 )
     WITH (
@@ -87,9 +89,9 @@ CREATE TABLE "key_quiz"
 (
     "id" BigSerial NOT NULL,
     "gender" Text,
-    "min_arg" Bigint,
-    "max_arg" Bigint,
-    "result_arg" Text,
+    "min_arg" Bigint NOT NULL,
+    "max_arg" Bigint NOT NULL,
+    "result_arg" Text NOT NULL,
     "id_quiz" Bigint NOT NULL
 )
     WITH (
@@ -162,8 +164,8 @@ ALTER TABLE "quiz_n_quiz" ADD CONSTRAINT "PK_quiz_n_quiz" PRIMARY KEY ("id_paren
 
 CREATE TABLE "history_results"
 (
-    "ID" BigSerial NOT NULL,
-    "result" Text,
+    "id" BigSerial NOT NULL,
+    "result" Text NOT NULL,
     "id_usr" Bigint NOT NULL,
     "id_user_n_quiz" Bigint NOT NULL,
     "id_children_quiz" Bigint
@@ -175,7 +177,7 @@ CREATE TABLE "history_results"
 CREATE INDEX "IX_Relationship9" ON "history_results" ("id_children_quiz")
 ;
 
-ALTER TABLE "history_results" ADD CONSTRAINT "PK_history_results" PRIMARY KEY ("id_usr","id_user_n_quiz","ID")
+ALTER TABLE "history_results" ADD CONSTRAINT "PK_history_results" PRIMARY KEY ("id_usr","id_user_n_quiz","id")
 ;
 
 -- Create foreign keys (relationships) section -------------------------------------------------

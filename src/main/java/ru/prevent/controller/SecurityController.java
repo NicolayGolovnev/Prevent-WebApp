@@ -1,32 +1,45 @@
 package ru.prevent.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import ru.prevent.entity.UserEntity;
+import ru.prevent.service.UserService;
 import springfox.documentation.annotations.ApiIgnore;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 @Controller
 @ApiIgnore
 public class SecurityController {
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@AuthenticationPrincipal UserDetails user, Model model) {
+        if (user != null) {
+            if (user.getUsername().equals("admin"))
+                return "redirect:/admin/";
+            else
+                return "redirect:/";
+        }
+
+        model.addAttribute("userForm", new UserEntity());
         return "login";
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestParam String mobile, @RequestParam String smsCode, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Cookie cookie = Arrays.stream(cookies).filter(c -> c.getName().equals(mobile)).findFirst().orElse(null);
-        if (!cookie.getValue().equals(smsCode))
-            return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(HttpStatus.OK);
+    @GetMapping("/signup")
+    public String registration(Model model) {
+        model.addAttribute("user", new UserEntity());
+        return "registration";
+    }
+
+    @PostMapping("/signup")
+    public String createUser(@ModelAttribute("user") UserEntity user) {
+        userService.register(user);
+        return "redirect:/login";
     }
 }

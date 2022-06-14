@@ -1,6 +1,7 @@
 package ru.prevent.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -30,7 +31,7 @@ public class HistoryResultsEntity {
     @JoinColumn(name = "id_children_quiz")
     QuizEntity childrenQuiz;
 
-    public boolean checkChildrenQuiz(){
+    public boolean checkChildrenQuiz() {
         return childrenQuiz != null;
     }
 }

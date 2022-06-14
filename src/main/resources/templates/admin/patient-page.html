@@ -34,10 +34,10 @@
     Центр превентивной и эстетической медицины
 </div>
 <div class="main-container container">
-    <h3 class="text-center">Редактирование информации о пациенте №[[${patient.id}]]</h3>
+    <h3 class="text-center">Редактирование информации о пациенте №[[${user.id}]]</h3>
 
-    <form action="#" method="post" th:action="@{/user/create}" th:object="${patient}">
-        <input hidden th:field="${patient.id}">
+    <form action="#" method="post" th:action="@{/user/create}" th:object="${user}">
+        <input hidden th:field="*{id}">
         <div class="form-group row justify-content-end">
             <label for="forFirstName" class="col-md-3 col-form-label">Фамилия</label>
             <div class="col-md-8">
@@ -84,6 +84,7 @@
             </div>
         </div>
         <input hidden th:field="*{quizzes}">
+        <input hidden th:field="*{password}">
         <div class="form-group row justify-content-end">
             <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-secondary col-md-2 mx-1 my-1">Назад</button>
             <button type="button" class="btn btn-danger col-md-2 mx-1 my-1 " data-toggle="modal" data-target="#deleteModal">Удалить</button>

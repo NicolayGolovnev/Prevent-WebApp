@@ -2,7 +2,10 @@ package ru.prevent.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import java.util.List;
 
 @Controller
 @Api(tags = "Контроллер конечного пользователя (клиента)")
+@Slf4j
 public class ClientController {
     @Autowired
     private UserService userService;
@@ -45,14 +49,15 @@ public class ClientController {
     private HistoryResultService historyResultService;
 
     @ApiOperation(value = "Загрузка главной страницы пользователя по уникальному идентификатору")
-    @GetMapping("/lk/{userId}")
-    public String loadUserPage(@PathVariable("userId") Long userId, Model model) {
+    @GetMapping("/")
+    public String loadUserPage(@AuthenticationPrincipal UserDetails user, Model model) {
+        Long userId = userService.findByUsername(user.getUsername()).getId();
         model.addAttribute("user", userService.findById(userId));
 
         List<UserAndQuizzesEntity> openQuizzes = userAndQuizService.findAllAppointedQuizzesByUserId(userId);
         openQuizzes.addAll(userAndQuizService.findAllOpenQuizzesByUserId(userId));
         List<QuizEntity> quizzes = new ArrayList<>();
-        for (UserAndQuizzesEntity test: openQuizzes) {
+        for (UserAndQuizzesEntity test : openQuizzes) {
             quizzes.add(test.getQuiz());
         }
         model.addAttribute("quizzes", quizzes);
@@ -74,7 +79,7 @@ public class ClientController {
         List<QuizAndQuizEntity> childQuizzes = quizAndQuizService.findAllChildTests(quizId);
         QuizModel quizModel = new QuizModel();
 
-        for (QuizAndQuizEntity childQuiz: childQuizzes) {
+        for (QuizAndQuizEntity childQuiz : childQuizzes) {
             ChildQuizModel childQuizModel = new ChildQuizModel();
             List<QuestionEntity> entityQuestions = questionService.findQuestionsByQuizId(childQuiz.getChildQuiz().getId());
             for (var question : entityQuestions) {
@@ -94,8 +99,8 @@ public class ClientController {
             quizModel.add(childQuizModel);
         }
 
-        if(childQuizzes.size() == 1 &&
-                (childQuizzes.get(0).getParentQuiz().getId().equals(childQuizzes.get(0).getChildQuiz().getId()))){
+        if (childQuizzes.size() == 1 &&
+                (childQuizzes.get(0).getParentQuiz().getId().equals(childQuizzes.get(0).getChildQuiz().getId()))) {
             quizModel.getChildQuizzes().get(0).setTittle("");
         }
 
@@ -114,7 +119,7 @@ public class ClientController {
 
     @ApiOperation(value = "Загрузка страницы просмотра результата опроса для пользователя")
     @GetMapping("/showCompleteTest")
-    public String showCompleteTest(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model){
+    public String showCompleteTest(@RequestParam("userId") Long userId, @RequestParam("quizId") Long quizId, Model model) {
         UserAndQuizzesEntity userAndQuiz = userAndQuizService.findById(quizId);
         model.addAttribute("results", historyResultService.findAllByIdUserAndQuiz(quizId));
         model.addAttribute("quizInfo", userAndQuiz);
@@ -122,12 +127,10 @@ public class ClientController {
         return "user/showResult";
     }
 
-    private HistoryResultsEntity saveBlock(UserEntity user, UserAndQuizzesEntity userAndQuiz, ChildQuizModel childQuiz)
-    {
+    private HistoryResultsEntity saveBlock(UserEntity user, UserAndQuizzesEntity userAndQuiz, ChildQuizModel childQuiz) {
         int resultQuiz = 0;
         QuestionEntity questionField;
-        for(QuestionAnswersModel question: childQuiz.getQuestions())
-        {
+        for (QuestionAnswersModel question : childQuiz.getQuestions()) {
             questionField = questionService.findById(question.getId());
             UserAndAnswersEntity newUserAnswer = UserAndAnswersEntity.builder()
                     .contentAnswer("")
@@ -142,8 +145,8 @@ public class ClientController {
         resultQuiz *= childQuiz.getWeight();
         List<KeyQuizEntity> keysQuiz = keyQuizService.findAllByQuizId(childQuiz.getId());
         String resultTest = "";
-        for(KeyQuizEntity keyQuiz: keysQuiz){
-            if(resultQuiz >= keyQuiz.getMinArg() && resultQuiz <= keyQuiz.getMaxArg()){
+        for (KeyQuizEntity keyQuiz : keysQuiz) {
+            if (resultQuiz >= keyQuiz.getMinArg() && resultQuiz <= keyQuiz.getMaxArg()) {
                 resultTest = keyQuiz.getResultArg();
                 break;
             }
@@ -159,7 +162,7 @@ public class ClientController {
 
     @ApiOperation(value = "Операция сохранение и подсчет баллов результатов опроса")
     @PostMapping("/saveResults")
-    public String saveResults(@ModelAttribute("questions") QuizModel resultForm, Model model){
+    public String saveResults(@ModelAttribute("questions") QuizModel resultForm, Model model) {
         UserEntity user = userService.findById(resultForm.getUserId());
         QuizEntity quiz = quizService.findById(resultForm.getQuizId());
         List<ChildQuizModel> childQuizzes = resultForm.getChildQuizzes();
@@ -173,13 +176,12 @@ public class ClientController {
         userAndQuizService.save(userAndQuiz);
 
         List<HistoryResultsEntity> resultsToModel = new ArrayList<>();
-        if (childQuizzes.size() == 1 && (childQuizzes.get(0).getId().equals(resultForm.getQuizId()))){
+        if (childQuizzes.size() == 1 && (childQuizzes.get(0).getId().equals(resultForm.getQuizId()))) {
             HistoryResultsEntity result = saveBlock(user, userAndQuiz, childQuizzes.get(0));
             historyResultService.save(result);
             resultsToModel.add(result);
-        }
-        else {
-            for (ChildQuizModel childQuiz: childQuizzes) {
+        } else {
+            for (ChildQuizModel childQuiz : childQuizzes) {
                 /*int resultQuiz = 0;
                 QuestionEntity questionField;
                 for(QuestionAnswersModel question: childQuiz.getQuestions())
@@ -225,7 +227,7 @@ public class ClientController {
 
     @ApiOperation(value = "", hidden = true)
     @GetMapping("/showResult/{id}")
-    public String showResult(@PathVariable Long id, Model model){
+    public String showResult(@PathVariable Long id, Model model) {
         model.addAttribute("result", userAndQuizService.findById(id));
         return "user/showResult";
     }
